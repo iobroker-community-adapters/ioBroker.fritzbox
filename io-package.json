@@ -1,0 +1,566 @@
+{
+  "common": {
+    "name": "fritzbox",
+    "version": "0.2.1",
+    "title": "fritzbox Adapter",
+    "desc": {
+      "en": "Adapter verarbeitet die Anrufinformation der Fritzbox über tcp, Port 1012 (Callmonitor in der Fritzbox mit #96*5* aktivieren)",
+      "de": "Adapter verarbeitet die Anrufinformation der Fritzbox über tcp, Port 1012 (Callmonitor in der Fritzbox mit #96*5* aktivieren)",
+      "ru": "Adapter verarbeitet die Anrufinformation der Fritzbox über tcp, Port 1012 (Callmonitor in der Fritzbox mit #96*5* aktivieren)"
+    },
+    "authors": [
+      "ruhr <ruhr@digheim.de>"
+    ],
+    "license": "MIT",
+    "platform": "Javascript/Node.js",
+    "mode": "daemon",
+    "availableModes": [
+      "daemon"
+    ],
+    "readme": "https://github.com/ioBroker/.../README.md",
+    "loglevel": "debug",
+    "icon": "fritzbox.png",
+    "keywords": [
+      "fritzbox",
+      "cdr",
+      "callmonitor"
+    ],
+    "extIcon": "",
+    "type": "communication"
+  },
+  "native": {
+    "fritzboxAddress": "192.168.178.1",
+    "cc": "49",
+    "ac": "211",
+    "unknownNumber": "### ? ###",
+    "numberLength": 15,
+    "deltaTimeOKSec": 5,
+    "externalLink": true,
+    "showHeadline": true,
+    "numberEntriesHistoryAll": 12,
+    "numberEntriesHistoryMissed": 10,
+    "showHistoryAllTableTxt": false,
+    "showHistoryAllTableHTML": true,
+    "showHistoryAllTableJSON": true,
+    "showCallmonitor": true,
+    "showMissedTableHTML": true,
+    "showMissedTableJSON": true,
+    "headlineDateOn": true,
+    "headlineDate": "Tag    Zeit  ",
+    "headlineDateLength": 14,
+    "headlineExtnumberOn": true,
+    "headlineExtnumber": "ext. Rufnr.",
+    "headlineDirectionOn": true,
+    "headlineDirection": "g<>k",
+    "headlineDirectionLength": 4
+  },
+  "objects": [],
+  "instanceObjects": [
+    {
+      "_id": "message",
+      "type": "state",
+      "common": {
+        "name": "Last fritzbox message",
+        "type": "string",
+        "role": "message",
+        "read": true,
+        "write": false,
+        "desc": "last message from fritzbox as string"
+      },
+      "native": {}
+    },
+    {
+      "_id": "calls",
+      "type": "channel",
+      "common": {
+        "name": "calls",
+        "role": "call info"
+      },
+      "native": {}
+    },
+    {
+      "_id": "calls.ring",
+      "type": "state",
+      "common": {
+        "name": "ring activ?",
+        "type": "boolean",
+        "role": "call info",
+        "read": true,
+        "write": false,
+        "desc": "ring activ?"
+      },
+      "native": {}
+    },
+    {
+      "_id": "calls.missedCount",
+      "type": "state",
+      "common": {
+        "name": "Counter: rings missed",
+        "type": "string",
+        "role": "call info",
+        "read": true,
+        "write": true,
+        "desc": "Counter: rings missed"
+      },
+      "native": {}
+    },
+    {
+      "_id": "calls.missedDateReset",
+      "type": "state",
+      "common": {
+        "name": "date last reset: counter rings missed",
+        "type": "string",
+        "role": "date",
+        "read": true,
+        "write": true,
+        "desc": "date last reset: counter rings missed"
+      },
+      "native": {}
+    },
+    {
+      "_id": "calls.ringActualNumber",
+      "type": "state",
+      "common": {
+        "name": "actual last ringing number",
+        "type": "string",
+        "role": "call info",
+        "read": true,
+        "write": false,
+        "desc": "actual last ringing number"
+      },
+      "native": {}
+    },
+    {
+      "_id": "calls.ringActualNumbers",
+      "type": "state",
+      "common": {
+        "name": "actual ringing numbers",
+        "type": "string",
+        "role": "call info",
+        "read": true,
+        "write": false,
+        "desc": "actual ringing numbers"
+      },
+      "native": {}
+    },
+    {
+      "_id": "calls.ringLastNumber",
+      "type": "state",
+      "common": {
+        "name": "ring last number",
+        "type": "string",
+        "role": "call info",
+        "read": true,
+        "write": false,
+        "desc": "ring last number"
+      },
+      "native": {}
+    },
+    {
+      "_id": "calls.ringLastMissedNumber",
+      "type": "state",
+      "common": {
+        "name": "ring last missed number",
+        "type": "string",
+        "role": "call info",
+        "read": true,
+        "write": false,
+        "desc": "ring last missed number"
+      },
+      "native": {}
+    },
+    {
+      "_id": "calls.callLastNumber",
+      "type": "state",
+      "common": {
+        "name": "call last number",
+        "type": "string",
+        "role": "call info",
+        "read": true,
+        "write": false,
+        "desc": "call last number"
+      },
+      "native": {}
+    },
+    {
+      "_id": "calls.connectNumber",
+      "type": "state",
+      "common": {
+        "name": "actual last connected number",
+        "type": "string",
+        "role": "call info",
+        "read": true,
+        "write": false,
+        "desc": "actual last connected number"
+      },
+      "native": {}
+    },
+    {
+      "_id": "calls.connectNumbers",
+      "type": "state",
+      "common": {
+        "name": "actual last connected numbers",
+        "type": "string",
+        "role": "call info",
+        "read": true,
+        "write": false,
+        "desc": "actual last connected numbers"
+      },
+      "native": {}
+    },
+    {
+      "_id": "calls.counterActualCalls",
+      "type": "channel",
+      "common": {
+        "name": "calls",
+        "role": "call info"
+      },
+      "native": {}
+    },
+    {
+      "_id": "calls.counterActualCalls.allActiveCount",
+      "type": "state",
+      "common": {
+        "name": "Counter: all active Calls",
+        "type": "string",
+        "role": "call info",
+        "read": true,
+        "write": false,
+        "desc": "Counter: all active Calls"
+      },
+      "native": {}
+    },
+    {
+      "_id": "calls.counterActualCalls.connectCount",
+      "type": "state",
+      "common": {
+        "name": "actual activ onnects",
+        "type": "string",
+        "role": "call info",
+        "read": true,
+        "write": false,
+        "desc": "Counter: actual activ connected calls"
+      },
+      "native": {}
+    },
+    {
+      "_id": "calls.counterActualCalls.ringCount",
+      "type": "state",
+      "common": {
+        "name": "actual ring count",
+        "type": "string",
+        "role": "call info",
+        "read": true,
+        "write": false,
+        "desc": "Counter: actual ring"
+      },
+      "native": {}
+    },
+    {
+      "_id": "calls.counterActualCalls.callCount",
+      "type": "state",
+      "common": {
+        "name": "actual activ calls",
+        "type": "string",
+        "role": "call info",
+        "read": true,
+        "write": false,
+        "desc": "Counter: actual activ calls"
+      },
+      "native": {}
+    },
+    {
+      "_id": "calls.telLinks",
+      "type": "channel",
+      "common": {
+        "name": "calls",
+        "role": "call info"
+      },
+      "native": {}
+    },
+    {
+      "_id": "calls.telLinks.ringLastNumberTel",
+      "type": "state",
+      "common": {
+        "name": "ring last number tel:link",
+        "type": "string",
+        "role": "call info",
+        "read": true,
+        "write": false,
+        "desc": "letzter Anrufer als tel:link"
+      },
+      "native": {}
+    },
+    {
+      "_id": "calls.telLinks.callLastNumberTel",
+      "type": "state",
+      "common": {
+        "name": "call last number tel:link",
+        "type": "string",
+        "role": "call info",
+        "read": true,
+        "write": false,
+        "desc": "letzte angerufene Nummer (Wahlwiederholung) als tel:link"
+      },
+      "native": {}
+    },
+    {
+      "_id": "calls.telLinks.ringLastMissedNumberTel",
+      "type": "state",
+      "common": {
+        "name": "ring last missed number tel:link",
+        "type": "string",
+        "role": "call info",
+        "read": true,
+        "write": false,
+        "desc": "letzter verpasster Anrufer als tel:link"
+      },
+      "native": {}
+    },
+    {
+      "_id": "callmonitor",
+      "type": "channel",
+      "common": {
+        "name": "callmonitor",
+        "role": "callmonitor"
+      },
+      "native": {}
+    },
+    {
+      "_id": "callmonitor.all",
+      "type": "state",
+      "common": {
+        "name": "callmonitor all",
+        "type": "string",
+        "role": "callmonitor",
+        "read": true,
+        "write": false,
+        "desc": "callmonitor all"
+      },
+      "native": {}
+    },
+    {
+      "_id": "callmonitor.ring",
+      "type": "state",
+      "common": {
+        "name": "callmonitor ring",
+        "type": "string",
+        "role": "callmonitor",
+        "read": true,
+        "write": false,
+        "desc": "callmonitor ring"
+      },
+      "native": {}
+    },
+    {
+      "_id": "callmonitor.call",
+      "type": "state",
+      "common": {
+        "name": "callmonitor call",
+        "type": "string",
+        "role": "callmonitor",
+        "read": true,
+        "write": false,
+        "desc": "callmonitor call"
+      },
+      "native": {}
+    },
+    {
+      "_id": "callmonitor.connect",
+      "type": "state",
+      "common": {
+        "name": "callmonitor connect",
+        "type": "string",
+        "role": "callmonitor",
+        "read": true,
+        "write": false,
+        "desc": "callmonitor connect"
+      },
+      "native": {}
+    },
+    {
+      "_id": "system",
+      "type": "channel",
+      "common": {
+        "name": "system",
+        "role": "system"
+      },
+      "native": {}
+    },
+    {
+      "_id": "system.deltaTime",
+      "type": "state",
+      "common": {
+        "name": "delta time in seconds between fritzbox and ioBroker",
+        "type": "string",
+        "role": "seconds",
+        "read": true,
+        "write": false,
+        "desc": "delta time in seconds between fritzbox and ioBroker"
+      },
+      "native": {}
+    },
+    {
+      "_id": "system.deltaTimeOK",
+      "type": "state",
+      "common": {
+        "name": "delta time in seconds between fritzbox and ioBroker ok",
+        "type": "boolean",
+        "role": "seconds",
+        "read": true,
+        "write": false,
+        "desc": "delta time in seconds between fritzbox and ioBroker ok"
+      },
+      "native": {}
+    },
+    {
+      "_id": "cdr",
+      "type": "channel",
+      "common": {
+        "name": "cdr",
+        "role": "cdr"
+      },
+      "native": {}
+    },
+    {
+      "_id": "cdr.json",
+      "type": "state",
+      "common": {
+        "name": "call cdr as JSON",
+        "type": "object",
+        "role": "cdr",
+        "read": true,
+        "write": false,
+        "desc": "call cdr as JSON"
+      },
+      "native": {}
+    },
+    {
+      "_id": "cdr.html",
+      "type": "state",
+      "common": {
+        "name": "call cdr as html",
+        "type": "string",
+        "role": "cdr",
+        "read": true,
+        "write": false,
+        "desc": "call cdr as html"
+      },
+      "native": {}
+    },
+    {
+      "_id": "cdr.missedJSON",
+      "type": "state",
+      "common": {
+        "name": "missed calls as JSON",
+        "type": "object",
+        "role": "cdr",
+        "read": true,
+        "write": false,
+        "desc": "missed calls as JSON"
+      },
+      "native": {}
+    },
+    {
+      "_id": "cdr.missedHTML",
+      "type": "state",
+      "common": {
+        "name": "missed calls as HTML",
+        "type": "string",
+        "role": "cdr",
+        "read": true,
+        "write": false,
+        "desc": "missed calls as HTML"
+      },
+      "native": {}
+    },
+    {
+      "_id": "cdr.txt",
+      "type": "state",
+      "common": {
+        "name": "call cdr as txt",
+        "type": "string",
+        "role": "cdr",
+        "read": true,
+        "write": false,
+        "desc": "call cdr as txt"
+      },
+      "native": {}
+    },
+    {
+      "_id": "history",
+      "type": "channel",
+      "common": {
+        "name": "history",
+        "role": "history"
+      },
+      "native": {}
+    },
+    {
+      "_id": "history.allTableHTML",
+      "type": "state",
+      "common": {
+        "name": "history of calls as HTML",
+        "type": "string",
+        "role": "history",
+        "read": true,
+        "write": false,
+        "desc": "history of calls as HTML"
+      },
+      "native": {}
+    },
+    {
+      "_id": "history.allTableTxt",
+      "type": "state",
+      "common": {
+        "name": "history of calls as Txt",
+        "type": "string",
+        "role": "history",
+        "read": true,
+        "write": false,
+        "desc": "history of calls as Txt"
+      },
+      "native": {}
+    },
+    {
+      "_id": "history.allTableJSON",
+      "type": "state",
+      "common": {
+        "name": "history of calls as JSON",
+        "type": "object",
+        "role": "table",
+        "read": true,
+        "write": false,
+        "desc": "history of calls as JSON"
+      },
+      "native": {}
+    },
+    {
+      "_id": "history.missedTableHTML",
+      "type": "state",
+      "common": {
+        "name": "history of missed calls as HTML",
+        "type": "string",
+        "role": "history",
+        "read": true,
+        "write": false,
+        "desc": "history of missed calls as HTML"
+      },
+      "native": {}
+    },
+    {
+      "_id": "history.missedTableJSON",
+      "type": "state",
+      "common": {
+        "name": "history of missed calls as JSON",
+        "type": "string",
+        "role": "history",
+        "read": true,
+        "write": false,
+        "desc": "history of missed calls as JSON"
+      },
+      "native": {}
+    }
+
+  ]
+}
