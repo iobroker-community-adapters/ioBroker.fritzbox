@@ -14,22 +14,19 @@
     "license": "MIT",
     "platform": "Javascript/Node.js",
     "mode": "daemon",
-    "availableModes": [
-      "daemon"
-    ],
-    "readme": "https://github.com/ioBroker/.../README.md",
-    "loglevel": "debug",
-    "icon": "fritzbox.png",
+    "readmeFile": "https://github.com/ruhr70/ioBroker.fritzbox/blob/master/README.md",
+    "loglevel": "info",
+    "icon": "https://raw.githubusercontent.com/ruhr70/ioBroker.fritzbox/master/admin/fritzbox.png",
     "keywords": [
       "fritzbox",
       "cdr",
       "callmonitor"
     ],
     "extIcon": "",
-    "type": "communication"
+    "type": "hardware"
   },
   "native": {
-    "fritzboxAddress": "192.168.178.1",
+    "fritzboxAddress": "192.168.1.1",
     "cc": "49",
     "ac": "211",
     "unknownNumber": "### ? ###",
