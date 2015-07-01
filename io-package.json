@@ -4,9 +4,9 @@
     "version": "0.2.1",
     "title": "fritzbox Adapter",
     "desc": {
-      "en": "Adapter verarbeitet die Anrufinformation der Fritzbox über tcp, Port 1012 (Callmonitor in der Fritzbox mit #96*5* aktivieren)",
+      "en": "Adapter monitors the call information from Fritzbox via tcp, Port 1012 (Activate call monitor in the Fritzbox with #96*5*)",
       "de": "Adapter verarbeitet die Anrufinformation der Fritzbox über tcp, Port 1012 (Callmonitor in der Fritzbox mit #96*5* aktivieren)",
-      "ru": "Adapter verarbeitet die Anrufinformation der Fritzbox über tcp, Port 1012 (Callmonitor in der Fritzbox mit #96*5* aktivieren)"
+      "ru": "Драйвер для отображения звонков с Fritzbox через tcp, Port 1012 (Нужно активировать call monitor в Fritzbox с помощью #96*5*)"
     },
     "authors": [
       "ruhr <ruhr@digheim.de>"
@@ -14,22 +14,21 @@
     "license": "MIT",
     "platform": "Javascript/Node.js",
     "mode": "daemon",
-    "availableModes": [
-      "daemon"
-    ],
-    "readme": "https://github.com/ioBroker/.../README.md",
-    "loglevel": "debug",
+    "loglevel": "info",
+    "icon": "fritzbox.png",
+    "readme": "https://github.com/ruhr70/ioBroker.fritzbox/blob/master/README.md",
+    "loglevel": "info",
     "icon": "fritzbox.png",
     "keywords": [
       "fritzbox",
       "cdr",
       "callmonitor"
     ],
-    "extIcon": "",
-    "type": "communication"
+    "extIcon": "https://raw.githubusercontent.com/ruhr70/ioBroker.fritzbox/master/admin/fritzbox.png",
+    "type": "hardware"
   },
   "native": {
-    "fritzboxAddress": "192.168.178.1",
+    "fritzboxAddress": "192.168.1.1",
     "cc": "49",
     "ac": "211",
     "unknownNumber": "### ? ###",
