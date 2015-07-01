@@ -14,9 +14,6 @@
     "license": "MIT",
     "platform": "Javascript/Node.js",
     "mode": "daemon",
-    "readmeFile": "https://github.com/ruhr70/ioBroker.fritzbox/blob/master/README.md",
-    "loglevel": "info",
-    "icon": "https://raw.githubusercontent.com/ruhr70/ioBroker.fritzbox/master/admin/fritzbox.png",
     "loglevel": "info",
     "icon": "fritzbox.png",
     "readme": "https://github.com/ruhr70/ioBroker.fritzbox/blob/master/README.md",
@@ -27,8 +24,6 @@
       "cdr",
       "callmonitor"
     ],
-    "extIcon": "",
-    "type": "hardware"
     "extIcon": "https://raw.githubusercontent.com/ruhr70/ioBroker.fritzbox/master/admin/fritzbox.png",
     "type": "hardware"
   },
