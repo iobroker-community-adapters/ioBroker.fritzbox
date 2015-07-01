@@ -21,6 +21,7 @@
     "url": "https://github.com/ruhr70/ioBroker.fritzbox"
   },
   "dependencies": {
+    "net": "^1.0.2",
     "xml2js": "^0.4.9"
   },
   "devDependencies": {
