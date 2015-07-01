@@ -16,6 +16,11 @@ ioBroker fritzbox Adapter
 
 ## Configuration
 
+## todo
+* Doku der Datenpunkte
+* Import des xml Telefonbuch der Fritzbox
+* Feinere Konfiguration der Anruferliste (Tabellen)
+
 ## License
 
 The MIT License (MIT)
