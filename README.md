@@ -16,6 +16,60 @@ ioBroker fritzbox Adapter
 
 ## Configuration
 
+## Dokumentation der Objekte
+
+Unter fritzbox.x. legt der Adapter folgende Channel und Objekte an:
+
+message                                 (Meldung aus der Fritzbox)
+
+calls.                                  (CHANNEL)
+calls.ring                              (true/false, steht ein Ruf an?)
+calls.missedCount                       (Integer, read & write, Anzahl verpasster Anrufe)
+calls.missedDateReset                   (Datum, zu dem calls.missedCount auf 0 gesetzt wurde
+calls.ringActualNumber                  (aktuell anstehender Ruf (der Letzte, wenn es mehrere gibt))
+calls.ringActualNumbers                 (alle aktuell anstehenden Rufe)
+calls.ringLastNumber                    (letzter Anrufer)
+calls.ringLastMissedNumber              (letzter verpasster Anrufer)
+calls.callLastNumber                    (Wahlwiederholung, letzte gewählte Rufnummer)
+calls.connectNumber                     (letztes aktuell verbundenes Gespräch)
+calls.connectNumbers                    (alle aktuell verbundenen Gespräche)
+
+calls.counterActualCalls.               (CHANNEL - Realtime)
+calls.counterActualCalls.ringCount      (Anzahl der anstehenden Anrufe (RING))
+calls.counterActualCalls.callCount      (Anzahl der gehenden Anrufversuche (CALL))
+calls.counterActualCalls.connectCount   (Anzahl der bestehenden Gespräche (CONNECT))
+calls.counterActualCalls.allActiveCount (Anzahl aktiver Anrufe (CALL, RING & CONNECT)
+
+calls.telLinks.                         (CHANNEL - wählbare Rufnummern tel:+...)
+calls.telLinks.ringLastNumberTel        (letzter Anrufer als wählbarer Link)
+calls.telLinks.ringLastMissedNumberTel  (letzter verpasster Anrufer als wählbarer Link)
+calls.telLinks.callLastNumberTel        (Wahlwiederholung, letzte gewählte Rufnummer, wählbar)
+
+history.                                (CHANNEL)
+history.allTableTxt                     (...)
+history.allTableHTML                    (Anruferliste als html Tabelle)
+history.allTableJSON                    (Anruferliste als JSON)
+history.missedTableHTML                 (Liste verpasste Anrufe als html)
+history.missedTableJSON                 (Liste verpasste Anrufe als JSON)
+
+history.cdr.                            (CHANNEL)
+history.cdr.json                        (CDR als JSON)
+history.cdr.html                        (CDR als html)
+history.cdr.txt                         (CDR als txt)
+history.cdr.missedJSON                  (letzter verpasster Anruf als JSON)
+history.cdr.missedHTML                  (letzte verpasster Anruf als html)
+
+callmonitor.                            (CHANNEL - Realtime)
+callmonitor.all                         (html Liste: alle aktiven Anrufe in allen Zuständen)
+callmonitor.ring                        (html Liste: alle aktiven Anrufe
+callmonitor.call                        (html Liste: alle gehenden Gespräche)
+callmonitor.connect                     (html Liste: alle verbundenen Gespräche)
+
+system.                                 (CHANNEL)
+system.deltaTime                        (Deltazeit zwischen System und Fritzbox in Sek.)
+system.deltaTimeOK                      (true/false Deltazeit zwischen System und Fritzbox in der Tolereanz)
+
+
 ## todo
 * Doku der Datenpunkte
 * Import des xml Telefonbuch der Fritzbox
