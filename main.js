@@ -488,12 +488,17 @@ function clearRealtimeVars() {
     listCall            = [];
     listConnect         = [];
     listAll             = [];
+
 }
+
+
+
+
 
 
 function adapterSetOnChange (object, value) {
     adapter.getState(object, function (err, state) {
-        if (!err) {
+        if (!err && state) {
             if (state.val != value) {
                 adapter.setState(object, value , true);
             }
@@ -502,6 +507,112 @@ function adapterSetOnChange (object, value) {
 }
 
 
+function adapterSetOnUndefined (object, value) {
+    adapter.getState(object, function (err, state) {
+        if (!err && state) {
+            var newValue = state.val || value;
+            adapter.setState(object, newValue , true);
+        } else {
+            adapter.setState(object, value , true);
+        }
+    });
+}
+
+
+
+function initVars() {
+// alte Zustände übernehmen oder bei Erstinitalisierung sinnvolle Werte
+    adapterSetOnUndefined("calls.missedCount", 0);
+    adapterSetOnUndefined("calls.missedDateReset", dateNow());
+
+    adapterSetOnUndefined("calls.ringLastNumber", "");
+    adapterSetOnUndefined("calls.ringLastMissedNumber", "");
+    adapterSetOnUndefined("calls.callLastNumber", "");
+
+    adapterSetOnUndefined("telLinks.ringLastNumberTel", "");
+    adapterSetOnUndefined("telLinks.ringLastMissedNumberTel", "");
+    adapterSetOnUndefined("telLinks.callLastNumberTel", "");
+
+    adapterSetOnUndefined("system.deltaTime", 0);
+    adapterSetOnUndefined("system.deltaTimeOK", true);
+
+    // config aus der Adapter Admin-Webseite übernehmen
+    configCC                    = adapter.config.cc;    // "49",            // eigene Landesvorwahl ohne führende 0
+    configAC                    = adapter.config.ac;    // "211",           // eigene Ortsvorwahl ohne führende 0
+    configUnknownNumber         = numberFormat(adapter.config.unknownNumber, adapter.config.unknownNumber.length); // Leerzeichen gegen utf-8 nbsp ersetzen
+    configNumberLength          = adapter.config.numberLength;
+    if (configNumberLength < 4) {
+        adapter.log.warn("Rufnummernlänge zu klein gewählt, geändert von " + configNumberLength + " auf 4");
+        configNumberLength = 4;
+    }
+    if (configNumberLength > 30) {
+        adapter.log.warn("Rufnummernlänge zu groß gewählt, geändert von " + configNumberLength + " auf 30");
+        configNumberLength = 30;
+    }
+
+    configExternalLink          = adapter.config.externalLink;
+    configShowHeadline          = adapter.config.showHeadline;
+
+    showHistoryAllTableTxt      = adapter.config.showHistoryAllTableTxt;
+    showHistoryAllTableHTML     = adapter.config.showHistoryAllTableHTML;
+    showHistoryAllTableJSON     = adapter.config.showHistoryAllTableJSON;
+    showCallmonitor             = adapter.config.showCallmonitor;
+    showMissedTableHTML         = adapter.config.showMissedTableHTML;
+    showMissedTableJSON         = adapter.config.showMissedTableJSON;
+
+    // vorhandene Werte aus den ioBroker Objekte des Fritzbox Adapters rauslesen und in die globalen Variablen übernehmen
+    adapter.getState('calls.missedCount', function (err, state) {
+        if (!err && state) {
+            objMissedCount = (state.val);
+            missedCount = (state.val);
+        }
+    });
+
+
+    if (adapter.config.showHeadline) {
+        headlineTableAllTxt = headlineAllTxt();
+        headlineTableAllHTML = headlineAllHTML();
+        headlineTableMissedHTML = headlineMissedHTML();
+    } else {
+        headlineTableAllTxt = "";
+        headlineTableAllHTML = "";
+        headlineTableMissedHTML = "";
+    }
+
+
+    if (!showHistoryAllTableTxt) {
+        adapter.setState('history.allTableTxt',    "deactivated",          true);
+    } else {
+        adapter.setState('history.allTableTxt',    headlineTableAllTxt,    true);
+    }
+    if (!showHistoryAllTableJSON) {
+        adapter.setState('history.allTableJSON',   "deactivated",          true);
+    }
+    if (!showHistoryAllTableHTML) {
+        adapter.setState('history.allTableHTML',   "deactivated",          true);
+    } else {
+        adapter.setState('history.allTableHTML',   headlineTableAllHTML,   true);
+    }
+    if (!showMissedTableHTML) {
+        adapter.setState('history.missedTableHTML', "deactivated",         true);
+    } else {
+        adapter.setState('history.missedTableHTML', headlineTableMissedHTML,   true);
+    }
+    if (!showMissedTableJSON)     adapter.setState('history.missedTableJSON',   "deactivated", true);
+    if (!showCallmonitor) {
+        adapter.setState('callmonitor.connect', "deactivated", true);
+        adapter.setState('callmonitor.ring', "deactivated", true);
+        adapter.setState('callmonitor.call', "deactivated", true);
+        adapter.setState('callmonitor.all', "deactivated", true);
+    } else {
+        adapter.setState('callmonitor.connect', "", true);
+        adapter.setState('callmonitor.ring', "", true);
+        adapter.setState('callmonitor.call', "", true);
+        adapter.setState('callmonitor.all', "", true);
+    }
+
+
+}
 
 
 
@@ -1017,83 +1128,7 @@ function connectToFritzbox(host) {
 function main() {
     adapter.log.debug("< main >");
 
-    // vorhandene Werte aus den ioBroker Objekte des Fritzbox Adapters rauslesen und übernehmen
-    adapter.getState('calls.missedCount', function (err, state) {
-        if (!err && state) {
-            objMissedCount = (state.val);
-            missedCount = (state.val);
-        }
-    });
-    // vorhandene Werte aus den ioBroker Objekte des Fritzbox Adapters rauslesen und übernehmen
-    adapter.getState('calls.missedDateReset', function (err, state) {
-        if (!err && state) {
-//            adapter.log.debug("(!err && state) state.val: " + state.val);
-        }
-        if (!err && !state) {
-//            adapter.log.debug("(!err && !state) state.val: " + state.val);
-            adapter.setState('calls.missedDateReset',         dateNow(),          true);
-        }
-        });
-
-    if (adapter.config.showHeadline) {
-        headlineTableAllTxt = headlineAllTxt();
-        headlineTableAllHTML = headlineAllHTML();
-        headlineTableMissedHTML = headlineMissedHTML();
-    } else {
-        headlineTableAllTxt = "";
-        headlineTableAllHTML = "";
-        headlineTableMissedHTML = "";
-    }
-
-
-    // config aus der Adapter Admin-Webseite übernehmen
-    configCC                    = adapter.config.cc;    // "49",            // eigene Landesvorwahl ohne führende 0
-    configAC                    = adapter.config.ac;    // "211",           // eigene Ortsvorwahl ohne führende 0
-    configUnknownNumber         = numberFormat(adapter.config.unknownNumber, adapter.config.unknownNumber.length); // Leerzeichen gegen utf-8 nbsp ersetzen
-    configNumberLength          = adapter.config.numberLength;
-    if (configNumberLength < 4) {
-        adapter.log.warn("Rufnummernlänge zu klein gewählt, geändert von " + configNumberLength + " auf 4");
-        configNumberLength = 4;
-    }
-    if (configNumberLength > 30) {
-        adapter.log.warn("Rufnummernlänge zu groß gewählt, geändert von " + configNumberLength + " auf 30");
-        configNumberLength = 30;
-    }
-
-    configExternalLink          = adapter.config.externalLink;
-    configShowHeadline          = adapter.config.showHeadline;
-
-    showHistoryAllTableTxt      = adapter.config.showHistoryAllTableTxt;
-    showHistoryAllTableHTML     = adapter.config.showHistoryAllTableHTML;
-    showHistoryAllTableJSON     = adapter.config.showHistoryAllTableJSON;
-    showCallmonitor             = adapter.config.showCallmonitor;
-    showMissedTableHTML         = adapter.config.showMissedTableHTML;
-    showMissedTableJSON         = adapter.config.showMissedTableJSON;
-    if (!showHistoryAllTableTxt) {
-        adapter.setState('history.allTableTxt',     "deactivated",          true);
-    } else {
-        adapter.setState('history.allTableTxt',     headlineTableAllTxt,    true);
-    }
-    if (!showHistoryAllTableJSON) {
-        adapter.setState('history.allTableJSON',    "deactivated",          true);
-    }
-    if (!showHistoryAllTableHTML) {
-        adapter.setState('history.allTableHTML',    "deactivated",             true);
-    } else {
-        adapter.setState('history.allTableHTML',    headlineTableAllHTML,   true);
-    }
-    if (!showMissedTableHTML) {
-        adapter.setState('history.missedTableHTML', "deactivated",          true);
-    } else {
-        adapter.setState('history.missedTableHTML', headlineTableMissedHTML,   true);
-    }
-    if (!showMissedTableJSON)     adapter.setState('history.missedTableJSON',   "deactivated", true);
-    if (!showCallmonitor) {
-        adapter.setState('callmonitor.connect', "deactivated", true);
-        adapter.setState('callmonitor.ring', "deactivated", true);
-        adapter.setState('callmonitor.call', "deactivated", true);
-        adapter.setState('callmonitor.all', "deactivated", true);
-    }
+    initVars();
 
     // Zustandsänderungen innerhalb der ioBroker fritzbox-Adapterobjekte überwachen
 //    adapter.subscribeForeignStates("node-red.0.fritzbox.*); // Beispiel um Datenpunkte anderer Adapter zu überwachen
