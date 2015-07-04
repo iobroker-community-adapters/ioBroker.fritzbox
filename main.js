@@ -128,6 +128,7 @@ adapter.on('ready', function () {
 // hier wird der Adapter beendet
 adapter.on('unload', function () {
     adapter.log.debug('adapter.on-unload: << UNLOAD >>');
+    clearRealtimeVars();
 });
 
 
@@ -497,6 +498,7 @@ function clearRealtimeVars() {
 
 
 function adapterSetOnChange (object, value) {
+    // ioBroker Objekte schreiben aber nur, wenn der Wert geändert wurde
     adapter.getState(object, function (err, state) {
         if (!err && state) {
             if (state.val != value) {
@@ -511,9 +513,11 @@ function adapterSetOnUndefined (object, value) {
     adapter.getState(object, function (err, state) {
         if (!err && state) {
             var newValue = state.val || value;
-            adapter.setState(object, newValue , true);
+            if (state.val == newValue) return; // vorhandene Werte nicht noch einmal schreiben
+            adapter.setState(object, newValue, true);
+//            adapter.log.info("Objekt: " + object + " Wert: " + state.val + " -> " + newValue + "  INIT: " +value);
         } else {
-            adapter.setState(object, value , true);
+            adapter.setState(object, value, true);
         }
     });
 }
@@ -1128,7 +1132,7 @@ function connectToFritzbox(host) {
 function main() {
     adapter.log.debug("< main >");
 
-    initVars();
+    initVars(); // ioBroker Objekte übernehmen wenn vorhanden, sonst init
 
     // Zustandsänderungen innerhalb der ioBroker fritzbox-Adapterobjekte überwachen
 //    adapter.subscribeForeignStates("node-red.0.fritzbox.*); // Beispiel um Datenpunkte anderer Adapter zu überwachen
