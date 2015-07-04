@@ -20,17 +20,10 @@
  *
  */
 
-
-// TODO Checkboxen Webadmin sind nicht richtig ausgefüllt und lassen sich nur speichern, wenn man etwas anderes ändert
 // TODO Wie können auf der Adminseite die Werte vor Änderung (onChange) kontrolliert und ggf. markiert werden?
 // TODO Leistungsmerkmale: (2) Fritzbox Telefonbuch importieren und verarbeiten
-// TODO package.json richtige Werte eintragen (Version, Module, usw.)
 // TODO Anruferlisten persistent realisieren (nicht die erstellten Tabellen, sonder die die Arrays mit den Listeneinträgen (historyListAllHtml, historyListAllTxt, historyListAllJson, historyListMissedHtml)
 //      -> ggf. Redesign. Nicht verschiedene Listen, sondern eine JSON und die Funktionen so ändern, dass makeList auf diese eine JSON aufbaut
-
-// jslint & jshint (ein Fork von jslint) sind Tools, die den Code auf Codeconventions prüft. In der IDE Webstorm sind beide Prüfmethoden schon enthalten (Konfiguration).
-/* jshint -W097 */// jshint strict:false
-/*jslint node: true */
 
 "use strict";   // verlangt saubereren Code (nach ECMAScript 5) - EMPFEHLUNG:  beim Programmieren rein, im fertigen Programm raus
 
@@ -40,7 +33,7 @@ var utils =  require(__dirname + '/lib/utils'); // Get common adapter utils
 var xml2js = require('xml2js'); // node-Modul um xml Strukturen in JSON umzuwandeln. Eine Beschreibung: http://www.flyacts.com/blog/nodejs-xml-daten-verarbeiten/
                                 // Bei der Entwicklung ins iobroker.frittbox Verzeichnis installieren. Als Admin, d.h. beim Mac mit sudo:
                                 // sudo npm install xml2js --save
-                                // mit dem --save wird es inss packet.json geschrieben
+                                // mit dem --save wird es ins packet.json geschrieben
                                 // vorbereitet, um das Telefonbuch der Fritzbox zu verarbeiten (Export im XML Format)
 var net =    require('net');    // node-Modul für die tcp/ip Kommunikation
                                 // ist schon in node.js enthalten
@@ -49,8 +42,6 @@ var net =    require('net');    // node-Modul für die tcp/ip Kommunikation
 var adapter = utils.adapter('fritzbox');
 
 var call = [];
-
-
 
 // Werte werden über die Adminseite gesetzt
 var // adapter.config.fritzboxAddress // ip-Adresse der Fritzbox
@@ -76,22 +67,21 @@ var ipCallgen                   = "172.16.130.122",     // ip-Adresse des Callge
 
 
 
-
-// Variablen, die sich nur in bestimmten Rufzuständen ändern und bei anderen Zuständen Ihren Wert behalten. Daher global.
-var ringLastNumber             = ringLastNumber             || "",
-    ringLastNumberTel          = ringLastNumberTel          || "",
-    ringLastMissedNumber       = ringLastMissedNumber       || "",
-    ringLastMissedNumberTel    = ringLastMissedNumberTel    || "",
-//    ringActualNumber           = ringActualNumber           || "",
-//    ring                       = ring                       || false,
-    callLastNumber             = callLastNumber             || "",
-    callLastNumberTel          = callLastNumberTel          || "",
-//    connectNumber              = connectNumber              || "",
-    missedCount                = missedCount                || 0,
+var ringLastNumber             = "",
+    ringLastNumberTel          = "",
+    ringLastMissedNumber       = "",
+    ringLastMissedNumberTel    = "",
+//    ringActualNumber           = "",
+//    ring                       = false,
+    callLastNumber             = "",
+    callLastNumberTel          = "",
+//    connectNumber              = "",
+    missedCount                = 0,
     historyListAllHtml         = [],
     historyListAllTxt          = [],
     historyListAllJson         = [],
     historyListMissedHtml      = [];
+
 
 var objMissedCount = 0;
 
@@ -149,7 +139,7 @@ adapter.on('stateChange', function (id, state) {
         // adapter.log.debug("state.val: " + state.val);
         if (state.val == 0 || state.val == "0 ") {
             adapter.setState('calls.missedDateReset',         dateNow(),          true);
-            adapter.log.debug ("missed calls: counter zurückgesetzt " + dateNow());
+            adapter.log.debug("missed calls: counter zurückgesetzt " + dateNow());
         }
     }
 });
@@ -158,13 +148,13 @@ adapter.on('stateChange', function (id, state) {
 
 function fritzboxDateEpoch(date) {
     date = date || "";
-    var year    = "20" + date.substring(6,8); // Achtung: ab dem Jahr 2100 erzeugt die Funktion ein falsches Datum ;-)
-    var month   = parseInt(date.substring(3,5))-1;
-    var day     = date.substring(0,2);
-    var hour    = date.substring(9,11);
-    var minute  = date.substring(12,14);
-    var second  = date.substring(15,17);
-    var time    = new Date(year,month,day,hour,minute,second);
+    var year    = "20" + date.substring(6, 8), // Achtung: ab dem Jahr 2100 erzeugt die Funktion ein falsches Datum ;-)
+        month   = parseInt(date.substring(3, 5)) - 1,
+        day     = date.substring(0, 2),
+        hour    = date.substring(9, 11),
+        minute  = date.substring(12, 14),
+        second  = date.substring(15, 17),
+        time    = new Date(year, month, day, hour, minute, second);
     return Date.parse(time); // fritzbox message date in epoch
 }
 
@@ -174,36 +164,36 @@ function dateEpochNow() {
     return now;
 }
 
-function dateNow () {
+function dateNow() {
     var date     = new Date(dateEpochNow()),
         year     = date.getFullYear(),
-        month    = date.getMonth()+1,
+        month    = date.getMonth() + 1,
         day      = date.getDate(),
         hour     = date.getHours(),
         minute   = date.getMinutes(),
         second   = date.getSeconds();
-    if(month.toString().length == 1) {
-        month  = '0'+ month;
+    if (month.toString().length == 1) {
+        month  = '0' + month;
     }
-    if(day.toString().length == 1) {
+    if (day.toString().length == 1) {
         day = '0' + day;
     }
-    if(hour.toString().length == 1) {
-        hour = '0'+hour;
+    if (hour.toString().length == 1) {
+        hour = '0' + hour;
     }
-    if(minute.toString().length == 1) {
-        minute = '0'+minute;
+    if (minute.toString().length == 1) {
+        minute = '0' + minute;
     }
-    if(second.toString().length == 1) {
-        second = '0'+second;
+    if (second.toString().length == 1) {
+        second = '0' + second;
     }
     return day + "." + month + "." + year + " " + hour + ":" + minute;
 }
 
 
-function fill(n,str) {  // liefere Anzahl n nbsp in utf-8, wenn str nicht angegeben oder n-mal str
+function fill(n, str) {  // liefere Anzahl n nbsp in utf-8, wenn str nicht angegeben oder n-mal str
     var space = "";
-    for(var i = 0; i < n; ++i) {
+    for (var i = 0; i < n; ++i) {
         space += ((!str) ? " " : str); // &nbsp; als utf-8 Code (Mac: alt+Leerzeichen) TODO: wie kann das nbsp-Leerzeichen in Wbstorm sichtbar gemacht werden
     }
     return space;
@@ -211,7 +201,7 @@ function fill(n,str) {  // liefere Anzahl n nbsp in utf-8, wenn str nicht angege
 
 function dynamicSort(property) {
     var sortOrder = 1;
-    if(property[0] === "-") {
+    if (property[0] === "-") {
         sortOrder = -1;
         property = property.substr(1);
     }
@@ -392,7 +382,7 @@ function makeList(list,line,headline,howManyLines,showHeadline) {
 
 
 function callmonitor(list) {
-// Liste aktueller Anrufe (RING)
+// Liste aktueller Anrufe (RING, CONNECT und CALL)
     var txt = '';
     for (var i = 0; i < list.length; i++) {
         txt += fritzboxDateToTableDate(call[list[i].id].dateStart) + " " + call[list[i].id].externalNumberForm;
@@ -501,6 +491,19 @@ function clearRealtimeVars() {
 }
 
 
+function adapterSetOnChange (object, value) {
+    adapter.getState(object, function (err, state) {
+        if (!err) {
+            if (state.val != value) {
+                adapter.setState(object, value , true);
+            }
+        }
+    });
+}
+
+
+
+
 
 
 
@@ -520,13 +523,6 @@ function parseData(message) {
         ring                = null,
         ringActualNumber    = "";
 
-    /*
-// Liste der aktiven RINGs, CALLs, CONNECTs
-    var listRing            = [],
-        listCall            = [],
-        listConnect         = [],
-        listAll             = [];
-*/
     var ringActualNumbers   = [],
         connectNumbers      = [],
         connectNumber       = "";
@@ -539,7 +535,7 @@ function parseData(message) {
 
 
 
-    // ###########  Auswertung und Audbau der Anruferinformationen aus der Fritzbox ###########
+    // ###########  Auswertung und Aufbau der Anruferinformationen aus der Fritzbox ###########
 
     // für alle Anruftypen identisch
     call[id].date            = obj[0];    // 01.07.15 12:34:56 - dd.mm.yy hh:mm:ss
@@ -572,7 +568,7 @@ function parseData(message) {
         call[id].callSymbol         = " <- "; // utf-8 nbsp
         call[id].callSymbolColor    = cssBlack + call[id].callSymbol + cssEnd;
     }
-    else // Incoming RING
+    else // Incoming (RING)
     if (call[id].type == "RING") {
         call[id].extensionLine      = "";        // used extension line
         call[id].ownNumber          = obj[4];    // called number - used own number
@@ -751,7 +747,7 @@ function parseData(message) {
     listAll.sort(dynamicSort("-dateStartEpoch"));       // Liste sortieren: jüngster Eintrag oben
 
 
-// aktuellste Anrufernummer wird als aktueller und neuster Anrufer (Ring) gespeichert (es kann noch mehr aktive RINGs geben, diese werden in "ringActualNumbers" gespeichert)
+// aktuellste Anrufernummer wird als aktueller und neuester Anrufer (Ring) gespeichert (es kann noch mehr aktive RINGs geben, diese werden in "ringActualNumbers" gespeichert)
     if (listRing[0] != null) {
         ringActualNumber = call[listRing[0].id].externalNumber;
         ring = true;
@@ -779,10 +775,15 @@ function parseData(message) {
     if (call[id].type == "DISCONNECT") {
         if (call[id].direction == "in") {
             ringLastNumber    = call[id].externalNumber;        // letzter Anrufer
+            adapter.setState('calls.ringLastNumber',                     ringLastNumber ,            true);
             ringLastNumberTel = call[id].externalTelLinkCenter; // letzter Anrufer als wählbarer Link
+            adapter.setState('calls.telLinks.ringLastNumberTel',         ringLastNumberTel,          true);
+
             if (!call[id].connect) { // letzter Anrufer, der verpasst wurde
                 ringLastMissedNumber = call[id].externalNumber;
+                adapter.setState('calls.ringLastMissedNumber',               ringLastMissedNumber ,      true);
                 ringLastMissedNumberTel = call[id].externalTelLinkCenter;
+                adapter.setState('calls.telLinks.ringLastMissedNumberTel',   ringLastMissedNumberTel ,   true);
             }
             // letzter verpasste Anruf wird hochgezählt, Zähler verpasste Anrufe (bis max. 999)
             // ioBroker Datenpunkt kann beschrieben und über ioBrkoer zurückgesetzt werden
@@ -794,11 +795,14 @@ function parseData(message) {
         } else
         if (call[id].direction == "out") {
             callLastNumber = call[id].externalNumber;
+            adapter.setState('calls.callLastNumber',                     callLastNumber ,            true);
             callLastNumberTel = call[id].externalTelLinkCenter;
+            adapter.setState('calls.telLinks.callLastNumberTel',         callLastNumberTel,          true);
         } else {
             adapter.log.warn ("Adapter starts during call. Some values are unknown.");
         }
-    }
+    } // END DISCONNECT
+
 
     // aktuelle Rufnummeren der gerade laufenden Anrufe (RING)
     for (var i = 0; i < listRing.length; i++){
@@ -811,39 +815,27 @@ function parseData(message) {
     }
 
 
-
+    // Daten, die bei jeder Meldung aktualisiert werden
     adapter.setState('system.deltaTime',                         call[id].deltaTime ,        true);
     adapter.setState('system.deltaTimeOK',                       call[id].deltaTimeOK ,      true);
     if (!call[id].deltaTimeOK) adapter.log.warn("delta time between system and fritzbox: " + call[id].deltaTime + " sec");
 
-    adapter.setState('calls.ringLastNumber',                     ringLastNumber ,            true);
-    adapter.setState('calls.ringLastMissedNumber',               ringLastMissedNumber ,      true);
-
-    adapter.setState('calls.callLastNumber',                     callLastNumber ,            true);
-
     //Auf Änderungen im ioBroker Objekt reagieren und die lokale Variable auch ändern.
-    if (objMissedCount !== missedCount) { // Zähler nur schreiben, wenn er sich veränder hat (wg. Überwachung)
+    if (objMissedCount !== missedCount) { // Zähler nur schreiben, wenn er sich verändert hat (wg. Traffic Überwachung des Objekts auf Änderung)
         adapter.setState('calls.missedCount',                        missedCount ,               true);
     }
     // adapter.log.debug ("objMissedCount: " + objMissedCount + "   missedCount: " + missedCount);
 
     //Realtime Daten
-    adapter.setState('calls.ring',                               ring ,                      true);
-    adapter.setState('calls.ringActualNumber',                   ringActualNumber ,          true);
-    adapter.setState('calls.ringActualNumbers',                  ringActualNumbers.join() ,  true);
-    adapter.setState('calls.connectNumber',                      connectNumber,              true);
-    adapter.setState('calls.connectNumbers',                     connectNumbers.join() ,     true);
-    adapter.setState('calls.counterActualCalls.ringCount',       ringCount ,                 true);
-    adapter.setState('calls.counterActualCalls.callCount',       callCount ,                 true);
-    adapter.setState('calls.counterActualCalls.connectCount',    connectCount ,              true);
-    adapter.setState('calls.counterActualCalls.allActiveCount',  allActiveCount ,            true);
-
-
-    adapter.setState('calls.telLinks.ringLastNumberTel',         ringLastNumberTel,          true);
-    adapter.setState('calls.telLinks.ringLastMissedNumberTel',   ringLastMissedNumberTel ,   true);
-    adapter.setState('calls.telLinks.callLastNumberTel',         callLastNumberTel,          true);
-
-
+    adapterSetOnChange ("calls.ring" , ring);
+    adapterSetOnChange ("calls.ringActualNumber" , ringActualNumber);
+    adapterSetOnChange ("calls.ringActualNumbers" , ringActualNumbers.join());
+    adapterSetOnChange ("calls.connectNumber" , connectNumber);
+    adapterSetOnChange ("calls.connectNumbers" , connectNumbers.join());
+    adapterSetOnChange ("calls.counterActualCalls.ringCount" , ringCount);
+    adapterSetOnChange ("calls.counterActualCalls.callCount" , callCount);
+    adapterSetOnChange ("calls.counterActualCalls.connectCount" , connectCount);
+    adapterSetOnChange ("calls.counterActualCalls.allActiveCount" , allActiveCount);
 
     // History / Anruferlisten
     if (call[id].type == "DISCONNECT") {
@@ -856,7 +848,6 @@ function parseData(message) {
         if (!configExternalLink) {
             externalNumber  = call[id].externalNumberForm;
         }
-
 
         // Einzelne Datenzeile Anruferliste gesamt (txt)
         var lineHistoryAllTxt =
@@ -903,8 +894,6 @@ function parseData(message) {
         }
 
 
-
-
         if (showHistoryAllTableHTML) {
             // Tabelle html erstellen
             var historyListAllHtmlStr = makeList(historyListAllHtml,lineHistoryAllHtml,headlineTableAllHTML,configHistoryAllLines, configShowHeadline);
@@ -935,7 +924,6 @@ function parseData(message) {
             adapter.setState('history.allTableJSON',    JSON.stringify(historyListAllJson), true);
         }
 
-
 //        adapter.log.debug("historyListAllJson Obj " +   JSON.stringify(historyListAllJson[0]) );  // erste Zeile der JSON ANruferliste im Log
 //        adapter.log.debug("history all JSON Items: " +  historyListAllJson.length );              // Anzahl der JSON Elemente in der Anruferliste
 
@@ -944,9 +932,7 @@ function parseData(message) {
         adapter.setState('cdr.html',                    lineHistoryAllHtml,         true);
         adapter.setState('cdr.txt',                     lineHistoryAllTxt,          true);
 
-
-
-    }
+    } // End DSICONNECT
 
 
     if (showCallmonitor) {
@@ -965,9 +951,12 @@ function parseData(message) {
                 for (var i = 0; i < listRing.length; i++) {
                     call[listRing[i].id].durationRingSecs = dateEpochNow() / 1000 - call[listRing[i].id].dateEpochNow / 1000;
                 }
-                adapter.setState('callmonitor.connect', callmonitor(listConnect), true);
-                adapter.setState('callmonitor.ring', callmonitor(listRing), true);
-                adapter.setState('callmonitor.all', callmonitorAll(listAll), true);
+                adapterSetOnChange ("callmonitor.connect" , callmonitor(listConnect));
+                adapterSetOnChange ("callmonitor.ring" , callmonitor(listRing));
+                adapterSetOnChange ("callmonitor.all" , callmonitorAll(listAll));
+//                adapter.setState('callmonitor.connect', callmonitor(listConnect), true);
+//                adapter.setState('callmonitor.ring', callmonitor(listRing), true);
+//                adapter.setState('callmonitor.all', callmonitorAll(listAll), true);
 
             }, 1000);
         } else if (!allActiveCount && intervalRunningCall) {
@@ -976,14 +965,15 @@ function parseData(message) {
             intervalRunningCall = null;
         }
 
-        adapter.setState('callmonitor.call', callmonitor(listCall), true);
+        adapterSetOnChange ("callmonitor.call" , callmonitor(listCall));
+//        adapter.setState('callmonitor.call', callmonitor(listCall), true);
 
         // wenn der Interval beendet wird, müssen die letzet Anrufe im Callmonitor auch bereinigt werden
         // die Callmonitorlisten werden zusätzlich zum Intervall mit jeder Fritzbox-Meldung aktualisiert
         // nur im else-Zweig im Intervall ist dies nicht ausreichend, wg. der Asynchonität
-        adapter.setState('callmonitor.connect', callmonitor(listConnect), true);
-        adapter.setState('callmonitor.ring', callmonitor(listRing), true);
-        adapter.setState('callmonitor.all', callmonitorAll(listAll), true);
+        adapterSetOnChange ("callmonitor.connect" , callmonitor(listConnect));
+        adapterSetOnChange ("callmonitor.ring" , callmonitor(listRing));
+        adapterSetOnChange ("callmonitor.all" , callmonitorAll(listAll));
     }
 
 
