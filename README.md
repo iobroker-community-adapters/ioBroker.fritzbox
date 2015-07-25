@@ -91,9 +91,11 @@ Enthält u.a.:
 
 ### Fritzbox Widget Live-Anrufmonitor
 
+Zeigt alle aktiven Gespräche, Anrufe (klingeln) und gehende Rufaufbauten an. Bei den aktiven Gesprächen und den Anrufen wird die Dauer eingeblendet (sekündlich aktualisiert).
+
 ![Fritzbox Widget Live-Anrufmonitor](doc/iobroker_fritzbox_anrufmonitor.png)
 
-
+[ioBroker Widget Live-Anrufmonitor](widgets/iobroker_fritzbox_anrufmonitor.json)
 
 
 ## todo
