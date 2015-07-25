@@ -95,7 +95,15 @@ Zeigt alle aktiven Gespräche, Anrufe (klingeln) und gehende Rufaufbauten an. Be
 
 ![Fritzbox Widget Live-Anrufmonitor](doc/iobroker_fritzbox_anrufmonitor.png)
 
-[ioBroker Widget Live-Anrufmonitor](widgets/iobroker_fritzbox_anrufmonitor.json)
+[ioBroker Widget Live-Anrufmonitor zum Import in VIS](widgets/iobroker_fritzbox_anrufmonitor.json)
+
+### Fritzbox Widget Anruferliste mit dem "basic - HTML Widget"
+
+Die Spalteninhalte und die dazugehörigen Überschriften können mit dem Widget frei gewählt werden. Damit sind auch Überschriften in anderen Sprachen möglich.
+
+![Fritzbox Widget Anruferliste mit dem basic - HTML Widget](doc/iobroker_fritzbox_html_table.png)
+
+[ioBroker Widget Anruferliste mit dem basic - HTML Widget zum Import in VIS](doc/iobroker_fritzbox_html_table.json)
 
 
 ## todo
