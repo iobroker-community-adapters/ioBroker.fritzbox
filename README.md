@@ -107,6 +107,24 @@ Die Spalteninhalte und die dazugehörigen Überschriften können mit dem Widget 
 [ioBroker Widget Anruferliste mit dem basic - HTML Widget zum Import in VIS](doc/iobroker_fritzbox_html_table.json)
 
 
+### Fritzbox Widgets Informationen zum aktuellen Anrufer, sowie vergangenen Anrufern
+
+Die Informationswidgets sind Beispiele für einzelne Datenpunkte, die der Fritzbox-Adapter generiert.
+
+Es exestiert jeweils ein Datenpunkt mit der Rufnummer, wie sie von der Fritzbox ausgegeben wurde (a) und ein Datenpunkt mit der Rufnummer umgewandelt als wählbarer Link (b) (es wird z.B. die Rufnummer 020147114711 angezeigt und als Link mit tel:+4920147114711 versehen). Die Tel-Links machen z.B. für VIS Oberflächen auf Smartphones Sinn, um einen verpassten Anruf direkt per Fingertipp zurückrufen zu können.
+
+Beispielwidgets:
+* (1) letzter Anrufer 
+* (2) aktueller Anrufer (wird für die Dauer des Klingelns angezeigt) 
+* (3) letzter Anrufer, der verpasst (nicht angenommen wurden)
+* (4) Wahlwiederholung: zuletzt gewählte Rufnummer
+
+![Fritzbox Widget Informationen zu den letzten Anrufen](doc/iobroker_fritzbox_letzte_telefonate.png)
+
+[ioBroker Widget Informationen zu den letzten Anrufen](doc/iobroker_fritzbox_letzte_telefonate.json)
+
+
+
 ## todo
 * Doku der Datenpunkte
 * Import des xml Telefonbuch der Fritzbox
