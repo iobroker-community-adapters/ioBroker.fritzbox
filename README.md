@@ -70,6 +70,12 @@ Unter **fritzbox.x.** legt der Adapter folgende Channel und Objekte an:
 * system.deltaTimeOK                      (true/false Deltazeit zwischen System und Fritzbox in der Tolereanz)
 
 
+## Beispiel-Widgets
+
+![Fritzbox Widget groß](doc/iobroker_fritzbox_widget_gross.png)
+
+
+
 ## todo
 * Doku der Datenpunkte
 * Import des xml Telefonbuch der Fritzbox
