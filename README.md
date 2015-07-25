@@ -123,7 +123,44 @@ Beispielwidgets:
 
 [ioBroker Widget Informationen zu den letzten Anrufen](doc/iobroker_fritzbox_letzte_telefonate.json)
 
+## JSON Datenformat für JSON CDR und JSON Anruferliste
 
+'''
+{
+"date":"25.07.15 16:40:21",
+"dateEpoch":1437835221000,
+"dateEpochNow":1437835221000,
+"deltaTime":0,
+"deltaTimeOK":true,
+"type":"DISCONNECT",
+"id":"1",
+"extensionLine":"11",
+"ownNumber":"021147114711",
+"externalNumber":"051112345678",
+"lineType":"POTS",
+"durationSecs":"55",
+"durationForm":"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;55",
+"durationSecs2":"55",
+"durationRingSecs":"",
+"connect":true,
+"direction":"out",
+"dateStartEpoch":1437835144000,
+"dateConnEpoch":1437835167000,
+"dateEndEpoch":1437835221000,
+"dateStart":"25.07.15 16:39:04",
+"dateConn":"25.07.15 16:39:27",
+"dateEnd":"25.07.15 16:40:21",
+"callSymbol":"<<-&nbsp;",
+"callSymbolColor":"<span style="\" color:green\""=""><b><<-&nbsp;</b></span>",
+"unknownNumber":false,
+"ownNumberForm":"021147114711&nbsp;&nbsp;&nbsp;",
+"externalNumberForm":"051112345678&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;",
+"ownNumberE164":"+4921147114711",
+"externalE164":"+4951112345678",
+"externalTelLink":"<a style="\" text-decoration:"="" none;\"="" href="\" tel:+4951112345678\""="">051112345678&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>",
+"externalTelLinkCenter":"<a style="\" text-decoration:"="" none;\"="" href="\" tel:+4951112345678\""="">051112345678</a>"
+}
+'''
 
 ## todo
 * Doku der Datenpunkte
