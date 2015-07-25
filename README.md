@@ -125,7 +125,7 @@ Beispielwidgets:
 
 ## JSON Datenformat für JSON CDR und JSON Anruferliste
 
-'''
+```
 {
 "date":"25.07.15 16:40:21",
 "dateEpoch":1437835221000,
@@ -160,7 +160,7 @@ Beispielwidgets:
 "externalTelLink":"<a style="\" text-decoration:"="" none;\"="" href="\" tel:+4951112345678\""="">051112345678&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>",
 "externalTelLinkCenter":"<a style="\" text-decoration:"="" none;\"="" href="\" tel:+4951112345678\""="">051112345678</a>"
 }
-'''
+```
 
 ## todo
 * Doku der Datenpunkte
