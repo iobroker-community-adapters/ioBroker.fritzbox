@@ -13,7 +13,6 @@
     }
   ],
   "homepage": "https://github.com/ruhr70/ioBroker.fritzbox",
-  "readme": "https://github.com/ruhr70/ioBroker.fritzbox/blob/master/README.md",
   "license": "MIT",
   "keywords": ["ioBroker", "fritzbox"],
   "repository": {
