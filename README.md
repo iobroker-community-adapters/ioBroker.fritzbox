@@ -104,7 +104,7 @@ Die Spalteninhalte und die dazugehörigen Überschriften können mit dem Widget 
 
 ![Fritzbox Widget Anruferliste mit dem basic - HTML Widget](doc/iobroker_fritzbox_html_table.png)
 
-[ioBroker Widget Anruferliste mit dem basic - HTML Widget zum Import in VIS](doc/iobroker_fritzbox_html_table.json)
+[ioBroker Widget Anruferliste mit dem basic - HTML Widget zum Import in VIS](widgets/iobroker_fritzbox_html_table.json)
 
 
 ### Fritzbox Widgets Informationen zum aktuellen Anrufer, sowie vergangenen Anrufern
@@ -121,7 +121,7 @@ Beispielwidgets:
 
 ![Fritzbox Widget Informationen zu den letzten Anrufen](doc/iobroker_fritzbox_letzte_telefonate.png)
 
-[ioBroker Widget Informationen zu den letzten Anrufen](doc/iobroker_fritzbox_letzte_telefonate.json)
+[ioBroker Widget Informationen zu den letzten Anrufen](widgets/iobroker_fritzbox_letzte_telefonate.json)
 
 ## JSON Datenformat für JSON CDR und JSON Anruferliste
 
