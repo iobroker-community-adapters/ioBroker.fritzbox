@@ -4,6 +4,9 @@ ioBroker fritzbox Adapter
 
 
 ## Changelog
+### 0.3.0 (2015-06-26)
+* (UncleSamSwiss) added support for wlan.enabled (using TR-064)
+
 ### 0.2.1 (2015-06-28)
 * (ruhr) more configuration options
 
@@ -68,6 +71,9 @@ Unter **fritzbox.x.** legt der Adapter folgende Channel und Objekte an:
 * **system.                                 (CHANNEL)**
 * system.deltaTime                        (Deltazeit zwischen System und Fritzbox in Sek.)
 * system.deltaTimeOK                      (true/false Deltazeit zwischen System und Fritzbox in der Tolereanz)
+
+* **wlan.                                   (CHANNEL)**
+* wlan.enabled                            (true/false, read & write, Zustand des WLANs, nur verfügbar wenn Passwort konfiguriert ist)
 
 
 ## Beispiel-Widgets
