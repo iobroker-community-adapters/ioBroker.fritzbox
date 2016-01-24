@@ -38,6 +38,8 @@ var xml2js = require('xml2js'); // node-Modul um xml Strukturen in JSON umzuwand
 var net =    require('net');    // node-Modul für die tcp/ip Kommunikation
                                 // ist schon in node.js enthalten
                                 // Beschreibung: https://nodejs.org/api/net.html
+var tr = require("tr-064");     // node-Modul für die Kommunikation via TR-064 mit der FritzBox
+                                // Beschreibung zu TR-064: http://avm.de/service/schnittstellen/
 
 var adapter = utils.adapter('fritzbox');
 
@@ -110,6 +112,9 @@ var listRing            = [],
 // für den 1-Sekundentimer für den Callmonitor
 var intervalRunningCall = null;
 
+// für die TR-064-Abfragen
+var intervalTR046 = null;
+var wlanState = null;
 
 
 
@@ -129,18 +134,38 @@ adapter.on('ready', function () {
 adapter.on('unload', function () {
     adapter.log.debug('adapter.on-unload: << UNLOAD >>');
     clearRealtimeVars();
+    
+    if (intervalRunningCall) {
+        clearInterval(intervalRunningCall);
+        intervalRunningCall = null;
+    }
+    
+    if (intervalTR046) {
+        clearInterval(intervalTR046);
+        intervalTR046 = null;
+    }
 });
 
 
 // is called if a subscribed state changes
 adapter.on('stateChange', function (id, state) {
     // adapter.log.debug('adapter.on-stateChange: << stateChange >>');
-    if (state && (id === adapter.namespace + ".calls.missedCount")) {
+    if (!state) {
+        return;
+    }
+    if (id === adapter.namespace + ".calls.missedCount") {
         // New value of
         // adapter.log.debug("state.val: " + state.val);
         if (state.val == 0 || state.val == "0 ") {
             adapter.setState('calls.missedDateReset',         dateNow(),          true);
             adapter.log.debug("missed calls: counter zurückgesetzt " + dateNow());
+        }
+    }
+    else if (id === adapter.namespace + ".wlan.enabled" && !state.ack) {
+        adapter.log.debug(id + "=" + state.val);
+        if (state.val != wlanState && intervalTR046) {
+            adapter.log.info("Changing WLAN to " + state.val);
+            setWlanEnabled(adapter.config.fritzboxAddress, adapter.config.fritzboxPassword, state.val);
         }
     }
 });
@@ -501,7 +526,7 @@ function adapterSetOnChange (object, value) {
     // ioBroker Objekte schreiben aber nur, wenn der Wert geändert wurde
     adapter.getState(object, function (err, state) {
         if (!err && state) {
-            if (state.val != value) {
+            if (state.val !== value || !state.ack) {
                 adapter.setState(object, value , true);
             }
         }
@@ -614,8 +639,8 @@ function initVars() {
         adapter.setState('callmonitor.call', "", true);
         adapter.setState('callmonitor.all', "", true);
     }
-
-
+    
+    adapter.setState('wlan.enabled', "", true);
 }
 
 
@@ -1097,6 +1122,73 @@ function parseData(message) {
 
 
 
+function handleWLANConfiguration(config) {
+    //console.log(config);
+    adapter.log.debug("WLAN: " + config['NewEnable']);
+    wlanState = config['NewEnable'] == 1;
+    adapterSetOnChange("wlan.enabled", wlanState);
+}
+
+
+
+function connectToTR064(host, password, callback) {
+    var tr064 = new tr.TR064();
+    tr064.initTR064Device(host, 49000, function (err, device) {
+        if (!err) {
+            device.startEncryptedCommunication(function (err, sslDev) {
+                if (!err) {
+                    sslDev.login('dslf-config', password);
+                    callback(sslDev);
+                }
+                else {
+                    adapter.log.warn("TR-064 error: " + err);
+                }
+            });
+        }
+        else {
+            adapter.log.warn("TR-064 error: " + err);
+        }
+    });
+}
+
+
+
+function getWlanConfig(host, password, callback) {
+    connectToTR064(host, password, function (sslDev) {
+        var wlanConfig = sslDev.services["urn:dslforum-org:service:WLANConfiguration:1"];
+        adapter.log.debug("TR-064: calling GetInfo()");
+        wlanConfig.actions.GetInfo(function (err, result) {
+            if (!err) {
+                adapter.log.debug("TR-064: got result from GetInfo()");
+                callback(result);
+            }
+            else {
+                adapter.log.warn("TR-064 error: " + err);
+            }
+        });
+    });
+}
+
+
+
+function setWlanEnabled(host, password, enabled) {
+    connectToTR064(host, password, function (sslDev) {
+        var wlanConfig = sslDev.services["urn:dslforum-org:service:WLANConfiguration:1"];
+        adapter.log.debug("TR-064: calling SetEnable(" + enabled + ")");
+        wlanConfig.actions.SetEnable({ 'NewEnable': enabled ? 1 : 0 }, function (err, result) {
+            if (!err) {
+                adapter.log.debug("TR-064: got result from SetEnable()");
+                //console.log(result);
+            }
+            else {
+                adapter.log.warn("TR-064 error: " + err);
+            }
+        });
+    });
+}
+
+
+
 function connectToFritzbox(host) {
     clearRealtimeVars(); // IP-Verbindung neu: Realtimedaten werden gelöscht, da ggf. nicht konsistent
     var socketBox = net.connect({port: 1012, host: host}, function() {
@@ -1124,7 +1216,21 @@ function connectToFritzbox(host) {
     socketBox.on('end',   restartConnection);
 
     socketBox.on('data',  parseData);   // Daten wurden aus der Fritzbox empfangen und dann in der Funktion parseData verarbeitet
+    
+    if (adapter.config.fritzboxPassword && adapter.config.fritzboxPassword.length) {
+        adapter.log.info("try to connect to TR-064: " + host + ":49000");
 
+        // TR-064-Verbindung bereitstellen (und überprüfen)
+        getWlanConfig(host, adapter.config.fritzboxPassword, function (result) {
+            adapter.log.info("Successfully connected to TR-064");
+            handleWLANConfiguration(result);
+            intervalTR046 = setInterval(function () {
+                getWlanConfig(host, adapter.config.fritzboxPassword, function (result) {
+                    handleWLANConfiguration(result);
+                });
+            }, 10000);
+        });
+    }
 }
 
 
@@ -1137,6 +1243,7 @@ function main() {
     // Zustandsänderungen innerhalb der ioBroker fritzbox-Adapterobjekte überwachen
 //    adapter.subscribeForeignStates("node-red.0.fritzbox.*); // Beispiel um Datenpunkte anderer Adapter zu überwachen
     adapter.subscribeStates('calls.missedCount');
+    adapter.subscribeStates('wlan.enabled');
 
     // TODO: IP-Prüfung bringt nichts, da auch Hostnamen / DNS erlaubt sind & eine Prüfung auf der Admin-Webseite ist sinnvoller
     var validIP = /^((25[0-5]|2[0-4][0-9]|1?[0-9]?[0-9])\.){3}(25[0-5]|2[0-4][0-9]|1?[0-9]?[0-9])$/;

@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "fritzbox",
-    "version": "0.2.1",
+    "version": "0.3.0",
     "title": "fritzbox Adapter",
     "desc": {
       "en": "Adapter monitors the call information from Fritzbox via tcp, Port 1012 (Activate call monitor in the Fritzbox with #96*5*)",
@@ -9,7 +9,8 @@
       "ru": "Драйвер для отображения звонков с Fritzbox через tcp, Port 1012 (Нужно активировать call monitor в Fritzbox с помощью #96*5*)"
     },
     "authors": [
-      "ruhr <ruhr@digheim.de>"
+      "ruhr <ruhr@digheim.de>",
+      "UncleSam <samuel.weibel@gmail.com>"
     ],
     "license": "MIT",
     "platform": "Javascript/Node.js",
@@ -29,6 +30,7 @@
   },
   "native": {
     "fritzboxAddress": "192.168.1.1",
+    "fritzboxPassword": "",
     "cc": "49",
     "ac": "211",
     "unknownNumber": "### ? ###",
@@ -557,6 +559,19 @@
         "read": true,
         "write": false,
         "desc": "history of missed calls as JSON"
+      },
+      "native": {}
+    },
+    {
+      "_id": "wlan.enabled",
+      "type": "state",
+      "common": {
+        "name": "Wi-Fi enabled",
+        "type": "boolean",
+        "role": "switch",
+        "read": true,
+        "write": true,
+        "desc": "Wi-Fi (WLAN) enabled"
       },
       "native": {}
     }
