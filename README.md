@@ -19,9 +19,9 @@ ioBroker fritzbox Adapter
 
 ## Configuration
 
-## Dokumentation der Objekte
+## Dokumentation der Datenpunkte
 
-Unter **fritzbox.x.** legt der Adapter folgende Channel und Objekte an:
+Unter **fritzbox.x.** legt der Adapter folgende Channel und Datenpunkte an:
 
 * message                                 (Meldung aus der Fritzbox)
 
