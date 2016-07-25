@@ -1191,23 +1191,52 @@ function setWlanEnabled(host, user, password, enabled) {
 function getPhonebook(host, user, password) {
     connectToTR064(host, user, password, function (sslDev) {
         var tel = sslDev.services["urn:dslforum-org:service:X_AVM-DE_OnTel:1"];
-        adapter.log.debug("TR-064: calling GetPhonebook()");
+        adapter.log.debug("TR-064: Calling GetPhonebook()");
         tel.actions.GetPhonebook({ NewPhonebookID: '0' }, function (err, ret) {
             if (err) {
-                adapter.log.warn("TR-064: error: " + err);
+                adapter.log.warn("TR-064: Error while calling GetPhonebook(): " + err);
             } else if (ret.NewPhonebookURL && ret.NewPhonebookURL.length > 0) {
                 var url = ret.NewPhonebookURL;
-                adapter.log.debug("TR-064: Got uri: " + url);
+                adapter.log.debug("TR-064: Got phonebook uri: " + url);
                 request(url, function (error, response, body) {
-                    if (response.statusCode == 200) {
-                        adapter.log.debug("TR-064: Got valid content from uri: " + url);
+                    if (!error && response.statusCode == 200) {
+                        adapter.log.debug("TR-064: Got valid phonebook content from, starting to parse ...");
                         var parser = new xml2js.Parser();
                         parser.parseString(body, function (err, result) {
                             if (err) {
-                                adapter.log.warn("TR-064: Parsing error: " + err);
+                                adapter.log.warn("TR-064: Error while parsing phonebook content: " + err);
                             } else {
-                                adapter.log.debug("TR-064: Successfully parsed content from uri: " + url);
-                                adapter.setState('phonebook.tableJSON', JSON.stringify(result), true);
+                                adapter.log.debug("TR-064: Successfully parsed phonebook content, persisting result ...");
+
+                                var phonenumbers = []; // create an empty array for fetching all configured phone numbers from fritzbox
+                                var phonebook = result.phonebooks.phonebook[0];
+                                for (var c = 0; c <= phonebook.contact.length; c++) {
+                                    var contact = phonebook.contact[c];
+                                    if (typeof contact != 'undefined') {
+                                        var entryName = contact.person[0].realName;
+                                        for (var t = 0; t <= contact.telephony.length; t++) {
+                                            var telephony = contact.telephony[t];
+                                            if (typeof telephony != 'undefined') {
+                                                for (var n = 0; n <= telephony.number.length; n++) {
+                                                    var number = telephony.number[n];
+                                                    if (typeof number != 'undefined') {
+                                                        var entryNumber = number._;
+                                                        var entryType = number.$.type;
+                                                        if (entryNumber.startsWith('0') || entryNumber.startsWith('+')) {
+                                                            adapter.log.debug("TR-064: " + c + ": " + entryName + " -> " + entryNumber + " -> " + entryType);
+                                                            phonenumbers.push({
+                                                                key: entryNumber,
+                                                                value: { name: entryName, type: entryType }
+                                                            });
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+
+                                adapter.setState('phonebook.tableJSON', JSON.stringify(phonenumbers), true);
                             }
                         });
                     }
@@ -1258,6 +1287,11 @@ function connectToFritzbox(host) {
                 });
             }, 10000);
         });
+
+        // try to get phonebook with a short delay
+        setTimeout(function () {
+            getPhonebook(host, adapter.config.fritzboxUser, adapter.config.fritzboxPassword);
+        }, 3000)
     }
 }
 
@@ -1282,9 +1316,6 @@ function main() {
     if (adapter.config.fritzboxAddress && adapter.config.fritzboxAddress.length) {
         adapter.log.info("try to connect: " + adapter.config.fritzboxAddress);
         connectToFritzbox(adapter.config.fritzboxAddress);      // fritzbox
-
-        // try to get phonebook once
-        getPhonebook(adapter.config.fritzboxAddress, adapter.config.fritzboxUser, adapter.config.fritzboxPassword)
     } else {
         adapter.log.error("<< ip-Adresse der Fritzbox unbekannt >>");
     }
