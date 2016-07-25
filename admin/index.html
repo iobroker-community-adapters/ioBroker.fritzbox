@@ -31,11 +31,14 @@
         "fritzbox adapter settings": {"en": "Fritzbox Configuration",         "de": "Fritzbox Adapter-Einstellungen",        "ru": "Fritzbox Configuration"},
         "fritzbox ip address":       {"en": "Fritzbox IP-Address",            "de": "IP-Adresse der Fritzbox",               "ru": "Fritzbox IP-Address"},
         "numbers":                   {"en": "Numbers",                        "de": "Rufnummern",                            "ru": "Numbers"},
+        "Username:":                 {"en": "Username:",                      "de": "Benutzer:",                             "ru": "Username:"},
         "IP-Adresse:":               {"en": "IP-Address:",                    "de": "IP-Adresse:",                           "ru": "IP-Address:"},
-        "password":                  {"en": "Password*:",                     "de": "Passwort*:",                            "ru": "Password*:"},
-        "password-disclaimer":       {"en": "* The password is only required if you wish to get additional information (Wi-Fi). Please be aware that the password is stored in plain-text in ioBroker!",
-                                      "de": "* Das Passwort wird nur benötigt, wenn zusätzliche Informationen (WLAN) gewünscht sind. Bitte beachten: das Passwort wird in Klartext in ioBroker gespeichert!",
-                                      "ru": "* The password is only required if you wish to get additional information (Wi-Fi). Please be aware that the password is stored in plain-text in ioBroker!"},
+        "Password:":                 {"en": "Password:",                      "de": "Passwort:",                            "ru": "Password:"},
+        "tr064 disclaimer":          {"en": "The credentials are only required if you wish to get additional functionality (Wi-Fi, phonebook). Please be aware that the password is stored in plain-text in ioBroker!",
+                                      "de": "Die Zugangsdaten werden nur benötigt, wenn zusätzliche Funktionalitäten (WLAN, Telefonbuch) aktiviert werden sollen. Bitte beachten: das Passwort wird in Klartext in ioBroker gespeichert!",
+                                      "ru": "The credentials are only required if you wish to get additional functionality (Wi-Fi, phonebook). Please be aware that the password is stored in plain-text in ioBroker!"},
+        "tr064 enable wlan":         { "en": "Control WLAN",                  "de": "WLAN-Steuerung:",                       "ru": "Control WLAN" },
+        "tr064 enable phonebook":    { "en": "Read phonebook",                "de": "Telefonbuch auslesen:",                 "ru": "Read phonebook" },
         "country code":              {"en": "Country Code:",                  "de": "Landesvorwahl ohne Präfix (z.B.: 49):", "ru": "Country Code:"},
         "area code":                 {"en": "Area Code:",                     "de": "Ortsvorwahl ohne Präfix (z.B.: 211):",  "ru": "Area Code:"},
         "unknown number":            {"en": "Unknown number:",                "de": "Unterdrückte/unbekannte Rufnummer:",    "ru": "Unknown number:"},
@@ -245,12 +248,27 @@
             <td class="translate">IP-Adresse:</td>
             <td><input type="text" id="fritzboxAddress" class="value"/></td>
         </tr>
+    </table>
+    <h4>TR-064</h4>
+    <table>
         <tr>
-            <td class="translate">password</td>
-            <td><input type="password" id="fritzboxPassword" class="value" /></td>
+            <td colspan="2" class="translate">tr064 disclaimer</td>
         </tr>
         <tr>
-            <td colspan="2" class="translate">password-disclaimer</td>
+            <td class="translate">Username:</td>
+            <td><input type="text" id="fritzboxUser" class="value"/></td>
+        </tr>
+        <tr>
+            <td class="translate">Password:</td>
+            <td><input type="password" id="fritzboxPassword" class="value"/></td>
+        </tr>
+        <tr>
+            <td class="translate">tr064 enable wlan</td>
+            <td><input id="enableWlan" type="checkbox" class="value" /></td>
+        </tr>
+        <tr>
+            <td class="translate">tr064 enable phonebook</td>
+            <td><input id="enablePhonebook" type="checkbox" class="value" /></td>
         </tr>
     </table>
     <h4 class="translate">numbers</h4>

@@ -1,7 +1,7 @@
 {
   "name": "iobroker.fritzbox",
   "description": "Verarbeitet die Callmontiorinformationen der AVM Fritzbox.",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "author": {
     "name": "ruhr",
     "email": "ruhr@digheim.de"
@@ -14,6 +14,10 @@
     {
       "name": "UncleSam",
       "email": "samuel.weibel@gmail.com"
+    },
+    {
+      "name": "BasGo",
+      "email": "basgo@gmx.de"
     }
   ],
   "homepage": "https://github.com/ruhr70/ioBroker.fritzbox",
@@ -24,6 +28,7 @@
     "url": "https://github.com/ruhr70/ioBroker.fritzbox"
   },
   "dependencies": {
+    "request": "^2.72.0",
     "xml2js": "^0.4.9",
     "tr-064": "~0.2.0"
   },

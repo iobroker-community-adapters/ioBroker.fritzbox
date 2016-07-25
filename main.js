@@ -41,6 +41,8 @@ var net =    require('net');    // node-Modul für die tcp/ip Kommunikation
 var tr = require("tr-064");     // node-Modul für die Kommunikation via TR-064 mit der FritzBox
                                 // Beschreibung zu TR-064: http://avm.de/service/schnittstellen/
 
+var request = require("request");
+
 var adapter = utils.adapter('fritzbox');
 
 var call = [];
@@ -163,9 +165,9 @@ adapter.on('stateChange', function (id, state) {
     }
     else if (id === adapter.namespace + ".wlan.enabled" && !state.ack) {
         adapter.log.debug(id + "=" + state.val);
-        if (state.val != wlanState && intervalTR046) {
+        if (state.val != wlanState && intervalTR046 && adapter.config.enableWlan) {
             adapter.log.info("Changing WLAN to " + state.val);
-            setWlanEnabled(adapter.config.fritzboxAddress, adapter.config.fritzboxPassword, state.val);
+            setWlanEnabled(adapter.config.fritzboxAddress, adapter.config.fritzboxUser, adapter.config.fritzboxPassword, state.val);
         }
     }
 });
@@ -1131,13 +1133,13 @@ function handleWLANConfiguration(config) {
 
 
 
-function connectToTR064(host, password, callback) {
+function connectToTR064(host, user, password, callback) {
     var tr064 = new tr.TR064();
     tr064.initTR064Device(host, 49000, function (err, device) {
         if (!err) {
             device.startEncryptedCommunication(function (err, sslDev) {
                 if (!err) {
-                    sslDev.login('dslf-config', password);
+                    sslDev.login(user, password);
                     callback(sslDev);
                 }
                 else {
@@ -1153,8 +1155,8 @@ function connectToTR064(host, password, callback) {
 
 
 
-function getWlanConfig(host, password, callback) {
-    connectToTR064(host, password, function (sslDev) {
+function getWlanConfig(host, user, password, callback) {
+    connectToTR064(host, user, password, function (sslDev) {
         var wlanConfig = sslDev.services["urn:dslforum-org:service:WLANConfiguration:1"];
         adapter.log.debug("TR-064: calling GetInfo()");
         wlanConfig.actions.GetInfo(function (err, result) {
@@ -1171,14 +1173,13 @@ function getWlanConfig(host, password, callback) {
 
 
 
-function setWlanEnabled(host, password, enabled) {
-    connectToTR064(host, password, function (sslDev) {
+function setWlanEnabled(host, user, password, enabled) {
+    connectToTR064(host, user, password, function (sslDev) {
         var wlanConfig = sslDev.services["urn:dslforum-org:service:WLANConfiguration:1"];
         adapter.log.debug("TR-064: calling SetEnable(" + enabled + ")");
         wlanConfig.actions.SetEnable({ 'NewEnable': enabled ? 1 : 0 }, function (err, result) {
             if (!err) {
                 adapter.log.debug("TR-064: got result from SetEnable()");
-                //console.log(result);
             }
             else {
                 adapter.log.warn("TR-064 error: " + err);
@@ -1187,7 +1188,62 @@ function setWlanEnabled(host, password, enabled) {
     });
 }
 
+function getPhonebook(host, user, password) {
+    connectToTR064(host, user, password, function (sslDev) {
+        var tel = sslDev.services["urn:dslforum-org:service:X_AVM-DE_OnTel:1"];
+        adapter.log.debug("TR-064: Calling GetPhonebook()");
+        tel.actions.GetPhonebook({ NewPhonebookID: '0' }, function (err, ret) {
+            if (err) {
+                adapter.log.warn("TR-064: Error while calling GetPhonebook(): " + err);
+            } else if (ret.NewPhonebookURL && ret.NewPhonebookURL.length > 0) {
+                var url = ret.NewPhonebookURL;
+                adapter.log.debug("TR-064: Got phonebook uri: " + url);
+                request(url, function (error, response, body) {
+                    if (!error && response.statusCode == 200) {
+                        adapter.log.debug("TR-064: Got valid phonebook content from, starting to parse ...");
+                        var parser = new xml2js.Parser();
+                        parser.parseString(body, function (err, result) {
+                            if (err) {
+                                adapter.log.warn("TR-064: Error while parsing phonebook content: " + err);
+                            } else {
+                                adapter.log.debug("TR-064: Successfully parsed phonebook content, analyzing result ...");
+                                var phonenumbers = []; // create an empty array for fetching all configured phone numbers from fritzbox
+                                var phonebook = result.phonebooks.phonebook[0];
+                                for (var c = 0; c <= phonebook.contact.length; c++) {
+                                    var contact = phonebook.contact[c];
+                                    if (typeof contact != 'undefined') {
+                                        var entryName = contact.person[0].realName[0];
+                                        for (var t = 0; t <= contact.telephony.length; t++) {
+                                            var telephony = contact.telephony[t];
+                                            if (typeof telephony != 'undefined') {
+                                                for (var n = 0; n <= telephony.number.length; n++) {
+                                                    var number = telephony.number[n];
+                                                    if (typeof number != 'undefined') {
+                                                        var entryNumber = number._;
+                                                        var entryType = number.$.type;
+                                                        if (entryNumber.startsWith('0') || entryNumber.startsWith('+')) {
+                                                            phonenumbers.push({
+                                                                key: entryNumber,
+                                                                value: { name: entryName, type: entryType }
+                                                            });
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
 
+                                adapter.setState('phonebook.tableJSON', JSON.stringify(phonenumbers), true);
+                                adapter.log.debug("TR-064: Successfully analyzed phonebook results");
+                            }
+                        });
+                    }
+                });
+            }
+        });
+    });
+}
 
 function connectToFritzbox(host) {
     clearRealtimeVars(); // IP-Verbindung neu: Realtimedaten werden gelöscht, da ggf. nicht konsistent
@@ -1217,19 +1273,26 @@ function connectToFritzbox(host) {
 
     socketBox.on('data',  parseData);   // Daten wurden aus der Fritzbox empfangen und dann in der Funktion parseData verarbeitet
     
-    if (adapter.config.fritzboxPassword && adapter.config.fritzboxPassword.length) {
-        adapter.log.info("try to connect to TR-064: " + host + ":49000");
+    if ((adapter.config.enableWlan || adapter.config.enablePhonebook) && adapter.config.fritzboxUser && adapter.config.fritzboxPassword && adapter.config.fritzboxPassword.length) {
+        adapter.log.info("Trying to connect to TR-064: " + host + ":49000");
 
-        // TR-064-Verbindung bereitstellen (und überprüfen)
-        getWlanConfig(host, adapter.config.fritzboxPassword, function (result) {
-            adapter.log.info("Successfully connected to TR-064");
-            handleWLANConfiguration(result);
-            intervalTR046 = setInterval(function () {
-                getWlanConfig(host, adapter.config.fritzboxPassword, function (result) {
-                    handleWLANConfiguration(result);
-                });
-            }, 10000);
-        });
+        // try to get WLAN status and enable timer
+        if (adapter.config.enableWlan) {
+            getWlanConfig(host, adapter.config.fritzboxUser, adapter.config.fritzboxPassword, function (result) {
+                adapter.log.info("Successfully connected to TR-064");
+                handleWLANConfiguration(result);
+                intervalTR046 = setInterval(function () {
+                    getWlanConfig(host, adapter.config.fritzboxUser, adapter.config.fritzboxPassword, function (result) {
+                        handleWLANConfiguration(result);
+                    });
+                }, 10000);
+            });
+        }
+
+        // try to get phonebook
+        if (adapter.config.enablePhonebook) {
+            getPhonebook(host, adapter.config.fritzboxUser, adapter.config.fritzboxPassword);
+        }
     }
 }
 

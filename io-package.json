@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "fritzbox",
-    "version": "0.3.0",
+    "version": "0.3.1",
     "title": "fritzbox Adapter",
     "desc": {
       "en": "Adapter monitors the call information from Fritzbox via tcp, Port 1012 (Activate call monitor in the Fritzbox with #96*5*)",
@@ -30,6 +30,7 @@
   },
   "native": {
     "fritzboxAddress": "192.168.1.1",
+    "fritzboxUser": "dslf-config",
     "fritzboxPassword": "",
     "cc": "49",
     "ac": "211",
@@ -563,6 +564,28 @@
       "native": {}
     },
     {
+      "_id": "phonebook",
+      "type": "channel",
+      "common": {
+        "name": "phonebook",
+        "role": "phonebook"
+      },
+      "native": {}
+    },
+    {
+      "_id": "phonebook.tableJSON",
+      "type": "state",
+      "common": {
+        "name": "phonebook as JSON",
+        "type": "string",
+        "role": "phonebook",
+        "read": true,
+        "write": false,
+        "desc": "phonebook as JSON"
+      },
+      "native": {}
+    },
+    {
       "_id": "wlan.enabled",
       "type": "state",
       "common": {
@@ -575,6 +598,5 @@
       },
       "native": {}
     }
-
   ]
 }
