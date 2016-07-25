@@ -69,7 +69,7 @@
         "write": false,
         "desc": "last message from fritzbox as string"
       },
-      "native": {}
+      "native": { }
     },
     {
       "_id": "calls",
@@ -78,7 +78,7 @@
         "name": "calls",
         "role": "call info"
       },
-      "native": {}
+      "native": { }
     },
     {
       "_id": "calls.ring",
@@ -91,7 +91,7 @@
         "write": false,
         "desc": "ring activ?"
       },
-      "native": {}
+      "native": { }
     },
     {
       "_id": "calls.missedCount",
@@ -104,7 +104,7 @@
         "write": true,
         "desc": "Counter: rings missed"
       },
-      "native": {}
+      "native": { }
     },
     {
       "_id": "calls.missedDateReset",
@@ -117,7 +117,7 @@
         "write": true,
         "desc": "date last reset: counter rings missed"
       },
-      "native": {}
+      "native": { }
     },
     {
       "_id": "calls.ringActualNumber",
@@ -130,7 +130,7 @@
         "write": false,
         "desc": "actual last ringing number"
       },
-      "native": {}
+      "native": { }
     },
     {
       "_id": "calls.ringActualNumbers",
@@ -143,7 +143,7 @@
         "write": false,
         "desc": "actual ringing numbers"
       },
-      "native": {}
+      "native": { }
     },
     {
       "_id": "calls.ringLastNumber",
@@ -156,7 +156,7 @@
         "write": false,
         "desc": "ring last number"
       },
-      "native": {}
+      "native": { }
     },
     {
       "_id": "calls.ringLastMissedNumber",
@@ -169,7 +169,7 @@
         "write": false,
         "desc": "ring last missed number"
       },
-      "native": {}
+      "native": { }
     },
     {
       "_id": "calls.callLastNumber",
@@ -182,7 +182,7 @@
         "write": false,
         "desc": "call last number"
       },
-      "native": {}
+      "native": { }
     },
     {
       "_id": "calls.connectNumber",
@@ -195,7 +195,7 @@
         "write": false,
         "desc": "actual last connected number"
       },
-      "native": {}
+      "native": { }
     },
     {
       "_id": "calls.connectNumbers",
@@ -208,7 +208,7 @@
         "write": false,
         "desc": "actual last connected numbers"
       },
-      "native": {}
+      "native": { }
     },
     {
       "_id": "calls.counterActualCalls",
@@ -217,7 +217,7 @@
         "name": "calls",
         "role": "call info"
       },
-      "native": {}
+      "native": { }
     },
     {
       "_id": "calls.counterActualCalls.allActiveCount",
@@ -230,7 +230,7 @@
         "write": false,
         "desc": "Counter: all active Calls"
       },
-      "native": {}
+      "native": { }
     },
     {
       "_id": "calls.counterActualCalls.connectCount",
@@ -243,7 +243,7 @@
         "write": false,
         "desc": "Counter: actual activ connected calls"
       },
-      "native": {}
+      "native": { }
     },
     {
       "_id": "calls.counterActualCalls.ringCount",
@@ -256,7 +256,7 @@
         "write": false,
         "desc": "Counter: actual ring"
       },
-      "native": {}
+      "native": { }
     },
     {
       "_id": "calls.counterActualCalls.callCount",
@@ -269,7 +269,7 @@
         "write": false,
         "desc": "Counter: actual activ calls"
       },
-      "native": {}
+      "native": { }
     },
     {
       "_id": "calls.telLinks",
@@ -278,7 +278,7 @@
         "name": "calls",
         "role": "call info"
       },
-      "native": {}
+      "native": { }
     },
     {
       "_id": "calls.telLinks.ringLastNumberTel",
@@ -291,7 +291,7 @@
         "write": false,
         "desc": "letzter Anrufer als tel:link"
       },
-      "native": {}
+      "native": { }
     },
     {
       "_id": "calls.telLinks.callLastNumberTel",
@@ -304,7 +304,7 @@
         "write": false,
         "desc": "letzte angerufene Nummer (Wahlwiederholung) als tel:link"
       },
-      "native": {}
+      "native": { }
     },
     {
       "_id": "calls.telLinks.ringLastMissedNumberTel",
@@ -317,7 +317,7 @@
         "write": false,
         "desc": "letzter verpasster Anrufer als tel:link"
       },
-      "native": {}
+      "native": { }
     },
     {
       "_id": "callmonitor",
@@ -326,7 +326,7 @@
         "name": "callmonitor",
         "role": "callmonitor"
       },
-      "native": {}
+      "native": { }
     },
     {
       "_id": "callmonitor.all",
@@ -339,7 +339,7 @@
         "write": false,
         "desc": "callmonitor all"
       },
-      "native": {}
+      "native": { }
     },
     {
       "_id": "callmonitor.ring",
@@ -352,7 +352,7 @@
         "write": false,
         "desc": "callmonitor ring"
       },
-      "native": {}
+      "native": { }
     },
     {
       "_id": "callmonitor.call",
@@ -365,7 +365,7 @@
         "write": false,
         "desc": "callmonitor call"
       },
-      "native": {}
+      "native": { }
     },
     {
       "_id": "callmonitor.connect",
@@ -378,7 +378,7 @@
         "write": false,
         "desc": "callmonitor connect"
       },
-      "native": {}
+      "native": { }
     },
     {
       "_id": "system",
@@ -387,7 +387,7 @@
         "name": "system",
         "role": "system"
       },
-      "native": {}
+      "native": { }
     },
     {
       "_id": "system.deltaTime",
@@ -400,7 +400,7 @@
         "write": false,
         "desc": "delta time in seconds between fritzbox and ioBroker"
       },
-      "native": {}
+      "native": { }
     },
     {
       "_id": "system.deltaTimeOK",
@@ -413,7 +413,7 @@
         "write": false,
         "desc": "delta time in seconds between fritzbox and ioBroker ok"
       },
-      "native": {}
+      "native": { }
     },
     {
       "_id": "cdr",
@@ -422,7 +422,7 @@
         "name": "cdr",
         "role": "cdr"
       },
-      "native": {}
+      "native": { }
     },
     {
       "_id": "cdr.json",
@@ -435,7 +435,7 @@
         "write": false,
         "desc": "call cdr as JSON"
       },
-      "native": {}
+      "native": { }
     },
     {
       "_id": "cdr.html",
@@ -448,7 +448,7 @@
         "write": false,
         "desc": "call cdr as html"
       },
-      "native": {}
+      "native": { }
     },
     {
       "_id": "cdr.missedJSON",
@@ -461,7 +461,7 @@
         "write": false,
         "desc": "missed calls as JSON"
       },
-      "native": {}
+      "native": { }
     },
     {
       "_id": "cdr.missedHTML",
@@ -474,7 +474,7 @@
         "write": false,
         "desc": "missed calls as HTML"
       },
-      "native": {}
+      "native": { }
     },
     {
       "_id": "cdr.txt",
@@ -487,7 +487,7 @@
         "write": false,
         "desc": "call cdr as txt"
       },
-      "native": {}
+      "native": { }
     },
     {
       "_id": "history",
@@ -496,7 +496,7 @@
         "name": "history",
         "role": "history"
       },
-      "native": {}
+      "native": { }
     },
     {
       "_id": "history.allTableHTML",
@@ -509,7 +509,7 @@
         "write": false,
         "desc": "history of calls as HTML"
       },
-      "native": {}
+      "native": { }
     },
     {
       "_id": "history.allTableTxt",
@@ -522,7 +522,7 @@
         "write": false,
         "desc": "history of calls as Txt"
       },
-      "native": {}
+      "native": { }
     },
     {
       "_id": "history.allTableJSON",
@@ -535,7 +535,7 @@
         "write": false,
         "desc": "history of calls as JSON"
       },
-      "native": {}
+      "native": { }
     },
     {
       "_id": "history.missedTableHTML",
@@ -548,7 +548,7 @@
         "write": false,
         "desc": "history of missed calls as HTML"
       },
-      "native": {}
+      "native": { }
     },
     {
       "_id": "history.missedTableJSON",
@@ -564,6 +564,28 @@
       "native": {}
     },
     {
+      "_id": "phonebook",
+      "type": "channel",
+      "common": {
+        "name": "phonebook",
+        "role": "phonebook"
+      },
+      "native": { }
+    },
+    {
+      "_id": "phonebook.tableJSON",
+      "type": "state",
+      "common": {
+        "name": "phonebook as JSON",
+        "type": "string",
+        "role": "phonebook",
+        "read": true,
+        "write": false,
+        "desc": "phonebook as JSON"
+      },
+      "native": {}
+    },
+    {
       "_id": "wlan.enabled",
       "type": "state",
       "common": {
@@ -574,7 +596,7 @@
         "write": true,
         "desc": "Wi-Fi (WLAN) enabled"
       },
-      "native": {}
+      "native": { }
     }
 
   ]

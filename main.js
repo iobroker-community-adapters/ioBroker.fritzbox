@@ -41,6 +41,8 @@ var net =    require('net');    // node-Modul für die tcp/ip Kommunikation
 var tr = require("tr-064");     // node-Modul für die Kommunikation via TR-064 mit der FritzBox
                                 // Beschreibung zu TR-064: http://avm.de/service/schnittstellen/
 
+var request = require("request");
+
 var adapter = utils.adapter('fritzbox');
 
 var call = [];
@@ -1187,7 +1189,7 @@ function setWlanEnabled(host, user, password, enabled) {
 }
 
 function getPhonebook(host, user, password) {
-    connectToTR064(host, password, function (sslDev) {
+    connectToTR064(host, user, password, function (sslDev) {
         var tel = sslDev.services["urn:dslforum-org:service:X_AVM-DE_OnTel:1"];
         adapter.log.debug("TR-064: calling GetPhonebook()");
         tel.actions.GetPhonebook({ NewPhonebookID: '0' }, function (err, ret) {
@@ -1205,6 +1207,7 @@ function getPhonebook(host, user, password) {
                                 adapter.log.warn("TR-064: Parsing error: " + err);
                             } else {
                                 adapter.log.debug("TR-064: Successfully parsed content from uri: " + url);
+                                adapter.setState('phonebook.tableJSON', JSON.stringify(result), true);
                             }
                         });
                     }
