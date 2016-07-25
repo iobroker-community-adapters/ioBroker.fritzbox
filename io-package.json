@@ -30,6 +30,7 @@
   },
   "native": {
     "fritzboxAddress": "192.168.1.1",
+    "fritzboxUser": "dslf-config",
     "fritzboxPassword": "",
     "cc": "49",
     "ac": "211",
