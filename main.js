@@ -1206,14 +1206,13 @@ function getPhonebook(host, user, password) {
                             if (err) {
                                 adapter.log.warn("TR-064: Error while parsing phonebook content: " + err);
                             } else {
-                                adapter.log.debug("TR-064: Successfully parsed phonebook content, persisting result ...");
-
+                                adapter.log.debug("TR-064: Successfully parsed phonebook content, analyzing result ...");
                                 var phonenumbers = []; // create an empty array for fetching all configured phone numbers from fritzbox
                                 var phonebook = result.phonebooks.phonebook[0];
                                 for (var c = 0; c <= phonebook.contact.length; c++) {
                                     var contact = phonebook.contact[c];
                                     if (typeof contact != 'undefined') {
-                                        var entryName = contact.person[0].realName;
+                                        var entryName = contact.person[0].realName[0];
                                         for (var t = 0; t <= contact.telephony.length; t++) {
                                             var telephony = contact.telephony[t];
                                             if (typeof telephony != 'undefined') {
@@ -1237,6 +1236,7 @@ function getPhonebook(host, user, password) {
                                 }
 
                                 adapter.setState('phonebook.tableJSON', JSON.stringify(phonenumbers), true);
+                                adapter.log.debug("TR-064: Successfully analyzed phonebook results");
                             }
                         });
                     }
@@ -1275,7 +1275,7 @@ function connectToFritzbox(host) {
     socketBox.on('data',  parseData);   // Daten wurden aus der Fritzbox empfangen und dann in der Funktion parseData verarbeitet
     
     if (adapter.config.fritzboxUser && adapter.config.fritzboxPassword && adapter.config.fritzboxPassword.length) {
-        adapter.log.info("try to connect to TR-064: " + host + ":49000");
+        adapter.log.info("Trying to connect to TR-064: " + host + ":49000");
 
         // TR-064-Verbindung bereitstellen (und überprüfen)
         getWlanConfig(host, adapter.config.fritzboxUser, adapter.config.fritzboxPassword, function (result) {
@@ -1288,10 +1288,8 @@ function connectToFritzbox(host) {
             }, 10000);
         });
 
-        // try to get phonebook with a short delay
-        setTimeout(function () {
-            getPhonebook(host, adapter.config.fritzboxUser, adapter.config.fritzboxPassword);
-        }, 3000)
+        // try to get phonebook
+        getPhonebook(host, adapter.config.fritzboxUser, adapter.config.fritzboxPassword);
     }
 }
 

@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "fritzbox",
-    "version": "0.3.0",
+    "version": "0.3.1",
     "title": "fritzbox Adapter",
     "desc": {
       "en": "Adapter monitors the call information from Fritzbox via tcp, Port 1012 (Activate call monitor in the Fritzbox with #96*5*)",
