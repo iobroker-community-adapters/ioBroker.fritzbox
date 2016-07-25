@@ -165,7 +165,7 @@ adapter.on('stateChange', function (id, state) {
     }
     else if (id === adapter.namespace + ".wlan.enabled" && !state.ack) {
         adapter.log.debug(id + "=" + state.val);
-        if (state.val != wlanState && intervalTR046) {
+        if (state.val != wlanState && intervalTR046 && adapter.config.enableWlan) {
             adapter.log.info("Changing WLAN to " + state.val);
             setWlanEnabled(adapter.config.fritzboxAddress, adapter.config.fritzboxUser, adapter.config.fritzboxPassword, state.val);
         }
@@ -1222,7 +1222,6 @@ function getPhonebook(host, user, password) {
                                                         var entryNumber = number._;
                                                         var entryType = number.$.type;
                                                         if (entryNumber.startsWith('0') || entryNumber.startsWith('+')) {
-                                                            adapter.log.debug("TR-064: " + c + ": " + entryName + " -> " + entryNumber + " -> " + entryType);
                                                             phonenumbers.push({
                                                                 key: entryNumber,
                                                                 value: { name: entryName, type: entryType }
@@ -1274,22 +1273,26 @@ function connectToFritzbox(host) {
 
     socketBox.on('data',  parseData);   // Daten wurden aus der Fritzbox empfangen und dann in der Funktion parseData verarbeitet
     
-    if (adapter.config.fritzboxUser && adapter.config.fritzboxPassword && adapter.config.fritzboxPassword.length) {
+    if ((adapter.config.enableWlan || adapter.config.enablePhonebook) && adapter.config.fritzboxUser && adapter.config.fritzboxPassword && adapter.config.fritzboxPassword.length) {
         adapter.log.info("Trying to connect to TR-064: " + host + ":49000");
 
-        // TR-064-Verbindung bereitstellen (und überprüfen)
-        getWlanConfig(host, adapter.config.fritzboxUser, adapter.config.fritzboxPassword, function (result) {
-            adapter.log.info("Successfully connected to TR-064");
-            handleWLANConfiguration(result);
-            intervalTR046 = setInterval(function () {
-                getWlanConfig(host, adapter.config.fritzboxUser, adapter.config.fritzboxPassword, function (result) {
-                    handleWLANConfiguration(result);
-                });
-            }, 10000);
-        });
+        // try to get WLAN status and enable timer
+        if (adapter.config.enableWlan) {
+            getWlanConfig(host, adapter.config.fritzboxUser, adapter.config.fritzboxPassword, function (result) {
+                adapter.log.info("Successfully connected to TR-064");
+                handleWLANConfiguration(result);
+                intervalTR046 = setInterval(function () {
+                    getWlanConfig(host, adapter.config.fritzboxUser, adapter.config.fritzboxPassword, function (result) {
+                        handleWLANConfiguration(result);
+                    });
+                }, 10000);
+            });
+        }
 
         // try to get phonebook
-        getPhonebook(host, adapter.config.fritzboxUser, adapter.config.fritzboxPassword);
+        if (adapter.config.enablePhonebook) {
+            getPhonebook(host, adapter.config.fritzboxUser, adapter.config.fritzboxPassword);
+        }
     }
 }
 

@@ -4,6 +4,10 @@ ioBroker fritzbox Adapter
 
 
 ## Changelog
+### 0.3.1 (2016-07-24)
+* (BasGo) enhanced TR-064 configuration
+* (BasGo) added rudimentary phonebook download into object store
+
 ### 0.3.0 (2015-06-26)
 * (UncleSamSwiss) added support for wlan.enabled (using TR-064)
 
@@ -75,6 +79,8 @@ Unter **fritzbox.x.** legt der Adapter folgende Channel und Datenpunkte an:
 * **wlan.                                   (CHANNEL)**
 * wlan.enabled                            (true/false, read & write, Zustand des WLANs, nur verfügbar wenn Passwort konfiguriert ist)
 
+* **phonebook.                              (CHANNEL)**
+* phonebook.tableJSON                     (Telefonbuch aller externen Nummern als JSON)
 
 ## Beispiel-Widgets
 
