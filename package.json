@@ -30,7 +30,9 @@
   "dependencies": {
     "request": "^2.72.0",
     "xml2js": "^0.4.9",
-    "tr-064": "~0.2.0"
+    "tr-064": "~0.2.0",
+    "mocha": "^2.3.4",
+    "chai": "^3.4.1"
   },
   "devDependencies": {
     "grunt": "~0.4.5",
