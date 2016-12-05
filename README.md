@@ -5,6 +5,8 @@ ioBroker fritzbox Adapter
 [![NPM version](http://img.shields.io/npm/v/iobroker.fritzbox.svg)](https://www.npmjs.com/package/iobroker.fritzbox)
 [![Downloads](https://img.shields.io/npm/dm/iobroker.fritzbox.svg)](https://www.npmjs.com/package/iobroker.fritzbox)
 
+[![NPM](https://nodei.co/npm/iobroker.nut.png?downloads=true)](https://nodei.co/npm/iobroker.nut/)
+
 ## Changelog
 ### 0.3.1 (2016-07-24)
 * (BasGo) enhanced TR-064 configuration
