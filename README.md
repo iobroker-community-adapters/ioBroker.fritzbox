@@ -2,6 +2,8 @@
 ioBroker fritzbox Adapter
 ===========================
 
+[![NPM version](http://img.shields.io/npm/v/iobroker.fritzbox.svg)](https://www.npmjs.com/package/iobroker.fritzbox)
+[![Downloads](https://img.shields.io/npm/dm/iobroker.fritzbox.svg)](https://www.npmjs.com/package/iobroker.fritzbox)
 
 ## Changelog
 ### 0.3.1 (2016-07-24)
