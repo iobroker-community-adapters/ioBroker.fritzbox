@@ -8,6 +8,7 @@ ioBroker fritzbox Adapter
 
 [![NPM](https://nodei.co/npm/iobroker.fritzbox.png?downloads=true)](https://nodei.co/npm/iobroker.fritzbox/)
 
+
 ## Changelog
 ### 0.3.1 (2016-07-24)
 * (BasGo) enhanced TR-064 configuration
