@@ -4,6 +4,7 @@ ioBroker fritzbox Adapter
 
 [![NPM version](http://img.shields.io/npm/v/iobroker.fritzbox.svg)](https://www.npmjs.com/package/iobroker.fritzbox)
 [![Downloads](https://img.shields.io/npm/dm/iobroker.fritzbox.svg)](https://www.npmjs.com/package/iobroker.fritzbox)
+**Tests:** Linux/Mac: [![Travis-CI](http://img.shields.io/travis/ruhr70/ioBroker.fritzbox/master.svg)](https://travis-ci.org/ruhr70/ioBroker.fritzbox)
 
 [![NPM](https://nodei.co/npm/iobroker.fritzbox.png?downloads=true)](https://nodei.co/npm/iobroker.fritzbox/)
 
