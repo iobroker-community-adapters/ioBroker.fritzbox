@@ -43,7 +43,7 @@ var tr = require("tr-064");     // node-Modul für die Kommunikation via TR-064 
 
 var request = require("request");
 
-var adapter = utils.adapter('fritzbox');
+var adapter = utils.Adapter('fritzbox');
 
 var call = [];
 
