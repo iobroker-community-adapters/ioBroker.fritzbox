@@ -46,7 +46,8 @@
     "grunt-contrib-copy": "^1.0.0",
     "grunt-exec": "^3.0.0",
     "mocha": "^4.1.0",
-    "chai": "^4.1.2"
+    "chai": "^4.1.2",
+    "@iobroker/adapter-core": "^1.0.3"
   },
   "bugs": {
     "url": "https://github.com/ruhr70/ioBroker.fritzbox/issues"
