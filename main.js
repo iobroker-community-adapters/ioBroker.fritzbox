@@ -29,7 +29,7 @@
 
 // require() ist eine Funktion von node.js, um weitere Module nachzuladen
 
-var utils =  require(__dirname + '/lib/utils'); // Get common adapter utils
+var utils = require('@iobroker/adapter-core'); // Get common adapter utils
 var xml2js = require('xml2js'); // node-Modul um xml Strukturen in JSON umzuwandeln. Eine Beschreibung: http://www.flyacts.com/blog/nodejs-xml-daten-verarbeiten/
                                 // Bei der Entwicklung ins iobroker.frittbox Verzeichnis installieren. Als Admin, d.h. beim Mac mit sudo:
                                 // sudo npm install xml2js --save
@@ -43,7 +43,7 @@ var tr = require("tr-064");     // node-Modul für die Kommunikation via TR-064 
 
 var request = require("request");
 
-var adapter = utils.adapter('fritzbox');
+var adapter = utils.Adapter('fritzbox');
 
 var call = [];
 
