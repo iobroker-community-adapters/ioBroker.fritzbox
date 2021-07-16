@@ -234,12 +234,12 @@
             "_id": "calls.counterActualCalls.connectCount",
             "type": "state",
             "common": {
-                "name": "actual activ onnects",
-                "type": "string",
+                "name": "actual active connects",
+                "type": "number",
                 "role": "call info",
                 "read": true,
                 "write": false,
-                "desc": "Counter: actual activ connected calls"
+                "desc": "Counter: actual active connected calls"
             },
             "native": {}
         },
@@ -248,11 +248,11 @@
             "type": "state",
             "common": {
                 "name": "actual ring count",
-                "type": "string",
+                "type": "number",
                 "role": "call info",
                 "read": true,
                 "write": false,
-                "desc": "Counter: actual ring"
+                "desc": "Counter: actual ring count"
             },
             "native": {}
         },
@@ -260,12 +260,12 @@
             "_id": "calls.counterActualCalls.callCount",
             "type": "state",
             "common": {
-                "name": "actual activ calls",
-                "type": "string",
+                "name": "actual active calls",
+                "type": "number",
                 "role": "call info",
                 "read": true,
                 "write": false,
-                "desc": "Counter: actual activ calls"
+                "desc": "Counter: actual active calls"
             },
             "native": {}
         },
@@ -392,7 +392,7 @@
             "type": "state",
             "common": {
                 "name": "delta time in seconds between fritzbox and ioBroker",
-                "type": "string",
+                "type": "number",
                 "role": "seconds",
                 "read": true,
                 "write": false,
