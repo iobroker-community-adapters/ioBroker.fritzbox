@@ -222,7 +222,7 @@
             "type": "state",
             "common": {
                 "name": "Counter: all active Calls",
-                "type": "number",
+                "type": "string",
                 "role": "call info",
                 "read": true,
                 "write": false,
