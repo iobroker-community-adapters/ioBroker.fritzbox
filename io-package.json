@@ -135,7 +135,7 @@
             "type": "state",
             "common": {
                 "name": "actual ringing numbers",
-                "type": "number",
+                "type": "string",
                 "role": "call info",
                 "read": true,
                 "write": false,
@@ -200,7 +200,7 @@
             "type": "state",
             "common": {
                 "name": "actual last connected numbers",
-                "type": "number",
+                "type": "string",
                 "role": "call info",
                 "read": true,
                 "write": false,
@@ -222,7 +222,7 @@
             "type": "state",
             "common": {
                 "name": "Counter: all active Calls",
-                "type": "string",
+                "type": "number",
                 "role": "call info",
                 "read": true,
                 "write": false,

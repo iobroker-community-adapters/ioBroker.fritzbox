@@ -503,9 +503,9 @@ function clearRealtimeVars() {
     //Realtime Daten löschen
     adapter.setState('calls.ring',                               false ,    true);
     adapter.setState('calls.ringActualNumber',                   "" ,       true);
-    adapter.setState('calls.ringActualNumbers',                  [] ,       true);
+    adapter.setState('calls.ringActualNumbers',                  "" ,       true);
     adapter.setState('calls.connectNumber',                      "",        true);
-    adapter.setState('calls.connectNumbers',                     [] ,       true);
+    adapter.setState('calls.connectNumbers',                     "" ,       true);
     adapter.setState('calls.counterActualCalls.ringCount',       0 ,        true);
     adapter.setState('calls.counterActualCalls.callCount',       0 ,        true);
     adapter.setState('calls.counterActualCalls.connectCount',    0 ,        true);
