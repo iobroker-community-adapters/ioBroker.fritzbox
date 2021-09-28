@@ -1198,7 +1198,21 @@ function getPhonebook(host, user, password) {
             } else if (ret.NewPhonebookURL && ret.NewPhonebookURL.length > 0) {
                 var url = ret.NewPhonebookURL;
                 adapter.log.debug("TR-064: Got phonebook uri: " + url);
-                request(url, function (error, response, body) {
+				
+				var agentOptions;
+				var agent;
+				
+				agentOptions = {
+				  rejectUnauthorized: false
+				};
+				
+				agent = new https.Agent(agentOptions);
+				
+                request({
+				  url: url
+				, method: 'GET'
+				, agent: agent
+				}, function (error, response, body) {
                     if (!error && response.statusCode == 200) {
                         adapter.log.debug("TR-064: Got valid phonebook content from, starting to parse ...");
                         var parser = new xml2js.Parser();
