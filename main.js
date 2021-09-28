@@ -1238,7 +1238,11 @@ function getPhonebook(host, user, password) {
                                 adapter.log.debug("TR-064: Successfully analyzed phonebook results");
                             }
                         });
-                    }
+                    } else {
+						adapter.log.warn(
+							`TR-064: Error while requesting phonebook: (${response.statusCode}) ${error}`
+						);
+					}
                 });
             }
         });
