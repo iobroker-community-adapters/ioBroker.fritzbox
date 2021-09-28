@@ -1240,7 +1240,7 @@ function getPhonebook(host, user, password) {
                         });
                     } else {
 						adapter.log.warn(
-							`TR-064: Error while requesting phonebook: (${response.statusCode}) ${error}`
+							`TR-064: Error while requesting phonebook: ${error}`
 						);
 					}
                 });
