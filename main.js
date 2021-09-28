@@ -42,6 +42,7 @@ var tr = require("tr-064");     // node-Modul für die Kommunikation via TR-064 
                                 // Beschreibung zu TR-064: http://avm.de/service/schnittstellen/
 
 var request = require("request");
+var https = require("https");
 
 var adapter = utils.Adapter('fritzbox');
 
