@@ -44,7 +44,7 @@ var tr = require("tr-064");     // node-Modul für die Kommunikation via TR-064 
 var request = require("request");
 var https = require("https");
 
-const { existsSync, writeFile, mkdirSync } = require('fs');
+const { existsSync, writeFile, mkdirSync, readdir } = require('fs');
 const path = require('path');
 
 var adapter = utils.Adapter('fritzbox');
@@ -1256,7 +1256,7 @@ function getTAM(host, user, password) {
                                             }
 
                                             var callDate = message.Date[0].split('.').join("").split(':').join("").split(' ').join("");
-                                            var file = `admin/tam/${callDate}-${message.Number[0]}.wav`
+                                            var file = `tam/${callDate}-${message.Number[0]}.wav`
                                             adapter.log.debug(`TR-064: TAM message file: ${file}`);
                                             if (existsSync(file)) {
                                                 msg.audioFile = path.resolve(file);
@@ -1264,7 +1264,7 @@ function getTAM(host, user, password) {
                                                 return;
                                             }
 
-                                            mkdirSync('admin/tam', { recursive: true });
+                                            mkdirSync('tam', { recursive: true });
 
                                             var downloadUrl = message.Path[0];
                                             if (downloadUrl.startsWith('/')) {
@@ -1307,6 +1307,22 @@ function getTAM(host, user, password) {
 
                                 Promise.all(promises).then(function() {
                                     messages.sort((m1,m2) => m1.index > m2.index ? 1 : m1.index < m2.index ? -1 : 0);
+
+                                    // cleanup old files
+                                    readdir('/tam', (err, files) => {
+                                        if (err) {
+                                            adapter.log.warn(
+                                                `TR-064: Error reading files from dir /tam: ${err}`
+                                            );
+                                        } else {
+                                            files.forEach(file => {
+                                                adapter.log.debug(
+                                                    `TR-064: found file: ${file}`
+                                                );
+                                            })
+                                        }
+                                    })
+
                                     adapter.setState('tam.messagesJSON', JSON.stringify(messages), true);
                                     adapter.log.debug("TR-064: Successfully analyzed TAM results");
                                 });
