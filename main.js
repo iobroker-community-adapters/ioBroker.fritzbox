@@ -1197,10 +1197,17 @@ function setWlanEnabled(host, user, password, enabled) {
 function getTAM(host, user, password) {
     connectToTR064(host, user, password, function (sslDev) {
         var tam = sslDev.services["urn:dslforum-org:service:X_AVM-DE_TAM:1"];
-        adapter.log.debug(`TR-064: Calling GetTAM() on ${JSON.stringify(tam)}`);
-        adapter.log.debug(`TR-064: Services: ${JSON.stringify(sslDev.services.keys())}`);
+        adapter.log.debug("TR-064: Calling GetMessageList()");
+        tam.actions.GetMessageList({NewIndex: 0}, function(err, ret) {
+            if (err) {
+                adapter.log.warn("TR-064: Error while calling GetMessageList(): " + err);
+            } else if (ret.NewURL && ret.NewURL.length > 0) {
+                var url = ret.NewURL;
+                adapter.log.debug("TR-064: Got TAM uri: " + url);
 
 
+            }
+        });
     });
 }
 
