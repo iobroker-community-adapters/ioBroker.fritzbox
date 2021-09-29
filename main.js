@@ -1196,7 +1196,8 @@ function setWlanEnabled(host, user, password, enabled) {
 
 function getTAM(host, user, password) {
     connectToTR064(host, user, password, function (sslDev) {
-        var tam = sslDev.services["urn:X_AVM-DE_TAM-com:serviceId:X_AVM-DE_TAM 1"];
+        adapter.log.debug(`TR-064: Services: ${JSON.stringify(sslDev.services)}`);
+        var tam = sslDev.services["urn:dslforum-org:service:X_AVM-DE_TAM:1"];
         adapter.log.debug(`TR-064: Calling GetTAM() on ${JSON.stringify(tam)}`);
 
 
