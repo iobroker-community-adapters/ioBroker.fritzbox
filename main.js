@@ -1305,7 +1305,8 @@ function getTAM(host, user, password) {
                                     }
                                 }
 
-                                Promise.all(promises).then(function(){
+                                Promise.all(promises).then(function() {
+                                    messages.sort((m1,m2) => m1.index > m2.index ? 1 : m1.index < m2.index ? -1 : 0);
                                     adapter.setState('tam.messagesJSON', JSON.stringify(messages), true);
                                     adapter.log.debug("TR-064: Successfully analyzed TAM results");
                                 });
