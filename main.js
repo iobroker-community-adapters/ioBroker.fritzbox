@@ -1243,7 +1243,7 @@ function getTAM(host, user, password) {
                                                 return;
                                             }
 
-                                            var file = `tam/${message.Date.getTime()}-${message.Number}.wav`
+                                            var file = `tam/${message.Date.replace('.','').replace(':','').replace(' ','')}-${message.Number}.wav`
                                             if (existsSync(file)) {
                                                 resolve(path.resolve(file));
                                                 return;
