@@ -1237,7 +1237,7 @@ function getTAM(host, user, password) {
                                     var message = result.Root.Message[m];
                                     if (typeof message != 'undefined') {
                                         promises.push(new Promise((resolve, reject) => {
-                                            if (!message.Path || message.length.Path.length < 1) {
+                                            if (!message.Path || message.Path.length < 1) {
                                                 adapter.log.warn("TR-064: TAM message has no url");
                                                 resolve('');
                                                 return;
