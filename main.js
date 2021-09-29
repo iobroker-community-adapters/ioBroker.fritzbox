@@ -1209,10 +1209,19 @@ function getTAM(host, user, password) {
                 adapter.log.debug("TR-064: Got TAM uri: " + url);
                 var baseUrl = url.substring(0, url.lastIndexOf('/'));
 
+                var agentOptions;
+				var agent;
+
+				agentOptions = {
+				  rejectUnauthorized: false
+				};
+
+				agent = new https.Agent(agentOptions);
+
                 request({
 				  url: url
 				, method: 'GET'
-				, agent: tam.agent
+				, agent: agent
 				}, function (error, response, body) {
                     if (!error && response.statusCode == 200) {
                         adapter.log.debug("TR-064: Got valid TAM content from, starting to parse ...");
