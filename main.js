@@ -1209,19 +1209,10 @@ function getTAM(host, user, password) {
                 adapter.log.debug("TR-064: Got TAM uri: " + url);
                 var baseUrl = url.substring(0, url.lastIndexOf('/'));
 
-                var agentOptions;
-				var agent;
-
-				agentOptions = {
-				  rejectUnauthorized: false
-				};
-
-				agent = new https.Agent(agentOptions);
-
                 request({
 				  url: url
 				, method: 'GET'
-				, agent: agent
+				, agent: tam.agent
 				}, function (error, response, body) {
                     if (!error && response.statusCode == 200) {
                         adapter.log.debug("TR-064: Got valid TAM content from, starting to parse ...");
@@ -1269,10 +1260,11 @@ function getTAM(host, user, password) {
                                                 downloadUrl = baseUrl + downloadUrl;
                                             }
                                             adapter.log.debug(`TR-064: Download TAM audio file from ${downloadUrl}`);
+
                                             request({
                                                 url: downloadUrl
                                               , method: 'GET'
-                                              , agent: agent
+                                              , agent: tam.agent
                                               }, function (err, res, fileBody) {
                                                   adapter.log.debug(`Download statuscode: ${res.statusCode || 0}`);
                                                   if (!err && res.statusCode == 200) {
