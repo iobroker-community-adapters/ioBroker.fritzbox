@@ -1410,7 +1410,8 @@ function connectToFritzbox(host) {
 
     socketBox.on('data',  parseData);   // Daten wurden aus der Fritzbox empfangen und dann in der Funktion parseData verarbeitet
 
-    if ((adapter.config.enableWlan || adapter.config.enablePhonebook) && adapter.config.fritzboxUser && adapter.config.fritzboxPassword && adapter.config.fritzboxPassword.length) {
+    if ((adapter.config.enableWlan || adapter.config.enablePhonebook || adapter.config.enableTAM)
+        && adapter.config.fritzboxUser && adapter.config.fritzboxPassword && adapter.config.fritzboxPassword.length) {
         adapter.log.info("Trying to connect to TR-064: " + host + ":49000");
 
         // try to get WLAN status and enable timer
@@ -1429,6 +1430,11 @@ function connectToFritzbox(host) {
         // try to get phonebook
         if (adapter.config.enablePhonebook) {
             getPhonebook(host, adapter.config.fritzboxUser, adapter.config.fritzboxPassword);
+        }
+
+        // try to get tel answering machine
+        if (adapter.config.enableTAM) {
+            getTAM(host, adapter.config.fritzboxUser, adapter.config.fritzboxPassword);
         }
     }
 }
