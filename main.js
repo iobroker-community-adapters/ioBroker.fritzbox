@@ -1280,13 +1280,17 @@ function getTAM(host, user, password) {
                                               , method: 'GET'
                                               , agent: agent
                                               }, function (err, res, fileBody) {
-                                                  adapter.log.debug(`Download statuscode: ${res.statusCode || 0}`);
                                                   if (!err && res.statusCode == 200) {
                                                     adapter.log.debug(`TR-064: Downloaded TAM audio file...`);
 
-                                                    writeFile(file, fileBody);
-                                                    msg.audioFile = path.resolve(file);
-                                                    resolve(msg);
+                                                    writeFile(file, fileBody, function(writeErr) {
+                                                        if (!writeErr){
+                                                            msg.audioFile = path.resolve(file);
+                                                        } else {
+                                                            adapter.log.warn(`TR-064: Error while writing file: ${writeErr}`);
+                                                        }
+                                                        resolve(msg);
+                                                    });
                                                   } else {
                                                     adapter.log.warn(
                                                         `TR-064: Error while downloading TAM audio file: ${err}`
