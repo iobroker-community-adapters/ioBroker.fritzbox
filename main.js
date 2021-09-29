@@ -1024,7 +1024,7 @@ function parseData(message) {
                 adapter.setState('cdr.missedJSON',              JSON.stringify(call[id]),   true);
                 adapter.setState('cdr.missedHTML',              lineHistoryMissedHtml,      true);
             }
-            }
+        }
 
         if (showMissedTableHTML) {
             // Anruferliste verpasste Anrufe erstellen
@@ -1074,6 +1074,11 @@ function parseData(message) {
         adapter.setState('cdr.json',                    JSON.stringify(call[id]),   true);
         adapter.setState('cdr.html',                    lineHistoryAllHtml,         true);
         adapter.setState('cdr.txt',                     lineHistoryAllTxt,          true);
+
+        // try to get phonebook
+        if (call[id].connect && call[id].direction === "in" && adapter.config.enableTAM) {
+            getTAM(host, adapter.config.fritzboxUser, adapter.config.fritzboxPassword);
+        }
 
     } // End DSICONNECT
 
@@ -1189,6 +1194,15 @@ function setWlanEnabled(host, user, password, enabled) {
     });
 }
 
+function getTAM(host, user, password) {
+    connectToTR064(host, user, password, function (sslDev) {
+        var tam = sslDev.services["urn:X_AVM-DE_TAM-com:serviceId:X_AVM-DE_TAM:1"];
+        adapter.log.debug(`TR-064: Calling GetTAM() on ${JSON.stringify(tam)}`);
+
+
+    });
+}
+
 function getPhonebook(host, user, password) {
     connectToTR064(host, user, password, function (sslDev) {
         var tel = sslDev.services["urn:dslforum-org:service:X_AVM-DE_OnTel:1"];
@@ -1199,16 +1213,16 @@ function getPhonebook(host, user, password) {
             } else if (ret.NewPhonebookURL && ret.NewPhonebookURL.length > 0) {
                 var url = ret.NewPhonebookURL;
                 adapter.log.debug("TR-064: Got phonebook uri: " + url);
-				
+
 				var agentOptions;
 				var agent;
-				
+
 				agentOptions = {
 				  rejectUnauthorized: false
 				};
-				
+
 				agent = new https.Agent(agentOptions);
-				
+
                 request({
 				  url: url
 				, method: 'GET'

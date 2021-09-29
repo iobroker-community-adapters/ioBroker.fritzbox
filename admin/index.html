@@ -1,335 +1,455 @@
 <html>
 
-<!-- these 4 files always have to be included -->
-<link rel="stylesheet" type="text/css" href="../../lib/css/themes/jquery-ui/redmond/jquery-ui.min.css"/>
-<script type="text/javascript" src="../../lib/js/jquery-1.11.1.min.js"></script>
-<script type="text/javascript" src="../../socket.io/socket.io.js"></script>
-<script type="text/javascript" src="../../lib/js/jquery-ui-1.10.3.full.min.js"></script>
+    <!-- these 4 files always have to be included -->
+    <link rel="stylesheet" type="text/css" href="../../lib/css/themes/jquery-ui/redmond/jquery-ui.min.css"/>
+    <script type="text/javascript" src="../../lib/js/jquery-1.11.1.min.js"></script>
+    <script type="text/javascript" src="../../socket.io/socket.io.js"></script>
+    <script type="text/javascript" src="../../lib/js/jquery-ui-1.10.3.full.min.js"></script>
 
-<!-- these two file always have to be included -->
-<link rel="stylesheet" type="text/css" href="../../css/adapter.css"/>
-<script type="text/javascript" src="../../js/translate.js"></script>
-<script type="text/javascript" src="../../js/adapter-settings.js"></script>
+    <!-- these two file always have to be included -->
+    <link rel="stylesheet" type="text/css" href="../../css/adapter.css"/>
+    <script type="text/javascript" src="../../js/translate.js"></script>
+    <script type="text/javascript" src="../../js/adapter-settings.js"></script>
 
+    <style>
+        .invalid {
+            border: 3px solid red;
+        }
+        .critical {
+            border: 3px solid orange;
+        }
+        .warn {
+            border: 6px solid yellow;
+        }
+    </style>
 
-<style>
-    .invalid {
-        border: 3px solid red;
-    }
-    .critical {
-        border: 3px solid orange;
-    }
-    .warn {
-        border: 6px solid yellow;
-    }
+    <!-- you have to define 2 functions in the global scope: -->
+    <script type="text/javascript">
+        systemDictionary = {
+            "fritzbox adapter settings": {
+                "en": "Fritzbox Configuration",
+                "de": "Fritzbox Adapter-Einstellungen",
+                "ru": "Fritzbox Configuration"
+            },
+            "fritzbox ip address": {
+                "en": "Fritzbox IP-Address",
+                "de": "IP-Adresse der Fritzbox",
+                "ru": "Fritzbox IP-Address"
+            },
+            "numbers": {
+                "en": "Numbers",
+                "de": "Rufnummern",
+                "ru": "Numbers"
+            },
+            "Username:": {
+                "en": "Username:",
+                "de": "Benutzer:",
+                "ru": "Username:"
+            },
+            "IP-Adresse:": {
+                "en": "IP-Address:",
+                "de": "IP-Adresse:",
+                "ru": "IP-Address:"
+            },
+            "Password:": {
+                "en": "Password:",
+                "de": "Passwort:",
+                "ru": "Password:"
+            },
+            "tr064 disclaimer": {
+                "en": "The credentials are only required if you wish to get additional functionality (Wi-Fi, phonebook). Please be aware that the password is stored in plain-text in ioBroker!",
+                "de": "Die Zugangsdaten werden nur benötigt, wenn zusätzliche Funktionalitäten (WLAN, Telefonbuch) aktiviert werden sollen. Bitte beachten: das Passwort wird in Klartext in ioBroker gespeichert!",
+                "ru": "The credentials are only required if you wish to get additional functionality (Wi-Fi, phonebook). Please be aware that the password is stored in plain-text in ioBroker!"
+            },
+            "tr064 enable wlan": {
+                "en": "Control WLAN",
+                "de": "WLAN-Steuerung:",
+                "ru": "Control WLAN"
+            },
+            "tr064 enable phonebook": {
+                "en": "Read phonebook",
+                "de": "Telefonbuch auslesen:",
+                "ru": "Read phonebook"
+            },
+            "country code": {
+                "en": "Country Code:",
+                "de": "Landesvorwahl ohne Präfix (z.B.: 49):",
+                "ru": "Country Code:"
+            },
+            "area code": {
+                "en": "Area Code:",
+                "de": "Ortsvorwahl ohne Präfix (z.B.: 211):",
+                "ru": "Area Code:"
+            },
+            "unknown number": {
+                "en": "Unknown number:",
+                "de": "Unterdrückte/unbekannte Rufnummer:",
+                "ru": "Unknown number:"
+            },
+            "monitoring": {
+                "en": "Dial #96*5* on a phone.",
+                "de": "An einem Telefon der Fritzbox <b>#96*5*</b> wählen, um den Anrufmonitor zu aktivieren.",
+                "ru": "Dial #96*5* on a phone."
+            },
+            "output": {
+                "en": "Output",
+                "de": "Datenausgabe und Formatierung",
+                "ru": "Output"
+            },
+            "number length": {
+                "en": "html/txt number length (df=15):",
+                "de": "html/txt Länge der ext. Rufnummer (df=15):",
+                "ru": "html/txt number length (df=15):"
+            },
+            "tel:number": {
+                "en": "Telephonnumer as tel: URL:",
+                "de": "html: Telefonnummer als tel:Link:",
+                "ru": "Telephonnumer as tel: URL:"
+            },
+            "headline": {
+                "en": "html/txt history, show headline:",
+                "de": "html/txt Anruferliste, zeige Überschrift:",
+                "ru": "html/txt history, show headline:"
+            },
+            "show history": {
+                "en": "Show history",
+                "de": "Ausgabe Anruferlisten",
+                "ru": "Show history"
+            },
+            "history all txt": {
+                "en": "Show history as txt",
+                "de": "Generiere Liste aller Anrufe als txt:",
+                "ru": "Show history as txt"
+            },
+            "history all html": {
+                "en": "Show history as html",
+                "de": "Generiere Liste aller Anrufe als html:",
+                "ru": "Show history as html"
+            },
+            "history all json": {
+                "en": "Show history as json",
+                "de": "Generiere Liste aller Anrufe als json:",
+                "ru": "Show history as json"
+            },
+            "history missed html": {
+                "en": "Show missed calls as html",
+                "de": "Generiere Liste verpasste Anrufe als html:",
+                "ru": "Show missed calls as html"
+            },
+            "history missed json": {
+                "en": "Show missed calls as json",
+                "de": "Generiere Liste verpasste Anrufe als json:",
+                "ru": "Show missed calls as json"
+            },
+            "show callmonitor": {
+                "en": "Show realtime callmonitor",
+                "de": "Zeige den Realtime-Callmonitor an:",
+                "ru": "Show realtime callmonitor"
+            }
 
-</style>
+        };
 
-<!-- you have to define 2 functions in the global scope: -->
-<script type="text/javascript">
-    systemDictionary = {
-        "fritzbox adapter settings": {"en": "Fritzbox Configuration",         "de": "Fritzbox Adapter-Einstellungen",        "ru": "Fritzbox Configuration"},
-        "fritzbox ip address":       {"en": "Fritzbox IP-Address",            "de": "IP-Adresse der Fritzbox",               "ru": "Fritzbox IP-Address"},
-        "numbers":                   {"en": "Numbers",                        "de": "Rufnummern",                            "ru": "Numbers"},
-        "Username:":                 {"en": "Username:",                      "de": "Benutzer:",                             "ru": "Username:"},
-        "IP-Adresse:":               {"en": "IP-Address:",                    "de": "IP-Adresse:",                           "ru": "IP-Address:"},
-        "Password:":                 {"en": "Password:",                      "de": "Passwort:",                            "ru": "Password:"},
-        "tr064 disclaimer":          {"en": "The credentials are only required if you wish to get additional functionality (Wi-Fi, phonebook). Please be aware that the password is stored in plain-text in ioBroker!",
-                                      "de": "Die Zugangsdaten werden nur benötigt, wenn zusätzliche Funktionalitäten (WLAN, Telefonbuch) aktiviert werden sollen. Bitte beachten: das Passwort wird in Klartext in ioBroker gespeichert!",
-                                      "ru": "The credentials are only required if you wish to get additional functionality (Wi-Fi, phonebook). Please be aware that the password is stored in plain-text in ioBroker!"},
-        "tr064 enable wlan":         { "en": "Control WLAN",                  "de": "WLAN-Steuerung:",                       "ru": "Control WLAN" },
-        "tr064 enable phonebook":    { "en": "Read phonebook",                "de": "Telefonbuch auslesen:",                 "ru": "Read phonebook" },
-        "country code":              {"en": "Country Code:",                  "de": "Landesvorwahl ohne Präfix (z.B.: 49):", "ru": "Country Code:"},
-        "area code":                 {"en": "Area Code:",                     "de": "Ortsvorwahl ohne Präfix (z.B.: 211):",  "ru": "Area Code:"},
-        "unknown number":            {"en": "Unknown number:",                "de": "Unterdrückte/unbekannte Rufnummer:",    "ru": "Unknown number:"},
-        "monitoring":                {"en": "Dial #96*5* on a phone.",
-                                      "de": "An einem Telefon der Fritzbox <b>#96*5*</b> wählen, um den Anrufmonitor zu aktivieren.",
-                                      "ru": "Dial #96*5* on a phone."},
-        "output":                    {"en": "Output",                         "de": "Datenausgabe und Formatierung",         "ru": "Output"},
-        "number length":             {"en": "html/txt number length (df=15):",
-                                      "de": "html/txt Länge der ext. Rufnummer (df=15):",
-                                      "ru": "html/txt number length (df=15):"},
-        "tel:number":                {"en": "Telephonnumer as tel: URL:",
-            "de": "html: Telefonnummer als tel:Link:",
-            "ru": "Telephonnumer as tel: URL:"},
-        "headline":                  {"en": "html/txt history, show headline:",
-            "de": "html/txt Anruferliste, zeige Überschrift:",
-            "ru": "html/txt history, show headline:"},
-        "show history":              {"en": "Show history",                   "de": "Ausgabe Anruferlisten",         "ru": "Show history"},
-        "history all txt":           {"en": "Show history as txt",            "de": "Generiere Liste aller Anrufe als txt:",      "ru": "Show history as txt"},
-        "history all html":          {"en": "Show history as html",           "de": "Generiere Liste aller Anrufe als html:",     "ru": "Show history as html"},
-        "history all json":          {"en": "Show history as json",           "de": "Generiere Liste aller Anrufe als json:",     "ru": "Show history as json"},
-        "history missed html":       {"en": "Show missed calls as html",      "de": "Generiere Liste verpasste Anrufe als html:", "ru": "Show missed calls as html"},
-        "history missed json":       {"en": "Show missed calls as json",      "de": "Generiere Liste verpasste Anrufe als json:", "ru": "Show missed calls as json"},
-        "show callmonitor":          {"en": "Show realtime callmonitor",      "de": "Zeige den Realtime-Callmonitor an:",         "ru": "Show realtime callmonitor"}
+        var onChange = null;
 
-    };
+        function setValue(id, value) {
+            // example: select elements with id=key and class=value and insert value
+            if ($('#' + id + '.value').attr('type') == 'checkbox') {
+                $('#' + id + '.value')
+                    .prop('checked', value)
+                    .change(function () {
+                        onChange();
+                    });
+            } else {
+                $('#' + id + '.value')
+                    .val(value)
+                    .change(function () {
+                        if (id == 'fritzboxAddress' || id == 'adapterAddress') {
+                            var ip1 = $('#fritzboxAddress').val();
+                            var ip2 = $('#adapterAddress').val();
 
-    var onChange = null;
+                            if (id == 'fritzboxAddress' && ip2 == '0.0.0.0') {
+                                var max = 0;
+                                var ip = '';
+                                $('#adapterAddress option').each(function () {
+                                    var c = checkIPs(ip1, $(this).attr('value'));
+                                    if (c > max) {
+                                        max = c;
+                                        ip = $(this).attr('value');
+                                    }
+                                });
+                                if (ip) 
+                                    $('#adapterAddress').val(ip);
 
-    function setValue(id, value) {
-        // example: select elements with id=key and class=value and insert value
-        if ($('#' + id + '.value').attr('type') == 'checkbox') {
-            $('#' + id + '.value').prop('checked', value).change(function() {
-                onChange();
-            });
-        } else {
-            $('#' + id + '.value').val(value).change(function() {
-                if (id == 'fritzboxAddress' || id == 'adapterAddress') {
-                    var ip1 = $('#fritzboxAddress').val();
-                    var ip2 = $('#adapterAddress').val();
-
-                    if (id == 'fritzboxAddress' && ip2 == '0.0.0.0') {
-                        var max = 0;
-                        var ip = '';
-                        $('#adapterAddress option').each(function () {
-                            var c = checkIPs(ip1, $(this).attr('value'));
-                            if (c > max) {
-                                max = c;
-                                ip = $(this).attr('value');
-                            }
-                        });
-                        if (ip) $('#adapterAddress').val(ip);
-
-                    }
-
-                    if (!ip2 || ip2 == '0.0.0.0' || !checkIPs(ip1, ip2)) {
-                        $('#adapterAddress').addClass('invalid').attr('title', _('This IP is unreachable from %s', $('#fritzboxAddress').val()));
-                    } else {
-                        $('#adapterAddress').removeClass('invalid').attr('title', '');
-                    }
-                }
-
-                onChange();
-            }).keyup(function() {
-                // Check that only numbers entered
-                if ($(this).hasClass('number')) {
-                    var val = $(this).val();
-                    if (val) {
-                        var newVal = '';
-                        for (var i = 0; i < val.length; i++) {
-                            if (val[i] >= '0' && val[i] <= '9') {
-                                newVal += val[i];
+                                }
+                            
+                            if (!ip2 || ip2 == '0.0.0.0' || !checkIPs(ip1, ip2)) {
+                                $('#adapterAddress')
+                                    .addClass('invalid')
+                                    .attr('title', _('This IP is unreachable from %s', $('#fritzboxAddress').val()));
+                            } else {
+                                $('#adapterAddress')
+                                    .removeClass('invalid')
+                                    .attr('title', '');
                             }
                         }
 
-                        if (val != newVal) $(this).val(newVal);
-                    }
-                }
-                // Fritzbox-Rufnummernformat gewünschte Länge überprüfen (max. 30)
-                if (id == 'numberLength') {
-                  if (parseInt(val) > 30) {
-                      newVal = "30";
-                      $(this).val(newVal);
-                  }
-                  // wenn die Einstellung für das Rufnummernformat kleiner als 4 ist, mit rotem Rahmen warnen
-                    if (parseInt(val) < 4) {
-                      $('#numberLength').addClass('invalid').attr('title', _('min.: 4, max.: 30'));
-                  } else {
-                      $('#numberLength').removeClass('invalid').attr('title', '');
-                  }
-                }
+                        onChange();
+                    })
+                    .keyup(function () {
+                        // Check that only numbers entered
+                        if ($(this).hasClass('number')) {
+                            var val = $(this).val();
+                            if (val) {
+                                var newVal = '';
+                                for (var i = 0; i < val.length; i++) {
+                                    if (val[i] >= '0' && val[i] <= '9') {
+                                        newVal += val[i];
+                                    }
+                                }
 
-                // Country Code (cc) darf nicht mit einer 0 beginnen
-                if (id == 'cc') {
-                    if (val.substring(0,1) == "0") {
-                        $('#cc').addClass('invalid').attr('title', _('Country Code without prefix'));
-                    } else {
-                        $('#cc').removeClass('invalid').attr('title', '');
-                    }
-                }
-                // Aerea Code (Ac) darf in Deutschland nicht mit einer 0 beginnen
-                var cc = $('#cc').val();
-                if (id == 'ac') {
-                    if (val.substring(0,1) == "0" && cc == "49") {
-                        $('#ac').addClass('invalid').attr('title', _('area Code without prefix'));
-                    } else {
-                        $('#ac').removeClass('invalid').attr('title', '');
-                    }
-                }
+                                if (val != newVal) 
+                                    $(this).val(newVal);
+                                }
+                            }
+                        // Fritzbox-Rufnummernformat gewünschte Länge überprüfen (max. 30)
+                        if (id == 'numberLength') {
+                            if (parseInt(val) > 30) {
+                                newVal = "30";
+                                $(this).val(newVal);
+                            }
+                            // wenn die Einstellung für das Rufnummernformat kleiner als 4 ist, mit rotem Rahmen warnen
+                            if (parseInt(val) < 4) {
+                                $('#numberLength')
+                                    .addClass('invalid')
+                                    .attr('title', _('min.: 4, max.: 30'));
+                            } else {
+                                $('#numberLength')
+                                    .removeClass('invalid')
+                                    .attr('title', '');
+                            }
+                        }
 
-                var validIP = /^((25[0-5]|2[0-4][0-9]|1?[0-9]?[0-9])\.){3}(25[0-5]|2[0-4][0-9]|1?[0-9]?[0-9])$/;
-                var fritzIP = $('#fritzboxAddress').val();
-                if (!fritzIP.match(validIP)) {
-                    $('#fritzboxAddress').addClass('warn').attr('title', _('Invalid IP-Address! Is it a hostname?'));
+                        // Country Code (cc) darf nicht mit einer 0 beginnen
+                        if (id == 'cc') {
+                            if (val.substring(0, 1) == "0") {
+                                $('#cc')
+                                    .addClass('invalid')
+                                    .attr('title', _('Country Code without prefix'));
+                            } else {
+                                $('#cc')
+                                    .removeClass('invalid')
+                                    .attr('title', '');
+                            }
+                        }
+                        // Aerea Code (Ac) darf in Deutschland nicht mit einer 0 beginnen
+                        var cc = $('#cc').val();
+                        if (id == 'ac') {
+                            if (val.substring(0, 1) == "0" && cc == "49") {
+                                $('#ac')
+                                    .addClass('invalid')
+                                    .attr('title', _('area Code without prefix'));
+                            } else {
+                                $('#ac')
+                                    .removeClass('invalid')
+                                    .attr('title', '');
+                            }
+                        }
+
+                        var validIP = /^((25[0-5]|2[0-4][0-9]|1?[0-9]?[0-9])\.){3}(25[0-5]|2[0-4][0-9]|1?[0-9]?[0-9])$/;
+                        var fritzIP = $('#fritzboxAddress').val();
+                        if (!fritzIP.match(validIP)) {
+                            $('#fritzboxAddress')
+                                .addClass('warn')
+                                .attr('title', _('Invalid IP-Address! Is it a hostname?'));
+                        } else {
+                            $('#fritzboxAddress')
+                                .removeClass('warn')
+                                .attr('title', '');
+                        }
+
+                        $(this).trigger('change');
+                    });
+            }
+        }
+
+        function load(settings, _onChange) {
+            onChange = _onChange;
+            fillSelectIPs('#adapterAddress', settings.adapterAddress, false, true);
+
+            for (var key in settings) {
+                setValue(key, settings[key]);
+            }
+
+            onChange(false);
+        }
+
+        function getSettings() {
+            var obj = {};
+            $('.value').each(function () {
+                var $this = $(this);
+                var id = $this.attr('id');
+
+                if ($this.attr('type') == 'checkbox') {
+                    obj[$this.attr('id')] = $this.prop('checked');
                 } else {
-                    $('#fritzboxAddress').removeClass('warn').attr('title', '');
+                    obj[$this.attr('id')] = $this.val();
                 }
-
-
-                $(this).trigger('change');
             });
-        }
-    }
-
-    function load(settings, _onChange) {
-        onChange = _onChange;
-        fillSelectIPs('#adapterAddress', settings.adapterAddress, false, true);
-
-        for (var key in settings) {
-            setValue(key, settings[key]);
+            return obj;
         }
 
-        onChange(false);
-    }
+        function save(callback) {
+            callback(getSettings());
+        }
 
-    function getSettings() {
-        var obj = {};
-        $('.value').each(function () {
-            var $this = $(this);
-            var id = $this.attr('id');
+        function checkIPs(ip1, ip2) {
+            // normally it must be calculated the common subnet mask and applyed to both ip addresses, if result is the same => ok
+            // I will check only 2 first numbers of ipV4
+            var i1 = ip1.split('.');
+            var i2 = ip2.split('.');
 
-            if ($this.attr('type') == 'checkbox') {
-                obj[$this.attr('id')] = $this.prop('checked');
-            } else {
-                obj[$this.attr('id')] = $this.val();
-            }
+            // If ipv6 or DNS name
+            if (i1.length != i2.length || i1.length != 4) 
+                return 1;
+            
+            if (i1[0] != i2[0]) 
+                return 0;
+            if (i1[1] != i2[1]) 
+                return 1;
+            if (i1[2] != i2[2]) 
+                return 2;
+            if (i1[3] != i2[3]) 
+                return 3;
+            
+            return 4;
+        }
+
+        $(document).ready(function () {
+            $('#daemon').change(function () {
+                switch ($(this).val()) {
+                    case 'rfd':
+                        $('#homematicPort').val('2001');
+                        break;
+
+                    case 'hs485d':
+                        $('#homematicPort').val('2000');
+                        break;
+
+                    case 'CUxD':
+                        $('#homematicPort').val('8701');
+                        $('#type').val('bin');
+                        break;
+                    default:
+                }
+            });
         });
-        return obj;
-    }
+    </script>
 
-    function save(callback) {
-        callback(getSettings());
-    }
+    <!-- you have to put your config page in a div with id adapter-container -->
+    <div id="adapter-container">
 
-    function checkIPs(ip1, ip2) {
-        // normally it must be calculated the common subnet mask and applyed to both ip addresses, if result is the same => ok
-        // I will check only 2 first numbers of ipV4
-        var i1 = ip1.split('.');
-        var i2 = ip2.split('.');
+        <table>
+            <tr>
+                <td><img src="fritzbox.png" width="64" height="64"></td>
+                <td style="padding-top: 20px;padding-left: 10px">
+                    <h3 class="translate">Fritzbox adapter settings</h3>
+                </td>
+            </tr>
+        </table>
 
-        // If ipv6 or DNS name
-        if (i1.length != i2.length || i1.length != 4) return 1;
+        <p class="translate">monitoring</p>
+        <h4 class="translate">fritzbox ip address</h4>
+        <table>
+            <tr>
+                <td class="translate">IP-Adresse:</td>
+                <td><input type="text" id="fritzboxAddress" class="value"/></td>
+            </tr>
+        </table>
+        <h4>TR-064</h4>
+        <table>
+            <tr>
+                <td colspan="2" class="translate">tr064 disclaimer</td>
+            </tr>
+            <tr>
+                <td class="translate">Username:</td>
+                <td><input type="text" id="fritzboxUser" class="value"/></td>
+            </tr>
+            <tr>
+                <td class="translate">Password:</td>
+                <td><input type="password" id="fritzboxPassword" class="value"/></td>
+            </tr>
+            <tr>
+                <td class="translate">tr064 enable wlan</td>
+                <td><input id="enableWlan" type="checkbox" class="value"/></td>
+            </tr>
+            <tr>
+                <td class="translate">tr064 enable phonebook</td>
+                <td><input id="enablePhonebook" type="checkbox" class="value"/></td>
+            </tr>
+            <tr>
+                <td class="translate">tr064 enable answering machine</td>
+                <td><input id="enableTAM" type="checkbox" class="value"/></td>
+            </tr>
+        </table>
+        <h4 class="translate">numbers</h4>
+        <table>
+            <tr>
+                <td class="translate">country code</td>
+                <td><input type="text" id="cc" class="value number"/></td>
+            </tr>
+            <tr>
+                <td class="translate">area code</td>
+                <td><input type="text" id="ac" class="value number"/></td>
+            </tr>
+            <tr>
+                <td class="translate">unknown number</td>
+                <td><input type="text" id="unknownNumber" class="value"/></td>
+            </tr>
+        </table>
+        <h4 class="translate">output</h4>
+        <table>
+            <tr>
+                <td class="translate">headline</td>
+                <td><input id="showHeadline" type="checkbox" class="value"/></td>
+            </tr>
+            <tr>
+                <td class="translate">number length</td>
+                <td><input id="numberLength" type="text" size="4" class="value number"/></td>
+            </tr>
+            <tr>
+                <td class="translate">tel:number</td>
+                <td><input id="externalLink" type="checkbox" class="value"/></td>
+            </tr>
 
-        if (i1[0] != i2[0]) return 0;
-        if (i1[1] != i2[1]) return 1;
-        if (i1[2] != i2[2]) return 2;
-        if (i1[3] != i2[3]) return 3;
+        </table>
+        <h4 class="translate">show history</h4>
+        <table>
+            <tr>
+                <td class="translate">history all txt</td>
+                <td><input id="showHistoryAllTableTxt" type="checkbox" class="value"/></td>
+            </tr>
+            <tr>
+                <td class="translate">history all html</td>
+                <td><input id="showHistoryAllTableHTML" type="checkbox" class="value"/></td>
+            </tr>
+            <tr>
+                <td class="translate">history all json</td>
+                <td><input id="showHistoryAllTableJSON" type="checkbox" class="value"/></td>
+            </tr>
+            <tr>
+                <td class="translate">history missed html</td>
+                <td><input id="showMissedTableHTML" type="checkbox" class="value"/></td>
+            </tr>
+            <tr>
+                <td class="translate">history missed json</td>
+                <td><input id="showMissedTableJSON" type="checkbox" class="value"/></td>
+            </tr>
+            <tr>
+                <td class="translate">show callmonitor</td>
+                <td><input id="showCallmonitor" type="checkbox" class="value"/></td>
+            </tr>
+        </table>
 
-        return 4;
-    }
-
-    $(document).ready(function () {
-        $('#daemon').change(function () {
-            switch ($(this).val()) {
-                case 'rfd':
-                    $('#homematicPort').val('2001');
-                    break;
-
-                case 'hs485d':
-                    $('#homematicPort').val('2000');
-                    break;
-
-                case 'CUxD':
-                    $('#homematicPort').val('8701');
-                    $('#type').val('bin');
-                    break;
-                default:
-            }
-        });
-    });
-
-</script>
-
-
-
-<!-- you have to put your config page in a div with id adapter-container -->
-<div id="adapter-container">
-
-    <table><tr>
-        <td><img src="fritzbox.png" width="64" height="64"></td>
-        <td style="padding-top: 20px;padding-left: 10px"><h3 class="translate">Fritzbox adapter settings</h3></td>
-    </tr></table>
-
-    <p class="translate">monitoring</p>
-    <h4 class="translate">fritzbox ip address</h4>
-    <table>
-        <tr>
-            <td class="translate">IP-Adresse:</td>
-            <td><input type="text" id="fritzboxAddress" class="value"/></td>
-        </tr>
-    </table>
-    <h4>TR-064</h4>
-    <table>
-        <tr>
-            <td colspan="2" class="translate">tr064 disclaimer</td>
-        </tr>
-        <tr>
-            <td class="translate">Username:</td>
-            <td><input type="text" id="fritzboxUser" class="value"/></td>
-        </tr>
-        <tr>
-            <td class="translate">Password:</td>
-            <td><input type="password" id="fritzboxPassword" class="value"/></td>
-        </tr>
-        <tr>
-            <td class="translate">tr064 enable wlan</td>
-            <td><input id="enableWlan" type="checkbox" class="value" /></td>
-        </tr>
-        <tr>
-            <td class="translate">tr064 enable phonebook</td>
-            <td><input id="enablePhonebook" type="checkbox" class="value" /></td>
-        </tr>
-    </table>
-    <h4 class="translate">numbers</h4>
-    <table>
-        <tr>
-            <td class="translate">country code</td>
-            <td><input type="text" id="cc" class="value number"/></td>
-        </tr>
-        <tr>
-            <td class="translate">area code</td>
-            <td><input type="text" id="ac" class="value number"/></td>
-        </tr>
-        <tr>
-            <td class="translate">unknown number</td>
-            <td><input type="text" id="unknownNumber" class="value"/></td>
-        </tr>
-    </table>
-    <h4 class="translate">output</h4>
-    <table>
-        <tr>
-            <td class="translate">headline</td>
-            <td><input id="showHeadline" type="checkbox" class="value"/></td>
-        </tr>
-        <tr>
-            <td class="translate">number length</td>
-            <td><input id="numberLength" type="text" size="4" class="value number"/></td>
-        </tr>
-        <tr>
-            <td class="translate">tel:number</td>
-            <td><input id="externalLink" type="checkbox" class="value"/></td>
-        </tr>
-
-    </table>
-    <h4 class="translate">show history</h4>
-    <table>
-        <tr>
-            <td class="translate">history all txt</td>
-            <td><input id="showHistoryAllTableTxt" type="checkbox" class="value"/></td>
-        </tr>
-        <tr>
-            <td class="translate">history all html</td>
-            <td><input id="showHistoryAllTableHTML" type="checkbox" class="value"/></td>
-        </tr>
-        <tr>
-            <td class="translate">history all json</td>
-            <td><input id="showHistoryAllTableJSON" type="checkbox" class="value"/></td>
-        </tr>
-        <tr>
-            <td class="translate">history missed html</td>
-            <td><input id="showMissedTableHTML" type="checkbox" class="value"/></td>
-        </tr>
-        <tr>
-            <td class="translate">history missed json</td>
-            <td><input id="showMissedTableJSON" type="checkbox" class="value"/></td>
-        </tr>
-        <tr>
-            <td class="translate">show callmonitor</td>
-            <td><input id="showCallmonitor" type="checkbox" class="value"/></td>
-        </tr>
-    </table>
-
-</div>
+    </div>
 
 </html>
