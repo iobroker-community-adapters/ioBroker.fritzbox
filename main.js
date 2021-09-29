@@ -1238,12 +1238,13 @@ function getTAM(host, user, password) {
                                     if (typeof message != 'undefined') {
                                         promises.push(new Promise((resolve, reject) => {
                                             if (!message.Path) {
-                                                adapter.log.warn("TR-064: TAM Message has no url");
+                                                adapter.log.warn("TR-064: TAM message has no url");
                                                 resolve('');
                                                 return;
                                             }
 
-                                            var file = `tam/${message.Date.replace('.','').replace(':','').replace(' ','')}-${message.Number}.wav`
+                                            var file = `tam/${message.Date.toString().replace('.','').replace(':','').replace(' ','')}-${message.Number}.wav`
+                                            adapter.log.debug(`TR-064: TAM message file: ${file}`);
                                             if (existsSync(file)) {
                                                 resolve(path.resolve(file));
                                                 return;
