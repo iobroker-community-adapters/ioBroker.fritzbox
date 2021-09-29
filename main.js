@@ -44,7 +44,7 @@ var tr = require("tr-064");     // node-Modul für die Kommunikation via TR-064 
 var request = require("request");
 var https = require("https");
 
-const { existsSync, writeFile, mkdirSync, readdir } = require('fs');
+const { existsSync, writeFile, mkdirSync, readdir, unlink } = require('fs');
 const path = require('path');
 
 var adapter = utils.Adapter('fritzbox');
@@ -1316,9 +1316,13 @@ function getTAM(host, user, password) {
                                             );
                                         } else {
                                             files.forEach(file => {
-                                                adapter.log.debug(
-                                                    `TR-064: found file: ${file}`
-                                                );
+                                                if (!messages.find(m => msg.audioFile == path.resolve(file))) {
+                                                    // old file
+                                                    adapter.log.debug(
+                                                        `TR-064: Remove old tam audio file: ${file}`
+                                                    );
+                                                    unlink(file);
+                                                }
                                             })
                                         }
                                     })
