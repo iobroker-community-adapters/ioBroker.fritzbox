@@ -1274,6 +1274,7 @@ function getTAM(host, user, password) {
                                               , method: 'GET'
                                               , agent: agent
                                               }, function (err, res, fileBody) {
+                                                  adapter.log.debug(`Download statuscode: ${res.statusCode || 0}`);
                                                   if (!err && res.statusCode == 200) {
                                                     adapter.log.debug(`TR-064: Downloaded TAM audio file...`);
 
