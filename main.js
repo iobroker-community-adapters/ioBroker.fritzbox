@@ -1208,7 +1208,7 @@ function getTAM(host, user, password) {
                 var url = ret.NewURL;
                 adapter.log.debug("TR-064: Got TAM uri: " + url);
                 var baseUrl = url.substring(0, url.lastIndexOf('/'));
-                var sid = /sid=([\d\w]+)/.match(url)[1];
+                var sid = url.match(/sid=([\d\w]+)/)[1];
                 adapter.log.debug(`TR-064: sid=${sid}`);
 
                 var agentOptions;
