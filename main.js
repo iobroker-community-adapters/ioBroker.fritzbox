@@ -1243,7 +1243,10 @@ function getTAM(host, user, password) {
                                                 return;
                                             }
 
-                                            var file = `tam/${message.Date[0].getTime()}-${message.Number[0]}.wav`
+                                            var callDate = message.Date[0];
+                                            adapter.log.debug(`callDate is ${typeof(callDate)}`);
+
+                                            var file = `tam/${callDate.toString().replaceAll('.','').replaceAll(':','').replaceAll(' ','')}-${message.Number[0]}.wav`
                                             adapter.log.debug(`TR-064: TAM message file: ${file}`);
                                             if (existsSync(file)) {
                                                 resolve(path.resolve(file));
