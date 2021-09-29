@@ -44,6 +44,9 @@ var tr = require("tr-064");     // node-Modul für die Kommunikation via TR-064 
 var request = require("request");
 var https = require("https");
 
+const { existsSync, writeFile, mkdirSync } = require('fs');
+const path = require('path');
+
 var adapter = utils.Adapter('fritzbox');
 
 var call = [];
@@ -1227,8 +1230,67 @@ function getTAM(host, user, password) {
                                 adapter.log.warn("TR-064: Error while parsing TAM content: " + err);
                             } else {
                                 adapter.log.debug("TR-064: Successfully parsed TAM content, analyzing result ...");
+                                var promises = [];
                                 var messages = [];
-                                adapter.log.debug(JSON.stringify(result));
+
+                                for (var m = 0; m <= result.Root.Message.length; m++) {
+                                    var message = result.Root.Message[m];
+                                    if (typeof message != 'undefined') {
+                                        promises.push(new Promise((resolve, reject) => {
+                                            if (!message.Path) {
+                                                adapter.log.warn("TR-064: TAM Message has no url");
+                                                resolve('');
+                                                return;
+                                            }
+
+                                            var file = `tam/${message.Date.getTime()}-${message.Number}.wav`
+                                            if (existsSync(file)) {
+                                                resolve(path.resolve(file));
+                                                return;
+                                            }
+
+                                            mkdirSync('tam', { recursive: true });
+
+                                            var downloadUrl = message.Path;
+                                            if (downloadUrl.startsWith('/')) {
+                                                downloadUrl = host + downloadUrl;
+                                            }
+                                            request({
+                                                url: downloadUrl
+                                              , method: 'GET'
+                                              , agent: agent
+                                              }, function (err, res, fileBody) {
+                                                  if (!err && res.statusCode == 200) {
+                                                    adapter.log.debug(`TR-064: Downloaded TAM audio file...`);
+
+                                                    writeFile(file, fileBody);
+                                                    resolve(path.resolve(file));
+                                                  } else {
+                                                    adapter.log.warn(
+                                                        `TR-064: Error while downloading TAM audio file: ${err}`
+                                                    );
+                                                    resolve('');
+                                                  }
+                                                }
+                                            );
+                                        }).then((path) => {
+                                            messages.push({
+                                                index: message.Index,
+                                                calledNumber: message.Called,
+                                                date: message.Date,
+                                                duration: message.Duration,
+                                                callerName: message.Name,
+                                                callerNumber: message.Number,
+                                                audioFile: path
+                                            });
+                                        }));
+                                    }
+                                }
+
+                                Promise.all(promises).then(function(){
+                                    adapter.setState('tam.messagesJSON', JSON.stringify(messages), true);
+                                    adapter.log.debug("TR-064: Successfully analyzed TAM results");
+                                });
                             }
                         });
                     } else {
