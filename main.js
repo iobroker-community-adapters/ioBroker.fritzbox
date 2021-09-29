@@ -1077,7 +1077,7 @@ function parseData(message) {
 
         // try to get phonebook
         if (call[id].connect && call[id].direction === "in" && adapter.config.enableTAM) {
-            getTAM(host, adapter.config.fritzboxUser, adapter.config.fritzboxPassword);
+            getTAM(adapter.config.fritzboxAddress, adapter.config.fritzboxUser, adapter.config.fritzboxPassword);
         }
 
     } // End DSICONNECT
