@@ -1236,6 +1236,8 @@ function getTAM(host, user, password) {
                                 var promises = [];
                                 var messages = [];
 
+                                mkdirSync('tam', { recursive: true });
+
                                 for (var m = 0; m <= result.Root.Message.length; m++) {
                                     var message = result.Root.Message[m];
                                     if (typeof message != 'undefined') {
@@ -1263,8 +1265,6 @@ function getTAM(host, user, password) {
                                                 resolve(msg);
                                                 return;
                                             }
-
-                                            mkdirSync('tam', { recursive: true });
 
                                             var downloadUrl = message.Path[0];
                                             if (downloadUrl.startsWith('/')) {
@@ -1309,7 +1309,7 @@ function getTAM(host, user, password) {
                                     messages.sort((m1,m2) => m1.index > m2.index ? 1 : m1.index < m2.index ? -1 : 0);
 
                                     // cleanup old files
-                                    readdir('/tam', (err, files) => {
+                                    readdir('tam', (err, files) => {
                                         if (err) {
                                             adapter.log.warn(
                                                 `TR-064: Error reading files from dir /tam: ${err}`
