@@ -1208,6 +1208,8 @@ function getTAM(host, user, password) {
                 var url = ret.NewURL;
                 adapter.log.debug("TR-064: Got TAM uri: " + url);
                 var baseUrl = url.substring(0, url.lastIndexOf('/'));
+                var sid = /sid=([\d\w]+)/.match(url)[1];
+                adapter.log.debug(`TR-064: sid=${sid}`);
 
                 var agentOptions;
 				var agent;
@@ -1268,12 +1270,15 @@ function getTAM(host, user, password) {
                                             if (downloadUrl.startsWith('/')) {
                                                 downloadUrl = baseUrl + downloadUrl;
                                             }
+                                            if (downloadUrl.indexOf('sid=')<0){
+                                                downloadUrl += `&sid=${sid}`;
+                                            }
                                             adapter.log.debug(`TR-064: Download TAM audio file from ${downloadUrl}`);
 
                                             request({
                                                 url: downloadUrl
                                               , method: 'GET'
-                                              , agent: tam.agent
+                                              , agent: agent
                                               }, function (err, res, fileBody) {
                                                   adapter.log.debug(`Download statuscode: ${res.statusCode || 0}`);
                                                   if (!err && res.statusCode == 200) {
