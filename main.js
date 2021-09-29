@@ -1205,7 +1205,38 @@ function getTAM(host, user, password) {
                 var url = ret.NewURL;
                 adapter.log.debug("TR-064: Got TAM uri: " + url);
 
+                var agentOptions;
+				var agent;
 
+				agentOptions = {
+				  rejectUnauthorized: false
+				};
+
+				agent = new https.Agent(agentOptions);
+
+                request({
+				  url: url
+				, method: 'GET'
+				, agent: agent
+				}, function (error, response, body) {
+                    if (!error && response.statusCode == 200) {
+                        adapter.log.debug("TR-064: Got valid TAM content from, starting to parse ...");
+                        adapter.log.debug(body);
+                        var parser = new xml2js.Parser();
+                        parser.parseString(body, function (err, result) {
+                            if (err) {
+                                adapter.log.warn("TR-064: Error while parsing TAM content: " + err);
+                            } else {
+                                adapter.log.debug("TR-064: Successfully parsed TAM content, analyzing result ...");
+
+                            }
+                        });
+                    } else {
+						adapter.log.warn(
+							`TR-064: Error while requesting TAM: ${error}`
+						);
+					}
+                });
             }
         });
     });
