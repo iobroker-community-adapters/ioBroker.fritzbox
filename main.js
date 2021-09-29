@@ -1237,13 +1237,13 @@ function getTAM(host, user, password) {
                                     var message = result.Root.Message[m];
                                     if (typeof message != 'undefined') {
                                         promises.push(new Promise((resolve, reject) => {
-                                            if (!message.Path) {
+                                            if (!message.Path || message.length.Path.length < 1) {
                                                 adapter.log.warn("TR-064: TAM message has no url");
                                                 resolve('');
                                                 return;
                                             }
 
-                                            var file = `tam/${message.Date.toString().replace('.','').replace(':','').replace(' ','')}-${message.Number}.wav`
+                                            var file = `tam/${message.Date[0].replaceAll('.','').replaceAll(':','').replaceAll(' ','')}-${message.Number[0]}.wav`
                                             adapter.log.debug(`TR-064: TAM message file: ${file}`);
                                             if (existsSync(file)) {
                                                 resolve(path.resolve(file));
@@ -1252,7 +1252,7 @@ function getTAM(host, user, password) {
 
                                             mkdirSync('tam', { recursive: true });
 
-                                            var downloadUrl = message.Path;
+                                            var downloadUrl = message.Path[0];
                                             if (downloadUrl.startsWith('/')) {
                                                 downloadUrl = host + downloadUrl;
                                             }
@@ -1276,12 +1276,12 @@ function getTAM(host, user, password) {
                                             );
                                         }).then((path) => {
                                             messages.push({
-                                                index: message.Index,
-                                                calledNumber: message.Called,
-                                                date: message.Date,
-                                                duration: message.Duration,
-                                                callerName: message.Name,
-                                                callerNumber: message.Number,
+                                                index: message.Index[0],
+                                                calledNumber: message.Called[0],
+                                                date: message.Date[0],
+                                                duration: message.Duration[0],
+                                                callerName: message.Name[0],
+                                                callerNumber: message.Number[0],
                                                 audioFile: path
                                             });
                                         }));
