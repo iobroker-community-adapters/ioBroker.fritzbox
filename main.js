@@ -1316,7 +1316,7 @@ function getTAM(host, user, password) {
                                             );
                                         } else {
                                             files.forEach(file => {
-                                                if (!messages.find(m => msg.audioFile == path.resolve(file))) {
+                                                if (!messages.find(msg => msg.audioFile == path.resolve(file))) {
                                                     // old file
                                                     adapter.log.debug(
                                                         `TR-064: Remove old tam audio file: ${file}`
