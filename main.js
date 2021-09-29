@@ -1277,6 +1277,7 @@ function getTAM(host, user, password) {
                                                 }
                                             );
                                         }).then((result) => {
+                                            adapter.log.debug(`TR-064: Push message: ${JSON.stringify(result)}`);
                                             messages.push({
                                                 index: result.message.Index[0],
                                                 calledNumber: result.message.Called[0],
