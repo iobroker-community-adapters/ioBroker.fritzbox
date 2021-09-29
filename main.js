@@ -1207,6 +1207,7 @@ function getTAM(host, user, password) {
             } else if (ret.NewURL && ret.NewURL.length > 0) {
                 var url = ret.NewURL;
                 adapter.log.debug("TR-064: Got TAM uri: " + url);
+                var baseUrl = url.substring(0, url.lastIndexOf('/'));
 
                 var agentOptions;
 				var agent;
@@ -1239,7 +1240,7 @@ function getTAM(host, user, password) {
                                         promises.push(new Promise((resolve, reject) => {
                                             if (!message.Path || message.Path.length < 1) {
                                                 adapter.log.warn("TR-064: TAM message has no url");
-                                                resolve('');
+                                                resolve({message: message, path:''});
                                                 return;
                                             }
 
@@ -1247,7 +1248,7 @@ function getTAM(host, user, password) {
                                             var file = `tam/${callDate}-${message.Number[0]}.wav`
                                             adapter.log.debug(`TR-064: TAM message file: ${file}`);
                                             if (existsSync(file)) {
-                                                resolve(path.resolve(file));
+                                                resolve({message: message, path: path.resolve(file)});
                                                 return;
                                             }
 
@@ -1255,7 +1256,7 @@ function getTAM(host, user, password) {
 
                                             var downloadUrl = message.Path[0];
                                             if (downloadUrl.startsWith('/')) {
-                                                downloadUrl = host + downloadUrl;
+                                                downloadUrl = baseUrl + downloadUrl;
                                             }
                                             request({
                                                 url: downloadUrl
@@ -1266,24 +1267,24 @@ function getTAM(host, user, password) {
                                                     adapter.log.debug(`TR-064: Downloaded TAM audio file...`);
 
                                                     writeFile(file, fileBody);
-                                                    resolve(path.resolve(file));
+                                                    resolve({message: message, path: path.resolve(file)});
                                                   } else {
                                                     adapter.log.warn(
                                                         `TR-064: Error while downloading TAM audio file: ${err}`
                                                     );
-                                                    resolve('');
+                                                    resolve({message: message, path:''});
                                                   }
                                                 }
                                             );
-                                        }).then((path) => {
+                                        }).then((result) => {
                                             messages.push({
-                                                index: message.Index[0],
-                                                calledNumber: message.Called[0],
-                                                date: message.Date[0],
-                                                duration: message.Duration[0],
-                                                callerName: message.Name[0],
-                                                callerNumber: message.Number[0],
-                                                audioFile: path
+                                                index: result.message.Index[0],
+                                                calledNumber: result.message.Called[0],
+                                                date: result.message.Date[0],
+                                                duration: result.message.Duration[0],
+                                                callerName: result.message.Name[0],
+                                                callerNumber: result.message.Number[0],
+                                                audioFile: result.path
                                             });
                                         }));
                                     }
