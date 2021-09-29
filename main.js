@@ -1256,7 +1256,7 @@ function getTAM(host, user, password) {
                                             }
 
                                             var callDate = message.Date[0].split('.').join("").split(':').join("").split(' ').join("");
-                                            var file = `tam/${callDate}-${message.Number[0]}.wav`
+                                            var file = `admin/tam/${callDate}-${message.Number[0]}.wav`
                                             adapter.log.debug(`TR-064: TAM message file: ${file}`);
                                             if (existsSync(file)) {
                                                 msg.audioFile = path.resolve(file);
@@ -1264,7 +1264,7 @@ function getTAM(host, user, password) {
                                                 return;
                                             }
 
-                                            mkdirSync('tam', { recursive: true });
+                                            mkdirSync('admin/tam', { recursive: true });
 
                                             var downloadUrl = message.Path[0];
                                             if (downloadUrl.startsWith('/')) {
