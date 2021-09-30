@@ -43,7 +43,6 @@ var tr = require("tr-064");     // node-Modul für die Kommunikation via TR-064 
 
 var request = require("request");
 var https = require("https");
-var http = require("http");
 
 const { existsSync, writeFile, mkdirSync, readdir, unlink, createWriteStream } = require('fs');
 const path = require('path');
@@ -1276,8 +1275,8 @@ function getTAM(host, user, password) {
                                             }
                                             adapter.log.debug(`TR-064: Download TAM audio file from ${downloadUrl}`);
 
-                                            http.get({
-                                                url: downloadUrl, agent: agent
+                                            https.get({
+                                                url: downloadUrl, agent: agent, port: 49443
                                               }, function (res) {
                                                   if (res.statusCode == 200) {
                                                     adapter.log.debug(`TR-064: Downloaded TAM audio file...`);
