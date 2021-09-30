@@ -42,7 +42,6 @@ var tr = require("tr-064");     // node-Modul für die Kommunikation via TR-064 
                                 // Beschreibung zu TR-064: http://avm.de/service/schnittstellen/
 
 var request = require("request");
-var https = require("https");
 
 const { existsSync, writeFile, mkdirSync, readdir, unlink, createWriteStream } = require('fs');
 const path = require('path');
@@ -1276,38 +1275,28 @@ function getTAM(host, user, password) {
                                             }
                                             adapter.log.debug(`TR-064: Download TAM audio file from ${downloadUrl}`);
 
-                                            var url = new URL(downloadUrl);
-                                            https.get({
-                                                hostname: url.hostname,
-                                                port: url.port,
-                                                path: url.pathname,
-                                                agent: agent
-                                              }, function (res) {
-                                                  if (res.statusCode == 200) {
-                                                    adapter.log.debug(`TR-064: Downloaded TAM audio file...`);
-
-                                                    const stream = createWriteStream(file);
-                                                    res.pipe(stream);
-                                                    stream.on('finish', function() {
-                                                        stream.close(function() {
-                                                            msg.audioFile = path.resolve(file);
-                                                            resolve(msg);
-                                                        });
-                                                    }).on('error', function(err) { // Handle errors
-                                                        unlink(file);
-                                                        adapter.log.warn(
-                                                            `TR-064: Error while downloading TAM audio file: ${err}`
-                                                        );
-                                                        resolve(msg);
-                                                      });;
-                                                  } else {
+                                            const stream = createWriteStream(file);
+                                            request({url: downloadUrl, agent: agent})
+                                                .on('error', function(err) {
+                                                    unlink(file);
                                                     adapter.log.warn(
-                                                        `TR-064: Error while downloading TAM audio file: ${res.statusCode}`
+                                                        `TR-064: Error while downloading TAM audio file: ${err}`
                                                     );
-                                                    resolve(msg);
-                                                  }
-                                                }
-                                            );
+                                                })
+                                                .pipe(stream)
+                                                .on('error', function(err) {
+                                                    unlink(file);
+                                                    adapter.log.warn(
+                                                        `TR-064: Error while writing TAM audio file: ${err}`
+                                                    );
+                                                })
+                                                .on('finish', function() {
+                                                    stream.close(function() {
+                                                        msg.audioFile = path.resolve(file);
+                                                        resolve(msg);
+                                                    });
+                                                });
+
                                         }).then((result) => {
                                             messages.push(result);
                                         }));
