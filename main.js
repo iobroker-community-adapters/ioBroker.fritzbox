@@ -1275,22 +1275,29 @@ function getTAM(host, user, password) {
                                             }
                                             adapter.log.debug(`TR-064: Download TAM audio file from ${downloadUrl}`);
 
-                                            request({
-                                                url: downloadUrl
-                                              , method: 'GET'
-                                              , agent: agent
-                                              }, function (err, res, fileBody) {
-                                                  if (!err && res.statusCode == 200) {
+                                            https.get({
+                                                url: downloadUrl, agent: agent
+                                              }, function (res) {
+                                                  if (res.statusCode == 200) {
                                                     adapter.log.debug(`TR-064: Downloaded TAM audio file...`);
 
                                                     const stream = createWriteStream(file);
                                                     res.pipe(stream);
-
-                                                    msg.audioFile = path.resolve(file);
-                                                    resolve(msg);
+                                                    stream.on('finish', function() {
+                                                        stream.close(function() {
+                                                            msg.audioFile = path.resolve(file);
+                                                            resolve(msg);
+                                                        });
+                                                    }).on('error', function(err) { // Handle errors
+                                                        unlink(file);
+                                                        adapter.log.warn(
+                                                            `TR-064: Error while downloading TAM audio file: ${err}`
+                                                        );
+                                                        resolve(msg);
+                                                      });;
                                                   } else {
                                                     adapter.log.warn(
-                                                        `TR-064: Error while downloading TAM audio file: ${err}`
+                                                        `TR-064: Error while downloading TAM audio file: ${res.statusCode}`
                                                     );
                                                     resolve(msg);
                                                   }
