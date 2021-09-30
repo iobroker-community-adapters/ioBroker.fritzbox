@@ -44,7 +44,7 @@ var tr = require("tr-064");     // node-Modul für die Kommunikation via TR-064 
 var request = require("request");
 var https = require("https");
 
-const { existsSync, writeFile, mkdirSync, readdir, unlink } = require('fs');
+const { existsSync, writeFile, mkdirSync, readdir, unlink, createWriteStream } = require('fs');
 const path = require('path');
 
 var adapter = utils.Adapter('fritzbox');
@@ -1283,14 +1283,11 @@ function getTAM(host, user, password) {
                                                   if (!err && res.statusCode == 200) {
                                                     adapter.log.debug(`TR-064: Downloaded TAM audio file...`);
 
-                                                    writeFile(file, fileBody, function(writeErr) {
-                                                        if (!writeErr){
-                                                            msg.audioFile = path.resolve(file);
-                                                        } else {
-                                                            adapter.log.warn(`TR-064: Error while writing file: ${writeErr}`);
-                                                        }
-                                                        resolve(msg);
-                                                    });
+                                                    const stream = createWriteStream(file);
+                                                    res.pipe(stream);
+
+                                                    msg.audioFile = path.resolve(file);
+                                                    resolve(msg);
                                                   } else {
                                                     adapter.log.warn(
                                                         `TR-064: Error while downloading TAM audio file: ${err}`
