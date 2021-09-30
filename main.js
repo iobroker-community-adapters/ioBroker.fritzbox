@@ -41,6 +41,7 @@ var net =    require('net');    // node-Modul für die tcp/ip Kommunikation
 var tr = require("tr-064");     // node-Modul für die Kommunikation via TR-064 mit der FritzBox
                                 // Beschreibung zu TR-064: http://avm.de/service/schnittstellen/
 
+var https = require("https");
 var request = require("request");
 
 const { existsSync, writeFile, mkdirSync, readdir, unlink, createWriteStream } = require('fs');
