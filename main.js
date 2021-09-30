@@ -46,6 +46,7 @@ var https = require("https");
 
 const { existsSync, writeFile, mkdirSync, readdir, unlink, createWriteStream } = require('fs');
 const path = require('path');
+const { url } = require('inspector');
 
 var adapter = utils.Adapter('fritzbox');
 
@@ -1275,8 +1276,12 @@ function getTAM(host, user, password) {
                                             }
                                             adapter.log.debug(`TR-064: Download TAM audio file from ${downloadUrl}`);
 
+                                            var url = new url(downloadUrl);
                                             https.get({
-                                                url: downloadUrl, agent: agent, port: 49443
+                                                hostname: url.hostname,
+                                                port: url.port,
+                                                path: url.pathname,
+                                                agent: agent
                                               }, function (res) {
                                                   if (res.statusCode == 200) {
                                                     adapter.log.debug(`TR-064: Downloaded TAM audio file...`);
