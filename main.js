@@ -1276,7 +1276,7 @@ function getTAM(host, user, password) {
                                             }
                                             adapter.log.debug(`TR-064: Download TAM audio file from ${downloadUrl}`);
 
-                                            var url = new url(downloadUrl);
+                                            var url = new URL(downloadUrl);
                                             https.get({
                                                 hostname: url.hostname,
                                                 port: url.port,
