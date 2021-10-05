@@ -1229,7 +1229,6 @@ function getTAM(host, user, password) {
                     if (!error && response.statusCode == 200) {
                         adapter.log.debug("TR-064: Got valid TAM content from, starting to parse ...");
                         var parser = new xml2js.Parser();
-                        adapter.log.debug(body);
                         parser.parseString(body, function (err, result) {
                             if (err) {
                                 adapter.log.warn("TR-064: Error while parsing TAM content: " + err);
@@ -1240,68 +1239,73 @@ function getTAM(host, user, password) {
 
                                 mkdirSync('tam', { recursive: true });
 
-                                for (var m = 0; m <= result.Root.Message.length; m++) {
-                                    var message = result.Root.Message[m];
-                                    if (typeof message != 'undefined') {
-                                        promises.push(new Promise((resolve, reject) => {
-                                            var msg = {
-                                                index: message.Index[0],
-                                                calledNumber: message.Called[0],
-                                                date: message.Date[0],
-                                                duration: message.Duration[0],
-                                                callerName: message.Name[0],
-                                                callerNumber: message.Number[0],
-                                                audioFile: ''
-                                            };
-                                            if (!message.Path || message.Path.length < 1) {
-                                                adapter.log.warn("TR-064: TAM message has no url");
-                                                resolve(msg);
-                                                return;
-                                            }
+                                if(!result.Root.Message) {
+                                    // No messahes
+                                    promises.push(new Promise((resolve, reject) => resolve()));
+                                } else {
+                                    for (var m = 0; m <= result.Root.Message.length; m++) {
+                                        var message = result.Root.Message[m];
+                                        if (typeof message != 'undefined') {
+                                            promises.push(new Promise((resolve, reject) => {
+                                                var msg = {
+                                                    index: message.Index[0],
+                                                    calledNumber: message.Called[0],
+                                                    date: message.Date[0],
+                                                    duration: message.Duration[0],
+                                                    callerName: message.Name[0],
+                                                    callerNumber: message.Number[0],
+                                                    audioFile: ''
+                                                };
+                                                if (!message.Path || message.Path.length < 1) {
+                                                    adapter.log.warn("TR-064: TAM message has no url");
+                                                    resolve(msg);
+                                                    return;
+                                                }
 
-                                            var callDate = message.Date[0].split('.').join("").split(':').join("").split(' ').join("");
-                                            var file = `tam/${callDate}-${message.Number[0]}.wav`
-                                            adapter.log.debug(`TR-064: TAM message file: ${file}`);
-                                            if (existsSync(file)) {
-                                                msg.audioFile = path.resolve(file);
-                                                resolve(msg);
-                                                return;
-                                            }
+                                                var callDate = message.Date[0].split('.').join("").split(':').join("").split(' ').join("");
+                                                var file = `tam/${callDate}-${message.Number[0]}.wav`
+                                                adapter.log.debug(`TR-064: TAM message file: ${file}`);
+                                                if (existsSync(file)) {
+                                                    msg.audioFile = path.resolve(file);
+                                                    resolve(msg);
+                                                    return;
+                                                }
 
-                                            var downloadUrl = message.Path[0];
-                                            if (downloadUrl.startsWith('/')) {
-                                                downloadUrl = baseUrl + downloadUrl;
-                                            }
-                                            if (downloadUrl.indexOf('sid=')<0){
-                                                downloadUrl += `&sid=${sid}`;
-                                            }
-                                            adapter.log.debug(`TR-064: Download TAM audio file from ${downloadUrl}`);
+                                                var downloadUrl = message.Path[0];
+                                                if (downloadUrl.startsWith('/')) {
+                                                    downloadUrl = baseUrl + downloadUrl;
+                                                }
+                                                if (downloadUrl.indexOf('sid=')<0){
+                                                    downloadUrl += `&sid=${sid}`;
+                                                }
+                                                adapter.log.debug(`TR-064: Download TAM audio file from ${downloadUrl}`);
 
-                                            const stream = createWriteStream(file);
-                                            request({url: downloadUrl, agent: agent})
-                                                .on('error', function(err) {
-                                                    unlink(file);
-                                                    adapter.log.warn(
-                                                        `TR-064: Error while downloading TAM audio file: ${err}`
-                                                    );
-                                                })
-                                                .pipe(stream)
-                                                .on('error', function(err) {
-                                                    unlink(file);
-                                                    adapter.log.warn(
-                                                        `TR-064: Error while writing TAM audio file: ${err}`
-                                                    );
-                                                })
-                                                .on('finish', function() {
-                                                    stream.close(function() {
-                                                        msg.audioFile = path.resolve(file);
-                                                        resolve(msg);
+                                                const stream = createWriteStream(file);
+                                                request({url: downloadUrl, agent: agent})
+                                                    .on('error', function(err) {
+                                                        unlink(file);
+                                                        adapter.log.warn(
+                                                            `TR-064: Error while downloading TAM audio file: ${err}`
+                                                        );
+                                                    })
+                                                    .pipe(stream)
+                                                    .on('error', function(err) {
+                                                        unlink(file);
+                                                        adapter.log.warn(
+                                                            `TR-064: Error while writing TAM audio file: ${err}`
+                                                        );
+                                                    })
+                                                    .on('finish', function() {
+                                                        stream.close(function() {
+                                                            msg.audioFile = path.resolve(file);
+                                                            resolve(msg);
+                                                        });
                                                     });
-                                                });
 
-                                        }).then((result) => {
-                                            messages.push(result);
-                                        }));
+                                            }).then((result) => {
+                                                messages.push(result);
+                                            }));
+                                        }
                                     }
                                 }
 
