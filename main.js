@@ -1229,6 +1229,7 @@ function getTAM(host, user, password) {
                     if (!error && response.statusCode == 200) {
                         adapter.log.debug("TR-064: Got valid TAM content from, starting to parse ...");
                         var parser = new xml2js.Parser();
+                        adapter.log.debug(body);
                         parser.parseString(body, function (err, result) {
                             if (err) {
                                 adapter.log.warn("TR-064: Error while parsing TAM content: " + err);
