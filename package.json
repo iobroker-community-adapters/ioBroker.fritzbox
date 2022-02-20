@@ -20,7 +20,7 @@
       "email": "basgo@gmx.de"
     }
   ],
-  "homepage": "https://github.com/ruhr70/ioBroker.fritzbox",
+  "homepage": "https://github.com/iobroker-community-adapters/ioBroker.fritzbox",
   "license": "MIT",
   "keywords": [
     "ioBroker",
@@ -28,7 +28,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/ruhr70/ioBroker.fritzbox"
+    "url": "https://github.com/iobroker-community-adapters/ioBroker.fritzbox"
   },
   "dependencies": {
     "request": "^2.72.0",
@@ -50,7 +50,7 @@
     "chai": "^4.1.2"
   },
   "bugs": {
-    "url": "https://github.com/ruhr70/ioBroker.fritzbox/issues"
+    "url": "https://github.com/iobroker-community-adapters/ioBroker.fritzbox/issues"
   },
   "scripts": {
     "test": "node node_modules/mocha/bin/mocha --exit"
