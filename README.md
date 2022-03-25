@@ -21,7 +21,7 @@ ioBroker fritzbox Adapter
 * (ruhr) more configuration options
 
 ### 0.2.0 (2015-06-26)
-* (ruhr) 
+* (ruhr)
 
 ## Install
 
@@ -88,6 +88,9 @@ Unter **fritzbox.x.** legt der Adapter folgende Channel und Datenpunkte an:
 * **phonebook.                              (CHANNEL)**
 * phonebook.tableJSON                     (Telefonbuch aller externen Nummern als JSON)
 
+* **tam.                              (CHANNEL)**
+* tam.messagesJSON                     (Alle Nachrichten des Anrufbeantworters als JSON)
+
 ## Beispiel-Widgets
 
 ### Fritzbox Widget in groß
@@ -132,8 +135,8 @@ Die Informationswidgets sind Beispiele für einzelne Datenpunkte, die der Fritzb
 Es exestiert jeweils ein Datenpunkt mit der Rufnummer, wie sie von der Fritzbox ausgegeben wurde (a) und ein Datenpunkt mit der Rufnummer umgewandelt als wählbarer Link (b) (es wird z.B. die Rufnummer 020147114711 angezeigt und als Link mit tel:+4920147114711 versehen). Die Tel-Links machen z.B. für VIS Oberflächen auf Smartphones Sinn, um einen verpassten Anruf direkt per Fingertipp zurückrufen zu können.
 
 Beispielwidgets:
-* (1) letzter Anrufer 
-* (2) aktueller Anrufer (wird für die Dauer des Klingelns angezeigt) 
+* (1) letzter Anrufer
+* (2) aktueller Anrufer (wird für die Dauer des Klingelns angezeigt)
 * (3) letzter Anrufer, der verpasst (nicht angenommen wurden)
 * (4) Wahlwiederholung: zuletzt gewählte Rufnummer
 

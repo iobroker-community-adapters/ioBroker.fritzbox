@@ -562,6 +562,28 @@
             "native": {}
         },
         {
+            "_id": "tam",
+            "type": "channel",
+            "common": {
+                "name": "tam",
+                "role": "tam"
+            },
+            "native": {}
+        },
+        {
+            "_id": "tam.messagesJSON",
+            "type": "state",
+            "common": {
+                "name": "tam as JSON",
+                "type": "string",
+                "role": "tam",
+                "read": true,
+                "write": false,
+                "desc": "answering machine as JSON"
+            },
+            "native": {}
+        },
+        {
             "_id": "phonebook",
             "type": "channel",
             "common": {
