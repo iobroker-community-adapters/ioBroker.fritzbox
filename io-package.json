@@ -17,13 +17,13 @@
         "mode": "daemon",
         "loglevel": "info",
         "icon": "fritzbox.png",
-        "readme": "https://github.com/ruhr70/ioBroker.fritzbox/blob/master/README.md",
+        "readme": "https://github.com/iobroker-community-adapters/ioBroker.fritzbox/blob/master/README.md",
         "keywords": [
             "fritzbox",
             "cdr",
             "callmonitor"
         ],
-        "extIcon": "https://raw.githubusercontent.com/ruhr70/ioBroker.fritzbox/master/admin/fritzbox.png",
+        "extIcon": "https://raw.githubusercontent.com/iobroker-community-adapters/ioBroker.fritzbox/master/admin/fritzbox.png",
         "type": "infrastructure"
     },
     "native": {
