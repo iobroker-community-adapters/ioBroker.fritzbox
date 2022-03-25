@@ -136,12 +136,12 @@ adapter.on('ready', function () {
 adapter.on('unload', function () {
     adapter.log.debug('adapter.on-unload: << UNLOAD >>');
     clearRealtimeVars();
-    
+
     if (intervalRunningCall) {
         clearInterval(intervalRunningCall);
         intervalRunningCall = null;
     }
-    
+
     if (intervalTR046) {
         clearInterval(intervalTR046);
         intervalTR046 = null;
@@ -503,9 +503,9 @@ function clearRealtimeVars() {
     //Realtime Daten löschen
     adapter.setState('calls.ring',                               false ,    true);
     adapter.setState('calls.ringActualNumber',                   "" ,       true);
-    adapter.setState('calls.ringActualNumbers',                  [] ,       true);
+    adapter.setState('calls.ringActualNumbers',                  "" ,       true);
     adapter.setState('calls.connectNumber',                      "",        true);
-    adapter.setState('calls.connectNumbers',                     [] ,       true);
+    adapter.setState('calls.connectNumbers',                     "" ,       true);
     adapter.setState('calls.counterActualCalls.ringCount',       0 ,        true);
     adapter.setState('calls.counterActualCalls.callCount',       0 ,        true);
     adapter.setState('calls.counterActualCalls.connectCount',    0 ,        true);
@@ -641,8 +641,8 @@ function initVars() {
         adapter.setState('callmonitor.call', "", true);
         adapter.setState('callmonitor.all', "", true);
     }
-    
-    adapter.setState('wlan.enabled', "", true);
+
+    adapter.setState('wlan.enabled', false, true);
 }
 
 
@@ -1272,7 +1272,7 @@ function connectToFritzbox(host) {
     socketBox.on('end',   restartConnection);
 
     socketBox.on('data',  parseData);   // Daten wurden aus der Fritzbox empfangen und dann in der Funktion parseData verarbeitet
-    
+
     if ((adapter.config.enableWlan || adapter.config.enablePhonebook) && adapter.config.fritzboxUser && adapter.config.fritzboxPassword && adapter.config.fritzboxPassword.length) {
         adapter.log.info("Trying to connect to TR-064: " + host + ":49000");
 
