@@ -14,7 +14,7 @@ ioBroker fritzbox Adapter
 
 ## Install
 
-```node iobroker.js add fritzbox```
+Choose Adapter "fritzbox" in ioBroker Admin
 
 ## Configuration
 
@@ -180,6 +180,7 @@ Beispielwidgets:
 ## Changelog
 
 ### __WORK IN PROGRESS__
+* IMPORTANT: You need to re-enter the password once after installing this version!
 * (Khaos66/Apollon77) General updates and fixes
 * (Khaos66) TAM (Telephone Answering Maschine) support added
 * (Apollon77) Add Sentry for crash reporting
