@@ -178,8 +178,7 @@ Beispielwidgets:
 * Feinere Konfiguration der Anruferliste (Tabellen)
 
 ## Changelog
-
-### __WORK IN PROGRESS__
+### 0.4.0 (2022-03-25)
 * IMPORTANT: You need to re-enter the password once after installing this version!
 * (Khaos66/Apollon77) General updates and fixes
 * (Khaos66) TAM (Telephone Answering Maschine) support added

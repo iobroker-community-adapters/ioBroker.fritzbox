@@ -1,719 +1,731 @@
 {
-    "common": {
-        "name": "fritzbox",
-        "version": "0.3.1",
-        "title": "fritzbox Adapter",
-        "titleLang": {
-            "en": "fritzbox Adapter",
-            "de": "Fritzbox-Adapter",
-            "ru": "Адаптер для фрицбокса",
-            "pt": "adaptador fritzbox",
-            "nl": "fritzbox-adapter",
-            "fr": "Adaptateur fritzbox",
-            "it": "Adattatore per fritzbox",
-            "es": "Adaptador fritzbox",
-            "pl": "Adapter fritzbox",
-            "zh-cn": "弗里茨盒适配器"
+  "common": {
+    "name": "fritzbox",
+    "version": "0.4.0",
+    "title": "fritzbox Adapter",
+    "titleLang": {
+      "en": "fritzbox Adapter",
+      "de": "Fritzbox-Adapter",
+      "ru": "Адаптер для фрицбокса",
+      "pt": "adaptador fritzbox",
+      "nl": "fritzbox-adapter",
+      "fr": "Adaptateur fritzbox",
+      "it": "Adattatore per fritzbox",
+      "es": "Adaptador fritzbox",
+      "pl": "Adapter fritzbox",
+      "zh-cn": "弗里茨盒适配器"
+    },
+    "news": {
+      "0.4.0": {
+        "en": "IMPORTANT: You need to re-enter the password once after installing this version!\nGeneral updates and fixes\nTAM (Telephone Answering Maschine) support added\nAdd Sentry for crash reporting",
+        "de": "WICHTIG: Nach der Installation dieser Version müssen Sie das Passwort einmalig neu eingeben!\nAllgemeine Aktualisierungen und Korrekturen\nTAM (Telefonanrufbeantworter)-Unterstützung hinzugefügt\nFügen Sie Sentry für Absturzberichte hinzu",
+        "ru": "ВАЖНО: Вам необходимо повторно ввести пароль один раз после установки этой версии!\nОбщие обновления и исправления\nДобавлена поддержка TAM (телефонный автоответчик).\nДобавьте Sentry для отчетов о сбоях",
+        "pt": "IMPORTANTE: Você precisa redigitar a senha uma vez depois de instalar esta versão!\nAtualizações e correções gerais\nAdicionado suporte TAM (Telephone Answering Maschine)\nAdicionar Sentinela para relatórios de falhas",
+        "nl": "BELANGRIJK: u moet het wachtwoord één keer opnieuw invoeren na het installeren van deze versie!\nAlgemene updates en oplossingen\nTAM (Telephone Answering Maschine) ondersteuning toegevoegd\nSentry toevoegen voor crashrapportage",
+        "fr": "IMPORTANT : Vous devez ressaisir le mot de passe une fois après l'installation de cette version !\nMises à jour et correctifs généraux\nPrise en charge TAM (répondeur téléphonique) ajoutée\nAjouter Sentry pour les rapports de plantage",
+        "it": "IMPORTANTE: è necessario reinserire la password una volta dopo aver installato questa versione!\nAggiornamenti e correzioni generali\nAggiunto il supporto TAM (Telephone Answering Maschine).\nAggiungi Sentinella per la segnalazione degli arresti anomali",
+        "es": "IMPORTANTE: ¡Debe volver a ingresar la contraseña una vez después de instalar esta versión!\nActualizaciones y correcciones generales\nSe agregó compatibilidad con TAM (Máquina contestadora telefónica)\nAgregar Sentry para informes de fallas",
+        "pl": "WAŻNE: Po zainstalowaniu tej wersji należy raz ponownie wprowadzić hasło!\nOgólne aktualizacje i poprawki\nDodano obsługę TAM (Telephone Answering Maschine)\nDodaj Sentry do zgłaszania awarii",
+        "zh-cn": "重要提示：安装此版本后需要重新输入一次密码！\n一般更新和修复\n添加了 TAM（电话应答机）支持\n添加 Sentry 以进行崩溃报告"
+      },
+      "0.2.1": {
+        "en": "Last long time stable version",
+        "de": "Letzte langzeitstabile Version",
+        "ru": "Последняя давно стабильная версия",
+        "pt": "Última versão estável por muito tempo",
+        "nl": "Laatste lange tijd stabiele versie",
+        "fr": "Dernière version stable depuis longtemps",
+        "it": "Ultima versione stabile da molto tempo",
+        "es": "Última versión estable desde hace mucho tiempo",
+        "pl": "Ostatnia długo stabilna wersja",
+        "zh-cn": "上次稳定版"
+      }
+    },
+    "desc": {
+      "en": "Adapter monitors the call information from Fritzbox via tcp, Port 1012 (Activate call monitor in the Fritzbox with #96*5*)",
+      "de": "Adapter überwacht die Anrufinformationen von Fritzbox über TCP, Port 1012 (Anrufüberwachung in der Fritzbox mit #96*5* aktivieren)",
+      "ru": "Адаптер отслеживает информацию о звонках из Fritzbox через tcp, порт 1012 (активируйте монитор звонков в Fritzbox с помощью #96*5*)",
+      "pt": "O adaptador monitora as informações de chamadas do Fritzbox via tcp, porta 1012 (Ative o monitor de chamadas no Fritzbox com #96*5*)",
+      "nl": "Adapter bewaakt de oproepinformatie van Fritzbox via tcp, poort 1012 (Activeer oproepmonitor in de Fritzbox met #96*5*)",
+      "fr": "L'adaptateur surveille les informations d'appel de Fritzbox via tcp, port 1012 (activez le moniteur d'appel dans la Fritzbox avec #96*5*)",
+      "it": "L'adattatore monitora le informazioni sulle chiamate da Fritzbox tramite TCP, Port 1012 (Attiva il monitoraggio delle chiamate nel Fritzbox con #96*5*)",
+      "es": "El adaptador monitorea la información de llamadas de Fritzbox a través de tcp, Puerto 1012 (Activar el monitor de llamadas en Fritzbox con #96*5*)",
+      "pl": "Adapter monitoruje informacje o połączeniach z Fritzbox przez tcp, Port 1012 (Aktywuj monitor połączeń we Fritzbox za pomocą #96*5*)",
+      "zh-cn": "适配器通过 tcp 端口 1012 监控 Fritzbox 的呼叫信息（使用 #96*5* 激活 Fritzbox 中的呼叫监控器）"
+    },
+    "authors": [
+      "ruhr <ruhr@digheim.de>",
+      "UncleSam <samuel.weibel@gmail.com>"
+    ],
+    "license": "MIT",
+    "platform": "Javascript/Node.js",
+    "mode": "daemon",
+    "loglevel": "info",
+    "icon": "fritzbox.png",
+    "readme": "https://github.com/iobroker-community-adapters/ioBroker.fritzbox/blob/master/README.md",
+    "keywords": [
+      "fritzbox",
+      "cdr",
+      "callmonitor"
+    ],
+    "extIcon": "https://raw.githubusercontent.com/iobroker-community-adapters/ioBroker.fritzbox/master/admin/fritzbox.png",
+    "type": "infrastructure",
+    "plugins": {
+      "sentry": {
+        "dsn": "https://e1ad7490be034731a6ff30434299b508@sentry.iobroker.net/184"
+      }
+    },
+    "dependencies": [
+      {
+        "js-controller": ">=3.0.0"
+      }
+    ],
+    "globalDependencies": [
+      {
+        "admin": ">=5.1.28"
+      }
+    ],
+    "connectionType": "local",
+    "dataSource": "push",
+    "tier": 2,
+    "messages": [
+      {
+        "condition": {
+          "operand": "and",
+          "rules": [
+            "oldVersion<0.4.0",
+            "newVersion>=0.4.0"
+          ]
         },
-        "news": {
-            "0.2.1": {
-                "en": "Last long time stable version",
-                "de": "Letzte langzeitstabile Version",
-                "ru": "Последняя давно стабильная версия",
-                "pt": "Última versão estável por muito tempo",
-                "nl": "Laatste lange tijd stabiele versie",
-                "fr": "Dernière version stable depuis longtemps",
-                "it": "Ultima versione stabile da molto tempo",
-                "es": "Última versión estable desde hace mucho tiempo",
-                "pl": "Ostatnia długo stabilna wersja",
-                "zh-cn": "上次稳定版"
-            }
+        "title": {
+          "en": "Re-enter the password after Update!",
+          "de": "Passwort muss nach dem Update erneut eingegeben werden!",
+          "ru": "Повторно введите пароль после обновления!",
+          "pt": "Digite novamente a senha após Atualizar!",
+          "nl": "Voer het wachtwoord opnieuw in na Update!",
+          "fr": "Entrez à nouveau le mot de passe après la mise à jour !",
+          "it": "Reinserire la password dopo l'aggiornamento!",
+          "es": "Vuelva a ingresar la contraseña después de ¡Actualizar!",
+          "pl": "Wprowadź hasło ponownie po aktualizacji!",
+          "zh-cn": "更新后重新输入密码！"
         },
-        "desc": {
-            "en": "Adapter monitors the call information from Fritzbox via tcp, Port 1012 (Activate call monitor in the Fritzbox with #96*5*)",
-            "de": "Adapter überwacht die Anrufinformationen von Fritzbox über TCP, Port 1012 (Anrufüberwachung in der Fritzbox mit #96*5* aktivieren)",
-            "ru": "Адаптер отслеживает информацию о звонках из Fritzbox через tcp, порт 1012 (активируйте монитор звонков в Fritzbox с помощью #96*5*)",
-            "pt": "O adaptador monitora as informações de chamadas do Fritzbox via tcp, porta 1012 (Ative o monitor de chamadas no Fritzbox com #96*5*)",
-            "nl": "Adapter bewaakt de oproepinformatie van Fritzbox via tcp, poort 1012 (Activeer oproepmonitor in de Fritzbox met #96*5*)",
-            "fr": "L'adaptateur surveille les informations d'appel de Fritzbox via tcp, port 1012 (activez le moniteur d'appel dans la Fritzbox avec #96*5*)",
-            "it": "L'adattatore monitora le informazioni sulle chiamate da Fritzbox tramite TCP, Port 1012 (Attiva il monitoraggio delle chiamate nel Fritzbox con #96*5*)",
-            "es": "El adaptador monitorea la información de llamadas de Fritzbox a través de tcp, Puerto 1012 (Activar el monitor de llamadas en Fritzbox con #96*5*)",
-            "pl": "Adapter monitoruje informacje o połączeniach z Fritzbox przez tcp, Port 1012 (Aktywuj monitor połączeń we Fritzbox za pomocą #96*5*)",
-            "zh-cn": "适配器通过 tcp 端口 1012 监控 Fritzbox 的呼叫信息（使用 #96*5* 激活 Fritzbox 中的呼叫监控器）"
+        "text": {
+          "en": "After installing this update the password/token used to access the Fritzbox needs to be re-entered in the Instance-Settings!",
+          "de": "Nach der Installation dieses Updates muss das für den Zugriff auf die Fritzbox verwendete Passwort/Token in den Instanz-Einstellungen neu eingegeben werden!",
+          "ru": "После установки этого обновления пароль/токен, используемый для доступа к Fritzbox, необходимо повторно ввести в настройках экземпляра!",
+          "pt": "Depois de instalar esta atualização, a senha/token usado para acessar o Fritzbox precisa ser reinserido nas configurações da instância!",
+          "nl": "Na het installeren van deze update moet het wachtwoord/token dat wordt gebruikt om toegang te krijgen tot de Fritzbox opnieuw worden ingevoerd in de Instance-Settings!",
+          "fr": "Après avoir installé cette mise à jour, le mot de passe/jeton utilisé pour accéder à la Fritzbox doit être ressaisi dans les paramètres de l'instance !",
+          "it": "Dopo aver installato questo aggiornamento, la password/token utilizzata per accedere al Fritzbox deve essere reinserita nelle Impostazioni dell'istanza!",
+          "es": "¡Después de instalar esta actualización, la contraseña/token utilizada para acceder a Fritzbox debe volver a ingresarse en la configuración de la instancia!",
+          "pl": "Po zainstalowaniu tej aktualizacji hasło/token używane do uzyskania dostępu do Fritzbox należy ponownie wprowadzić w ustawieniach instancji!",
+          "zh-cn": "安装此更新后，用于访问 Fritzbox 的密码/令牌需要在实例设置中重新输入！"
         },
-        "authors": [
-            "ruhr <ruhr@digheim.de>",
-            "UncleSam <samuel.weibel@gmail.com>"
-        ],
-        "license": "MIT",
-        "platform": "Javascript/Node.js",
-        "mode": "daemon",
-        "loglevel": "info",
-        "icon": "fritzbox.png",
-        "readme": "https://github.com/iobroker-community-adapters/ioBroker.fritzbox/blob/master/README.md",
-        "keywords": [
-            "fritzbox",
-            "cdr",
-            "callmonitor"
-        ],
-        "extIcon": "https://raw.githubusercontent.com/iobroker-community-adapters/ioBroker.fritzbox/master/admin/fritzbox.png",
-        "type": "infrastructure",
-        "plugins": {
-            "sentry": {
-                "dsn": "https://e1ad7490be034731a6ff30434299b508@sentry.iobroker.net/184"
-            }
-        },
-        "dependencies": [
-            {
-                "js-controller": ">=3.0.0"
-            }
-        ],
-        "globalDependencies": [
-            {
-                "admin": ">=5.1.28"
-            }
-        ],
-        "connectionType": "local",
-        "dataSource": "push",
-        "tier": 2,
-        "messages": [
-            {
-                "condition": {
-                    "operand": "and",
-                    "rules": [
-                        "oldVersion<0.4.0",
-                        "newVersion>=0.4.0"
-                    ]
-                },
-                "title": {
-                    "en": "Re-enter the password after Update!",
-                    "de": "Passwort muss nach dem Update erneut eingegeben werden!",
-                    "ru": "Повторно введите пароль после обновления!",
-                    "pt": "Digite novamente a senha após Atualizar!",
-                    "nl": "Voer het wachtwoord opnieuw in na Update!",
-                    "fr": "Entrez à nouveau le mot de passe après la mise à jour !",
-                    "it": "Reinserire la password dopo l'aggiornamento!",
-                    "es": "Vuelva a ingresar la contraseña después de ¡Actualizar!",
-                    "pl": "Wprowadź hasło ponownie po aktualizacji!",
-                    "zh-cn": "更新后重新输入密码！"
-                },
-                "text": {
-                    "en": "After installing this update the password/token used to access the Fritzbox needs to be re-entered in the Instance-Settings!",
-                    "de": "Nach der Installation dieses Updates muss das für den Zugriff auf die Fritzbox verwendete Passwort/Token in den Instanz-Einstellungen neu eingegeben werden!",
-                    "ru": "После установки этого обновления пароль/токен, используемый для доступа к Fritzbox, необходимо повторно ввести в настройках экземпляра!",
-                    "pt": "Depois de instalar esta atualização, a senha/token usado para acessar o Fritzbox precisa ser reinserido nas configurações da instância!",
-                    "nl": "Na het installeren van deze update moet het wachtwoord/token dat wordt gebruikt om toegang te krijgen tot de Fritzbox opnieuw worden ingevoerd in de Instance-Settings!",
-                    "fr": "Après avoir installé cette mise à jour, le mot de passe/jeton utilisé pour accéder à la Fritzbox doit être ressaisi dans les paramètres de l'instance !",
-                    "it": "Dopo aver installato questo aggiornamento, la password/token utilizzata per accedere al Fritzbox deve essere reinserita nelle Impostazioni dell'istanza!",
-                    "es": "¡Después de instalar esta actualización, la contraseña/token utilizada para acceder a Fritzbox debe volver a ingresarse en la configuración de la instancia!",
-                    "pl": "Po zainstalowaniu tej aktualizacji hasło/token używane do uzyskania dostępu do Fritzbox należy ponownie wprowadzić w ustawieniach instancji!",
-                    "zh-cn": "安装此更新后，用于访问 Fritzbox 的密码/令牌需要在实例设置中重新输入！"
-                },
-                "level": "warn",
-                "buttons": [
-                    "agree",
-                    "cancel"
-                ]
-            }
+        "level": "warn",
+        "buttons": [
+          "agree",
+          "cancel"
         ]
-    },
-    "protectedNative": [
-        "fritzboxPassword"
-    ],
-    "encryptedNative": [
-        "fritzboxPassword"
-    ],
-    "native": {
-        "fritzboxAddress": "192.168.1.1",
-        "fritzboxUser": "dslf-config",
-        "fritzboxPassword": "",
-        "cc": "49",
-        "ac": "211",
-        "unknownNumber": "### ? ###",
-        "numberLength": 15,
-        "deltaTimeOKSec": 5,
-        "externalLink": true,
-        "showHeadline": true,
-        "numberEntriesHistoryAll": 12,
-        "numberEntriesHistoryMissed": 10,
-        "showHistoryAllTableTxt": false,
-        "showHistoryAllTableHTML": true,
-        "showHistoryAllTableJSON": true,
-        "showCallmonitor": true,
-        "showMissedTableHTML": true,
-        "showMissedTableJSON": true,
-        "headlineDateOn": true,
-        "headlineDate": "Tag    Zeit  ",
-        "headlineDateLength": 14,
-        "headlineExtnumberOn": true,
-        "headlineExtnumber": "ext. Rufnr.",
-        "headlineDirectionOn": true,
-        "headlineDirection": "g<>k",
-        "headlineDirectionLength": 4
-    },
-    "objects": [],
-    "instanceObjects": [
-        {
-            "_id": "message",
-            "type": "state",
-            "common": {
-                "name": "Last fritzbox message",
-                "type": "string",
-                "role": "message",
-                "read": true,
-                "write": false,
-                "desc": "last message from fritzbox as string"
-            },
-            "native": {}
-        },
-        {
-            "_id": "calls",
-            "type": "channel",
-            "common": {
-                "name": "calls",
-                "role": "call info"
-            },
-            "native": {}
-        },
-        {
-            "_id": "calls.ring",
-            "type": "state",
-            "common": {
-                "name": "ring activ?",
-                "type": "boolean",
-                "role": "call info",
-                "read": true,
-                "write": false,
-                "desc": "ring activ?"
-            },
-            "native": {}
-        },
-        {
-            "_id": "calls.missedCount",
-            "type": "state",
-            "common": {
-                "name": "Counter: rings missed",
-                "type": "number",
-                "role": "call info",
-                "read": true,
-                "write": true,
-                "desc": "Counter: rings missed"
-            },
-            "native": {}
-        },
-        {
-            "_id": "calls.missedDateReset",
-            "type": "state",
-            "common": {
-                "name": "date last reset: counter rings missed",
-                "type": "string",
-                "role": "date",
-                "read": true,
-                "write": true,
-                "desc": "date last reset: counter rings missed"
-            },
-            "native": {}
-        },
-        {
-            "_id": "calls.ringActualNumber",
-            "type": "state",
-            "common": {
-                "name": "actual last ringing number",
-                "type": "string",
-                "role": "call info",
-                "read": true,
-                "write": false,
-                "desc": "actual last ringing number"
-            },
-            "native": {}
-        },
-        {
-            "_id": "calls.ringActualNumbers",
-            "type": "state",
-            "common": {
-                "name": "actual ringing numbers",
-                "type": "string",
-                "role": "call info",
-                "read": true,
-                "write": false,
-                "desc": "actual ringing numbers"
-            },
-            "native": {}
-        },
-        {
-            "_id": "calls.ringLastNumber",
-            "type": "state",
-            "common": {
-                "name": "ring last number",
-                "type": "string",
-                "role": "call info",
-                "read": true,
-                "write": false,
-                "desc": "ring last number"
-            },
-            "native": {}
-        },
-        {
-            "_id": "calls.ringLastMissedNumber",
-            "type": "state",
-            "common": {
-                "name": "ring last missed number",
-                "type": "string",
-                "role": "call info",
-                "read": true,
-                "write": false,
-                "desc": "ring last missed number"
-            },
-            "native": {}
-        },
-        {
-            "_id": "calls.callLastNumber",
-            "type": "state",
-            "common": {
-                "name": "call last number",
-                "type": "string",
-                "role": "call info",
-                "read": true,
-                "write": false,
-                "desc": "call last number"
-            },
-            "native": {}
-        },
-        {
-            "_id": "calls.connectNumber",
-            "type": "state",
-            "common": {
-                "name": "actual last connected number",
-                "type": "string",
-                "role": "call info",
-                "read": true,
-                "write": false,
-                "desc": "actual last connected number"
-            },
-            "native": {}
-        },
-        {
-            "_id": "calls.connectNumbers",
-            "type": "state",
-            "common": {
-                "name": "actual last connected numbers",
-                "type": "string",
-                "role": "call info",
-                "read": true,
-                "write": false,
-                "desc": "actual last connected numbers"
-            },
-            "native": {}
-        },
-        {
-            "_id": "calls.counterActualCalls",
-            "type": "channel",
-            "common": {
-                "name": "calls",
-                "role": "call info"
-            },
-            "native": {}
-        },
-        {
-            "_id": "calls.counterActualCalls.allActiveCount",
-            "type": "state",
-            "common": {
-                "name": "Counter: all active Calls",
-                "type": "number",
-                "role": "call info",
-                "read": true,
-                "write": false,
-                "desc": "Counter: all active Calls"
-            },
-            "native": {}
-        },
-        {
-            "_id": "calls.counterActualCalls.connectCount",
-            "type": "state",
-            "common": {
-                "name": "actual active connects",
-                "type": "number",
-                "role": "call info",
-                "read": true,
-                "write": false,
-                "desc": "Counter: actual active connected calls"
-            },
-            "native": {}
-        },
-        {
-            "_id": "calls.counterActualCalls.ringCount",
-            "type": "state",
-            "common": {
-                "name": "actual ring count",
-                "type": "number",
-                "role": "call info",
-                "read": true,
-                "write": false,
-                "desc": "Counter: actual ring count"
-            },
-            "native": {}
-        },
-        {
-            "_id": "calls.counterActualCalls.callCount",
-            "type": "state",
-            "common": {
-                "name": "actual active calls",
-                "type": "number",
-                "role": "call info",
-                "read": true,
-                "write": false,
-                "desc": "Counter: actual active calls"
-            },
-            "native": {}
-        },
-        {
-            "_id": "calls.telLinks",
-            "type": "channel",
-            "common": {
-                "name": "calls",
-                "role": "call info"
-            },
-            "native": {}
-        },
-        {
-            "_id": "calls.telLinks.ringLastNumberTel",
-            "type": "state",
-            "common": {
-                "name": "ring last number tel:link",
-                "type": "string",
-                "role": "call info",
-                "read": true,
-                "write": false,
-                "desc": "letzter Anrufer als tel:link"
-            },
-            "native": {}
-        },
-        {
-            "_id": "calls.telLinks.callLastNumberTel",
-            "type": "state",
-            "common": {
-                "name": "call last number tel:link",
-                "type": "string",
-                "role": "call info",
-                "read": true,
-                "write": false,
-                "desc": "letzte angerufene Nummer (Wahlwiederholung) als tel:link"
-            },
-            "native": {}
-        },
-        {
-            "_id": "calls.telLinks.ringLastMissedNumberTel",
-            "type": "state",
-            "common": {
-                "name": "ring last missed number tel:link",
-                "type": "string",
-                "role": "call info",
-                "read": true,
-                "write": false,
-                "desc": "letzter verpasster Anrufer als tel:link"
-            },
-            "native": {}
-        },
-        {
-            "_id": "callmonitor",
-            "type": "channel",
-            "common": {
-                "name": "callmonitor",
-                "role": "callmonitor"
-            },
-            "native": {}
-        },
-        {
-            "_id": "callmonitor.all",
-            "type": "state",
-            "common": {
-                "name": "callmonitor all",
-                "type": "string",
-                "role": "callmonitor",
-                "read": true,
-                "write": false,
-                "desc": "callmonitor all"
-            },
-            "native": {}
-        },
-        {
-            "_id": "callmonitor.ring",
-            "type": "state",
-            "common": {
-                "name": "callmonitor ring",
-                "type": "string",
-                "role": "callmonitor",
-                "read": true,
-                "write": false,
-                "desc": "callmonitor ring"
-            },
-            "native": {}
-        },
-        {
-            "_id": "callmonitor.call",
-            "type": "state",
-            "common": {
-                "name": "callmonitor call",
-                "type": "string",
-                "role": "callmonitor",
-                "read": true,
-                "write": false,
-                "desc": "callmonitor call"
-            },
-            "native": {}
-        },
-        {
-            "_id": "callmonitor.connect",
-            "type": "state",
-            "common": {
-                "name": "callmonitor connect",
-                "type": "string",
-                "role": "callmonitor",
-                "read": true,
-                "write": false,
-                "desc": "callmonitor connect"
-            },
-            "native": {}
-        },
-        {
-            "_id": "system",
-            "type": "channel",
-            "common": {
-                "name": "system",
-                "role": "system"
-            },
-            "native": {}
-        },
-        {
-            "_id": "system.deltaTime",
-            "type": "state",
-            "common": {
-                "name": "delta time in seconds between fritzbox and ioBroker",
-                "type": "number",
-                "role": "seconds",
-                "read": true,
-                "write": false,
-                "desc": "delta time in seconds between fritzbox and ioBroker"
-            },
-            "native": {}
-        },
-        {
-            "_id": "system.deltaTimeOK",
-            "type": "state",
-            "common": {
-                "name": "delta time in seconds between fritzbox and ioBroker ok",
-                "type": "boolean",
-                "role": "seconds",
-                "read": true,
-                "write": false,
-                "desc": "delta time in seconds between fritzbox and ioBroker ok"
-            },
-            "native": {}
-        },
-        {
-            "_id": "cdr",
-            "type": "channel",
-            "common": {
-                "name": "cdr",
-                "role": "cdr"
-            },
-            "native": {}
-        },
-        {
-            "_id": "cdr.json",
-            "type": "state",
-            "common": {
-                "name": "call cdr as JSON",
-                "type": "object",
-                "role": "cdr",
-                "read": true,
-                "write": false,
-                "desc": "call cdr as JSON"
-            },
-            "native": {}
-        },
-        {
-            "_id": "cdr.html",
-            "type": "state",
-            "common": {
-                "name": "call cdr as html",
-                "type": "string",
-                "role": "cdr",
-                "read": true,
-                "write": false,
-                "desc": "call cdr as html"
-            },
-            "native": {}
-        },
-        {
-            "_id": "cdr.missedJSON",
-            "type": "state",
-            "common": {
-                "name": "missed calls as JSON",
-                "type": "object",
-                "role": "cdr",
-                "read": true,
-                "write": false,
-                "desc": "missed calls as JSON"
-            },
-            "native": {}
-        },
-        {
-            "_id": "cdr.missedHTML",
-            "type": "state",
-            "common": {
-                "name": "missed calls as HTML",
-                "type": "string",
-                "role": "cdr",
-                "read": true,
-                "write": false,
-                "desc": "missed calls as HTML"
-            },
-            "native": {}
-        },
-        {
-            "_id": "cdr.txt",
-            "type": "state",
-            "common": {
-                "name": "call cdr as txt",
-                "type": "string",
-                "role": "cdr",
-                "read": true,
-                "write": false,
-                "desc": "call cdr as txt"
-            },
-            "native": {}
-        },
-        {
-            "_id": "history",
-            "type": "channel",
-            "common": {
-                "name": "history",
-                "role": "history"
-            },
-            "native": {}
-        },
-        {
-            "_id": "history.allTableHTML",
-            "type": "state",
-            "common": {
-                "name": "history of calls as HTML",
-                "type": "string",
-                "role": "history",
-                "read": true,
-                "write": false,
-                "desc": "history of calls as HTML"
-            },
-            "native": {}
-        },
-        {
-            "_id": "history.allTableTxt",
-            "type": "state",
-            "common": {
-                "name": "history of calls as Txt",
-                "type": "string",
-                "role": "history",
-                "read": true,
-                "write": false,
-                "desc": "history of calls as Txt"
-            },
-            "native": {}
-        },
-        {
-            "_id": "history.allTableJSON",
-            "type": "state",
-            "common": {
-                "name": "history of calls as JSON",
-                "type": "object",
-                "role": "table",
-                "read": true,
-                "write": false,
-                "desc": "history of calls as JSON"
-            },
-            "native": {}
-        },
-        {
-            "_id": "history.missedTableHTML",
-            "type": "state",
-            "common": {
-                "name": "history of missed calls as HTML",
-                "type": "string",
-                "role": "history",
-                "read": true,
-                "write": false,
-                "desc": "history of missed calls as HTML"
-            },
-            "native": {}
-        },
-        {
-            "_id": "history.missedTableJSON",
-            "type": "state",
-            "common": {
-                "name": "history of missed calls as JSON",
-                "type": "string",
-                "role": "history",
-                "read": true,
-                "write": false,
-                "desc": "history of missed calls as JSON"
-            },
-            "native": {}
-        },
-        {
-            "_id": "tam",
-            "type": "channel",
-            "common": {
-                "name": "tam",
-                "role": "tam"
-            },
-            "native": {}
-        },
-        {
-            "_id": "tam.messagesJSON",
-            "type": "state",
-            "common": {
-                "name": "tam as JSON",
-                "type": "string",
-                "role": "tam",
-                "read": true,
-                "write": false,
-                "desc": "answering machine as JSON"
-            },
-            "native": {}
-        },
-        {
-            "_id": "phonebook",
-            "type": "channel",
-            "common": {
-                "name": "phonebook",
-                "role": "phonebook"
-            },
-            "native": {}
-        },
-        {
-            "_id": "phonebook.tableJSON",
-            "type": "state",
-            "common": {
-                "name": "phonebook as JSON",
-                "type": "string",
-                "role": "phonebook",
-                "read": true,
-                "write": false,
-                "desc": "phonebook as JSON"
-            },
-            "native": {}
-        },
-        {
-            "_id": "wlan.enabled",
-            "type": "state",
-            "common": {
-                "name": "Wi-Fi enabled",
-                "type": "boolean",
-                "role": "switch",
-                "read": true,
-                "write": true,
-                "desc": "Wi-Fi (WLAN) enabled"
-            },
-            "native": {}
-        }
+      }
     ]
+  },
+  "protectedNative": [
+    "fritzboxPassword"
+  ],
+  "encryptedNative": [
+    "fritzboxPassword"
+  ],
+  "native": {
+    "fritzboxAddress": "192.168.1.1",
+    "fritzboxUser": "dslf-config",
+    "fritzboxPassword": "",
+    "cc": "49",
+    "ac": "211",
+    "unknownNumber": "### ? ###",
+    "numberLength": 15,
+    "deltaTimeOKSec": 5,
+    "externalLink": true,
+    "showHeadline": true,
+    "numberEntriesHistoryAll": 12,
+    "numberEntriesHistoryMissed": 10,
+    "showHistoryAllTableTxt": false,
+    "showHistoryAllTableHTML": true,
+    "showHistoryAllTableJSON": true,
+    "showCallmonitor": true,
+    "showMissedTableHTML": true,
+    "showMissedTableJSON": true,
+    "headlineDateOn": true,
+    "headlineDate": "Tag    Zeit  ",
+    "headlineDateLength": 14,
+    "headlineExtnumberOn": true,
+    "headlineExtnumber": "ext. Rufnr.",
+    "headlineDirectionOn": true,
+    "headlineDirection": "g<>k",
+    "headlineDirectionLength": 4
+  },
+  "objects": [],
+  "instanceObjects": [
+    {
+      "_id": "message",
+      "type": "state",
+      "common": {
+        "name": "Last fritzbox message",
+        "type": "string",
+        "role": "message",
+        "read": true,
+        "write": false,
+        "desc": "last message from fritzbox as string"
+      },
+      "native": {}
+    },
+    {
+      "_id": "calls",
+      "type": "channel",
+      "common": {
+        "name": "calls",
+        "role": "call info"
+      },
+      "native": {}
+    },
+    {
+      "_id": "calls.ring",
+      "type": "state",
+      "common": {
+        "name": "ring activ?",
+        "type": "boolean",
+        "role": "call info",
+        "read": true,
+        "write": false,
+        "desc": "ring activ?"
+      },
+      "native": {}
+    },
+    {
+      "_id": "calls.missedCount",
+      "type": "state",
+      "common": {
+        "name": "Counter: rings missed",
+        "type": "number",
+        "role": "call info",
+        "read": true,
+        "write": true,
+        "desc": "Counter: rings missed"
+      },
+      "native": {}
+    },
+    {
+      "_id": "calls.missedDateReset",
+      "type": "state",
+      "common": {
+        "name": "date last reset: counter rings missed",
+        "type": "string",
+        "role": "date",
+        "read": true,
+        "write": true,
+        "desc": "date last reset: counter rings missed"
+      },
+      "native": {}
+    },
+    {
+      "_id": "calls.ringActualNumber",
+      "type": "state",
+      "common": {
+        "name": "actual last ringing number",
+        "type": "string",
+        "role": "call info",
+        "read": true,
+        "write": false,
+        "desc": "actual last ringing number"
+      },
+      "native": {}
+    },
+    {
+      "_id": "calls.ringActualNumbers",
+      "type": "state",
+      "common": {
+        "name": "actual ringing numbers",
+        "type": "string",
+        "role": "call info",
+        "read": true,
+        "write": false,
+        "desc": "actual ringing numbers"
+      },
+      "native": {}
+    },
+    {
+      "_id": "calls.ringLastNumber",
+      "type": "state",
+      "common": {
+        "name": "ring last number",
+        "type": "string",
+        "role": "call info",
+        "read": true,
+        "write": false,
+        "desc": "ring last number"
+      },
+      "native": {}
+    },
+    {
+      "_id": "calls.ringLastMissedNumber",
+      "type": "state",
+      "common": {
+        "name": "ring last missed number",
+        "type": "string",
+        "role": "call info",
+        "read": true,
+        "write": false,
+        "desc": "ring last missed number"
+      },
+      "native": {}
+    },
+    {
+      "_id": "calls.callLastNumber",
+      "type": "state",
+      "common": {
+        "name": "call last number",
+        "type": "string",
+        "role": "call info",
+        "read": true,
+        "write": false,
+        "desc": "call last number"
+      },
+      "native": {}
+    },
+    {
+      "_id": "calls.connectNumber",
+      "type": "state",
+      "common": {
+        "name": "actual last connected number",
+        "type": "string",
+        "role": "call info",
+        "read": true,
+        "write": false,
+        "desc": "actual last connected number"
+      },
+      "native": {}
+    },
+    {
+      "_id": "calls.connectNumbers",
+      "type": "state",
+      "common": {
+        "name": "actual last connected numbers",
+        "type": "string",
+        "role": "call info",
+        "read": true,
+        "write": false,
+        "desc": "actual last connected numbers"
+      },
+      "native": {}
+    },
+    {
+      "_id": "calls.counterActualCalls",
+      "type": "channel",
+      "common": {
+        "name": "calls",
+        "role": "call info"
+      },
+      "native": {}
+    },
+    {
+      "_id": "calls.counterActualCalls.allActiveCount",
+      "type": "state",
+      "common": {
+        "name": "Counter: all active Calls",
+        "type": "number",
+        "role": "call info",
+        "read": true,
+        "write": false,
+        "desc": "Counter: all active Calls"
+      },
+      "native": {}
+    },
+    {
+      "_id": "calls.counterActualCalls.connectCount",
+      "type": "state",
+      "common": {
+        "name": "actual active connects",
+        "type": "number",
+        "role": "call info",
+        "read": true,
+        "write": false,
+        "desc": "Counter: actual active connected calls"
+      },
+      "native": {}
+    },
+    {
+      "_id": "calls.counterActualCalls.ringCount",
+      "type": "state",
+      "common": {
+        "name": "actual ring count",
+        "type": "number",
+        "role": "call info",
+        "read": true,
+        "write": false,
+        "desc": "Counter: actual ring count"
+      },
+      "native": {}
+    },
+    {
+      "_id": "calls.counterActualCalls.callCount",
+      "type": "state",
+      "common": {
+        "name": "actual active calls",
+        "type": "number",
+        "role": "call info",
+        "read": true,
+        "write": false,
+        "desc": "Counter: actual active calls"
+      },
+      "native": {}
+    },
+    {
+      "_id": "calls.telLinks",
+      "type": "channel",
+      "common": {
+        "name": "calls",
+        "role": "call info"
+      },
+      "native": {}
+    },
+    {
+      "_id": "calls.telLinks.ringLastNumberTel",
+      "type": "state",
+      "common": {
+        "name": "ring last number tel:link",
+        "type": "string",
+        "role": "call info",
+        "read": true,
+        "write": false,
+        "desc": "letzter Anrufer als tel:link"
+      },
+      "native": {}
+    },
+    {
+      "_id": "calls.telLinks.callLastNumberTel",
+      "type": "state",
+      "common": {
+        "name": "call last number tel:link",
+        "type": "string",
+        "role": "call info",
+        "read": true,
+        "write": false,
+        "desc": "letzte angerufene Nummer (Wahlwiederholung) als tel:link"
+      },
+      "native": {}
+    },
+    {
+      "_id": "calls.telLinks.ringLastMissedNumberTel",
+      "type": "state",
+      "common": {
+        "name": "ring last missed number tel:link",
+        "type": "string",
+        "role": "call info",
+        "read": true,
+        "write": false,
+        "desc": "letzter verpasster Anrufer als tel:link"
+      },
+      "native": {}
+    },
+    {
+      "_id": "callmonitor",
+      "type": "channel",
+      "common": {
+        "name": "callmonitor",
+        "role": "callmonitor"
+      },
+      "native": {}
+    },
+    {
+      "_id": "callmonitor.all",
+      "type": "state",
+      "common": {
+        "name": "callmonitor all",
+        "type": "string",
+        "role": "callmonitor",
+        "read": true,
+        "write": false,
+        "desc": "callmonitor all"
+      },
+      "native": {}
+    },
+    {
+      "_id": "callmonitor.ring",
+      "type": "state",
+      "common": {
+        "name": "callmonitor ring",
+        "type": "string",
+        "role": "callmonitor",
+        "read": true,
+        "write": false,
+        "desc": "callmonitor ring"
+      },
+      "native": {}
+    },
+    {
+      "_id": "callmonitor.call",
+      "type": "state",
+      "common": {
+        "name": "callmonitor call",
+        "type": "string",
+        "role": "callmonitor",
+        "read": true,
+        "write": false,
+        "desc": "callmonitor call"
+      },
+      "native": {}
+    },
+    {
+      "_id": "callmonitor.connect",
+      "type": "state",
+      "common": {
+        "name": "callmonitor connect",
+        "type": "string",
+        "role": "callmonitor",
+        "read": true,
+        "write": false,
+        "desc": "callmonitor connect"
+      },
+      "native": {}
+    },
+    {
+      "_id": "system",
+      "type": "channel",
+      "common": {
+        "name": "system",
+        "role": "system"
+      },
+      "native": {}
+    },
+    {
+      "_id": "system.deltaTime",
+      "type": "state",
+      "common": {
+        "name": "delta time in seconds between fritzbox and ioBroker",
+        "type": "number",
+        "role": "seconds",
+        "read": true,
+        "write": false,
+        "desc": "delta time in seconds between fritzbox and ioBroker"
+      },
+      "native": {}
+    },
+    {
+      "_id": "system.deltaTimeOK",
+      "type": "state",
+      "common": {
+        "name": "delta time in seconds between fritzbox and ioBroker ok",
+        "type": "boolean",
+        "role": "seconds",
+        "read": true,
+        "write": false,
+        "desc": "delta time in seconds between fritzbox and ioBroker ok"
+      },
+      "native": {}
+    },
+    {
+      "_id": "cdr",
+      "type": "channel",
+      "common": {
+        "name": "cdr",
+        "role": "cdr"
+      },
+      "native": {}
+    },
+    {
+      "_id": "cdr.json",
+      "type": "state",
+      "common": {
+        "name": "call cdr as JSON",
+        "type": "object",
+        "role": "cdr",
+        "read": true,
+        "write": false,
+        "desc": "call cdr as JSON"
+      },
+      "native": {}
+    },
+    {
+      "_id": "cdr.html",
+      "type": "state",
+      "common": {
+        "name": "call cdr as html",
+        "type": "string",
+        "role": "cdr",
+        "read": true,
+        "write": false,
+        "desc": "call cdr as html"
+      },
+      "native": {}
+    },
+    {
+      "_id": "cdr.missedJSON",
+      "type": "state",
+      "common": {
+        "name": "missed calls as JSON",
+        "type": "object",
+        "role": "cdr",
+        "read": true,
+        "write": false,
+        "desc": "missed calls as JSON"
+      },
+      "native": {}
+    },
+    {
+      "_id": "cdr.missedHTML",
+      "type": "state",
+      "common": {
+        "name": "missed calls as HTML",
+        "type": "string",
+        "role": "cdr",
+        "read": true,
+        "write": false,
+        "desc": "missed calls as HTML"
+      },
+      "native": {}
+    },
+    {
+      "_id": "cdr.txt",
+      "type": "state",
+      "common": {
+        "name": "call cdr as txt",
+        "type": "string",
+        "role": "cdr",
+        "read": true,
+        "write": false,
+        "desc": "call cdr as txt"
+      },
+      "native": {}
+    },
+    {
+      "_id": "history",
+      "type": "channel",
+      "common": {
+        "name": "history",
+        "role": "history"
+      },
+      "native": {}
+    },
+    {
+      "_id": "history.allTableHTML",
+      "type": "state",
+      "common": {
+        "name": "history of calls as HTML",
+        "type": "string",
+        "role": "history",
+        "read": true,
+        "write": false,
+        "desc": "history of calls as HTML"
+      },
+      "native": {}
+    },
+    {
+      "_id": "history.allTableTxt",
+      "type": "state",
+      "common": {
+        "name": "history of calls as Txt",
+        "type": "string",
+        "role": "history",
+        "read": true,
+        "write": false,
+        "desc": "history of calls as Txt"
+      },
+      "native": {}
+    },
+    {
+      "_id": "history.allTableJSON",
+      "type": "state",
+      "common": {
+        "name": "history of calls as JSON",
+        "type": "object",
+        "role": "table",
+        "read": true,
+        "write": false,
+        "desc": "history of calls as JSON"
+      },
+      "native": {}
+    },
+    {
+      "_id": "history.missedTableHTML",
+      "type": "state",
+      "common": {
+        "name": "history of missed calls as HTML",
+        "type": "string",
+        "role": "history",
+        "read": true,
+        "write": false,
+        "desc": "history of missed calls as HTML"
+      },
+      "native": {}
+    },
+    {
+      "_id": "history.missedTableJSON",
+      "type": "state",
+      "common": {
+        "name": "history of missed calls as JSON",
+        "type": "string",
+        "role": "history",
+        "read": true,
+        "write": false,
+        "desc": "history of missed calls as JSON"
+      },
+      "native": {}
+    },
+    {
+      "_id": "tam",
+      "type": "channel",
+      "common": {
+        "name": "tam",
+        "role": "tam"
+      },
+      "native": {}
+    },
+    {
+      "_id": "tam.messagesJSON",
+      "type": "state",
+      "common": {
+        "name": "tam as JSON",
+        "type": "string",
+        "role": "tam",
+        "read": true,
+        "write": false,
+        "desc": "answering machine as JSON"
+      },
+      "native": {}
+    },
+    {
+      "_id": "phonebook",
+      "type": "channel",
+      "common": {
+        "name": "phonebook",
+        "role": "phonebook"
+      },
+      "native": {}
+    },
+    {
+      "_id": "phonebook.tableJSON",
+      "type": "state",
+      "common": {
+        "name": "phonebook as JSON",
+        "type": "string",
+        "role": "phonebook",
+        "read": true,
+        "write": false,
+        "desc": "phonebook as JSON"
+      },
+      "native": {}
+    },
+    {
+      "_id": "wlan.enabled",
+      "type": "state",
+      "common": {
+        "name": "Wi-Fi enabled",
+        "type": "boolean",
+        "role": "switch",
+        "read": true,
+        "write": true,
+        "desc": "Wi-Fi (WLAN) enabled"
+      },
+      "native": {}
+    }
+  ]
 }
