@@ -41,7 +41,12 @@ var net =    require('net');    // node-Modul für die tcp/ip Kommunikation
 var tr = require("tr-064");     // node-Modul für die Kommunikation via TR-064 mit der FritzBox
                                 // Beschreibung zu TR-064: http://avm.de/service/schnittstellen/
 
+var https = require("https");
 var request = require("request");
+
+const { existsSync, writeFile, mkdirSync, readdir, unlink, createWriteStream } = require('fs');
+const path = require('path');
+const { url } = require('inspector');
 
 var adapter = utils.Adapter('fritzbox');
 
@@ -1023,7 +1028,7 @@ function parseData(message) {
                 adapter.setState('cdr.missedJSON',              JSON.stringify(call[id]),   true);
                 adapter.setState('cdr.missedHTML',              lineHistoryMissedHtml,      true);
             }
-            }
+        }
 
         if (showMissedTableHTML) {
             // Anruferliste verpasste Anrufe erstellen
@@ -1073,6 +1078,11 @@ function parseData(message) {
         adapter.setState('cdr.json',                    JSON.stringify(call[id]),   true);
         adapter.setState('cdr.html',                    lineHistoryAllHtml,         true);
         adapter.setState('cdr.txt',                     lineHistoryAllTxt,          true);
+
+        // try to get phonebook
+        if (call[id].connect && call[id].direction === "in" && adapter.config.enableTAM) {
+            getTAM(adapter.config.fritzboxAddress, adapter.config.fritzboxUser, adapter.config.fritzboxPassword);
+        }
 
     } // End DSICONNECT
 
@@ -1188,6 +1198,162 @@ function setWlanEnabled(host, user, password, enabled) {
     });
 }
 
+function getTAM(host, user, password) {
+    connectToTR064(host, user, password, function (sslDev) {
+        var tam = sslDev.services["urn:dslforum-org:service:X_AVM-DE_TAM:1"];
+        adapter.log.debug("TR-064: Calling GetMessageList()");
+        tam.actions.GetMessageList({NewIndex: 0}, function(err, ret) {
+            if (err) {
+                adapter.log.warn("TR-064: Error while calling GetMessageList(): " + err);
+            } else if (ret.NewURL && ret.NewURL.length > 0) {
+                var url = ret.NewURL;
+                adapter.log.debug("TR-064: Got TAM uri: " + url);
+                var baseUrl = url.substring(0, url.lastIndexOf('/'));
+                var sid = url.match(/sid=([\d\w]+)/)[1];
+                adapter.log.debug(`TR-064: sid=${sid}`);
+
+                var agentOptions;
+				var agent;
+
+				agentOptions = {
+				  rejectUnauthorized: false
+				};
+
+				agent = new https.Agent(agentOptions);
+
+                request({
+				  url: url
+				, method: 'GET'
+				, agent: agent
+				}, function (error, response, body) {
+                    if (!error && response.statusCode == 200) {
+                        adapter.log.debug("TR-064: Got valid TAM content from, starting to parse ...");
+                        var parser = new xml2js.Parser();
+                        parser.parseString(body, function (err, result) {
+                            if (err) {
+                                adapter.log.warn("TR-064: Error while parsing TAM content: " + err);
+                            } else {
+                                adapter.log.debug("TR-064: Successfully parsed TAM content, analyzing result ...");
+                                var promises = [];
+                                var messages = [];
+
+                                mkdirSync('tam', { recursive: true });
+
+                                if(!result.Root.Message) {
+                                    // No messahes
+                                    promises.push(new Promise((resolve, reject) => resolve()));
+                                } else {
+                                    for (var m = 0; m <= result.Root.Message.length; m++) {
+                                        var message = result.Root.Message[m];
+                                        if (typeof message != 'undefined') {
+                                            promises.push(new Promise((resolve, reject) => {
+                                                var msg = {
+                                                    index: message.Index[0],
+                                                    calledNumber: message.Called[0],
+                                                    date: message.Date[0],
+                                                    duration: message.Duration[0],
+                                                    callerName: message.Name[0],
+                                                    callerNumber: message.Number[0],
+                                                    audioFile: ''
+                                                };
+                                                if (!message.Path || message.Path.length < 1) {
+                                                    adapter.log.warn("TR-064: TAM message has no url");
+                                                    resolve(msg);
+                                                    return;
+                                                }
+
+                                                var callDate = message.Date[0].split('.').join("").split(':').join("").split(' ').join("");
+                                                var file = `tam/${callDate}-${message.Number[0]}.wav`
+                                                adapter.log.debug(`TR-064: TAM message file: ${file}`);
+                                                if (existsSync(file)) {
+                                                    msg.audioFile = path.resolve(file);
+                                                    resolve(msg);
+                                                    return;
+                                                }
+
+                                                var downloadUrl = message.Path[0];
+                                                if (downloadUrl.startsWith('/')) {
+                                                    downloadUrl = baseUrl + downloadUrl;
+                                                }
+                                                if (downloadUrl.indexOf('sid=')<0){
+                                                    downloadUrl += `&sid=${sid}`;
+                                                }
+                                                adapter.log.debug(`TR-064: Download TAM audio file from ${downloadUrl}`);
+
+                                                const stream = createWriteStream(file);
+                                                request({url: downloadUrl, agent: agent})
+                                                    .on('error', function(err) {
+                                                        unlink(file);
+                                                        adapter.log.warn(
+                                                            `TR-064: Error while downloading TAM audio file: ${err}`
+                                                        );
+                                                    })
+                                                    .pipe(stream)
+                                                    .on('error', function(err) {
+                                                        unlink(file);
+                                                        adapter.log.warn(
+                                                            `TR-064: Error while writing TAM audio file: ${err}`
+                                                        );
+                                                    })
+                                                    .on('finish', function() {
+                                                        stream.close(function() {
+                                                            msg.audioFile = path.resolve(file);
+                                                            resolve(msg);
+                                                        });
+                                                    });
+
+                                            }).then((result) => {
+                                                messages.push(result);
+                                            }));
+                                        }
+                                    }
+                                }
+
+                                Promise.all(promises).then(function() {
+                                    messages.sort((m1,m2) => m1.index > m2.index ? 1 : m1.index < m2.index ? -1 : 0);
+
+                                    // cleanup old files
+                                    readdir('tam', (err, files) => {
+                                        if (err) {
+                                            adapter.log.warn(
+                                                `TR-064: Error reading files from dir /tam: ${err}`
+                                            );
+                                        } else {
+                                            files.forEach(file => {
+                                                file = path.resolve("tam/" + file);
+                                                if (!messages.find(msg => msg.audioFile == file)) {
+                                                    // old file
+                                                    adapter.log.debug(
+                                                        `TR-064: Remove old tam audio file: ${file}`
+                                                    );
+                                                    unlink(file, function(err){
+                                                        if (err) {
+                                                            adapter.log.warn(
+                                                                `TR-064: Error deleting file ${file}: ${err}`
+                                                            );
+                                                        }
+                                                    });
+                                                }
+                                            })
+                                        }
+                                    })
+
+                                    adapter.setState('tam.messagesJSON', JSON.stringify(messages), true);
+                                    adapter.log.debug("TR-064: Successfully analyzed TAM results");
+                                });
+                            }
+                        });
+                    } else {
+						adapter.log.warn(
+							`TR-064: Error while requesting TAM: ${error}`
+						);
+					}
+                });
+            }
+        });
+    });
+}
+
 function getPhonebook(host, user, password) {
     connectToTR064(host, user, password, function (sslDev) {
         var tel = sslDev.services["urn:dslforum-org:service:X_AVM-DE_OnTel:1"];
@@ -1198,7 +1364,21 @@ function getPhonebook(host, user, password) {
             } else if (ret.NewPhonebookURL && ret.NewPhonebookURL.length > 0) {
                 var url = ret.NewPhonebookURL;
                 adapter.log.debug("TR-064: Got phonebook uri: " + url);
-                request(url, function (error, response, body) {
+
+				var agentOptions;
+				var agent;
+
+				agentOptions = {
+				  rejectUnauthorized: false
+				};
+
+				agent = new https.Agent(agentOptions);
+
+                request({
+				  url: url
+				, method: 'GET'
+				, agent: agent
+				}, function (error, response, body) {
                     if (!error && response.statusCode == 200) {
                         adapter.log.debug("TR-064: Got valid phonebook content from, starting to parse ...");
                         var parser = new xml2js.Parser();
@@ -1238,7 +1418,11 @@ function getPhonebook(host, user, password) {
                                 adapter.log.debug("TR-064: Successfully analyzed phonebook results");
                             }
                         });
-                    }
+                    } else {
+						adapter.log.warn(
+							`TR-064: Error while requesting phonebook: ${error}`
+						);
+					}
                 });
             }
         });
@@ -1273,7 +1457,8 @@ function connectToFritzbox(host) {
 
     socketBox.on('data',  parseData);   // Daten wurden aus der Fritzbox empfangen und dann in der Funktion parseData verarbeitet
 
-    if ((adapter.config.enableWlan || adapter.config.enablePhonebook) && adapter.config.fritzboxUser && adapter.config.fritzboxPassword && adapter.config.fritzboxPassword.length) {
+    if ((adapter.config.enableWlan || adapter.config.enablePhonebook || adapter.config.enableTAM)
+        && adapter.config.fritzboxUser && adapter.config.fritzboxPassword && adapter.config.fritzboxPassword.length) {
         adapter.log.info("Trying to connect to TR-064: " + host + ":49000");
 
         // try to get WLAN status and enable timer
@@ -1292,6 +1477,11 @@ function connectToFritzbox(host) {
         // try to get phonebook
         if (adapter.config.enablePhonebook) {
             getPhonebook(host, adapter.config.fritzboxUser, adapter.config.fritzboxPassword);
+        }
+
+        // try to get tel answering machine
+        if (adapter.config.enableTAM) {
+            getTAM(host, adapter.config.fritzboxUser, adapter.config.fritzboxPassword);
         }
     }
 }
