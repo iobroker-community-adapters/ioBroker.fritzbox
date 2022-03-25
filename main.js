@@ -176,18 +176,18 @@ adapter.on('stateChange', function (id, state) {
     if (!state) {
         return;
     }
-    if (id === adapter.namespace + ".calls.missedCount") {
+    if (id === `${adapter.namespace}.calls.missedCount`) {
         // New value of
         // adapter.log.debug("state.val: " + state.val);
         if (state.val == 0 || state.val == "0 ") {
             adapter.setState('calls.missedDateReset',         dateNow(),          true);
-            adapter.log.debug("missed calls: counter zurückgesetzt " + dateNow());
+            adapter.log.debug(`missed calls: counter zurückgesetzt ${dateNow()}`);
         }
     }
-    else if (id === adapter.namespace + ".wlan.enabled" && !state.ack) {
-        adapter.log.debug(id + "=" + state.val);
+    else if (id === `${adapter.namespace}.wlan.enabled` && !state.ack) {
+        adapter.log.debug(`${id}=${state.val}`);
         if (state.val != wlanState && intervalTR046 && adapter.config.enableWlan) {
-            adapter.log.info("Changing WLAN to " + state.val);
+            adapter.log.info(`Changing WLAN to ${state.val}`);
             setWlanEnabled(adapter.config.fritzboxAddress, adapter.config.fritzboxUser, adapter.config.fritzboxPassword, state.val);
         }
     }
@@ -197,7 +197,7 @@ adapter.on('stateChange', function (id, state) {
 
 function fritzboxDateEpoch(date) {
     date = date || "";
-    var year    = "20" + date.substring(6, 8), // Achtung: ab dem Jahr 2100 erzeugt die Funktion ein falsches Datum ;-)
+    var year    = `20${date.substring(6, 8)}`, // Achtung: ab dem Jahr 2100 erzeugt die Funktion ein falsches Datum ;-)
         month   = parseInt(date.substring(3, 5)) - 1,
         day     = date.substring(0, 2),
         hour    = date.substring(9, 11),
@@ -222,21 +222,21 @@ function dateNow() {
         minute   = date.getMinutes(),
         second   = date.getSeconds();
     if (month.toString().length === 1) {
-        month  = '0' + month;
+        month  = `0${month}`;
     }
     if (day.toString().length === 1) {
-        day = '0' + day;
+        day = `0${day}`;
     }
     if (hour.toString().length === 1) {
-        hour = '0' + hour;
+        hour = `0${hour}`;
     }
     if (minute.toString().length === 1) {
-        minute = '0' + minute;
+        minute = `0${minute}`;
     }
     if (second.toString().length === 1) {
-        second = '0' + second;
+        second = `0${second}`;
     }
-    return day + "." + month + "." + year + " " + hour + ":" + minute;
+    return `${day}.${month}.${year} ${hour}:${minute}`;
 }
 
 
@@ -266,7 +266,7 @@ function numberFormat(number,length,align) {
     var onlyNumbers = /\D+/g;
     if (!number.match(onlyNumbers)) { // wenn der String numbers nur Ziffern enthält und diese in der Anzahl zu lang sind, kürzen und die letzte Ziffer gegen ein "x" ersetzen
         if (number.length > length) {
-            number = number.substring(0, length - 1) + "x";
+            number = `${number.substring(0, length - 1)}x`;
         }
     }
     number = number.substring(0,length); // sollte die externen numbern insgesamt länger sein, werden diese auf die max. gewünschte Länge gekürzt
@@ -278,10 +278,10 @@ function numberFormat(number,length,align) {
     var i = 0;
     while (number.search(" ") >= 0) {
     number = number.replace(" ", " "); // alle normalen Leerzeichen gegen utf-8 non breaking spaces ersetzen
-        if (!i) adapter.log.debug('Leerzeichen gegen utf-8 non breaking space ersetzt: <'+ number + ">");
+        if (!i) adapter.log.debug(`Leerzeichen gegen utf-8 non breaking space ersetzt: <${number}>`);
         i++;
         if (i > 40) {
-            adapter.log.warn("function numberFormat: zu langer Sting: " + number);
+            adapter.log.warn(`function numberFormat: zu langer Sting: ${number}`);
             break;
         }
     }
@@ -305,13 +305,13 @@ function e164(extrnr) {
         extrnr = extrnr.slice(extrnr0, extrnr.length);
 
         if (extrnr0 == 0) {
-            extrnr = "+" + configCC + configAC + extrnr;
+            extrnr = `+${configCC}${configAC}${extrnr}`;
         }
         if (extrnr0 == 1) {
-            extrnr = "+" + configCC + extrnr;
+            extrnr = `+${configCC}${extrnr}`;
         }
         if (extrnr0 == 2) {
-            extrnr = "+" + extrnr;
+            extrnr = `+${extrnr}`;
         }
 
         if (extrnr0 < 0 && extrnr0 > 2) {
@@ -326,9 +326,9 @@ function telLink(e164,formattedNumber) {
 // erstellt aus einer e164 Rufnummer einen tel: link. Wird als 2. Parameter eine formatierte Rufnummer übergeben, wird diese dargestellt.
     var link = "";
     if (!formattedNumber) {
-        link = '<a style="text-decoration: none;" href="tel:' + e164 + '">' + e164 + '</a>';
+        link = `<a style="text-decoration: none;" href="tel:${e164}">${e164}</a>`;
     } else {
-        link = '<a style="text-decoration: none;" href="tel:' + e164 + '">' + formattedNumber + '</a>';
+        link = `<a style="text-decoration: none;" href="tel:${e164}">${formattedNumber}</a>`;
     }
     return link;
 }
@@ -342,7 +342,7 @@ function validateE164(e164) {
         return true;
     } else {
         // Invalid international phone number
-        adapter.log.warn(e164 + " is not a vail int. phone number. Please check your configuration (Country + Area Code).");
+        adapter.log.warn(`${e164} is not a vail int. phone number. Please check your configuration (Country + Area Code).`);
         return false;
     }
 }
@@ -359,7 +359,7 @@ function fritzboxDateToTableDate(fritzboxDate) {
     // var time = hour + ":" + minute + "  ";
     // var date = day  + "." + month  + ".20" + year + " ";
     // var date = day  + "." + month  + "." + year + " ";
-    var date = day + "." + month + ". " + hour + ":" + minute + "  "; // space = non-breaking-space in utf-8
+    var date = `${day}.${month}. ${hour}:${minute}  `; // space = non-breaking-space in utf-8
     return date;
 }
 
@@ -385,10 +385,10 @@ function durationForm(duration) {
         if (durationMin < 1) {
             duration = durationSek;
         } else {
-            duration = durationMin + ":" + fill((2- durationSek.toString().length),"0") + durationSek;
+            duration = `${durationMin}:${fill((2 - durationSek.toString().length), "0")}${durationSek}`;
         }
     } else {
-        duration = durationStd + ":" + fill((2- durationMin.toString().length),"0") + durationMin + ":" + fill((2- durationSek.toString().length),0) + durationSek;
+        duration = `${durationStd}:${fill((2 - durationMin.toString().length), "0")}${durationMin}:${fill((2 - durationSek.toString().length), 0)}${durationSek}`;
     }
     duration = duration.toString();
 
@@ -407,7 +407,7 @@ function durationForm(duration) {
 function getEventsList(anruferliste) {
     var text = '';
     for (var i = 0; i < anruferliste.length; i++) {
-         text += (text ? '<br>\n' : '') + anruferliste[i];
+         text += `${text ? '<br>\n' : ''}${anruferliste[i]}`;
 //        text += anruferliste[i] + (text ? '<br>\n' : '');
     }
     return text;
@@ -434,7 +434,7 @@ function callmonitor(list) {
 // Liste aktueller Anrufe (RING, CONNECT und CALL)
     var txt = '';
     for (var i = 0; i < list.length; i++) {
-        txt += fritzboxDateToTableDate(call[list[i].id].dateStart) + " " + call[list[i].id].externalNumberForm;
+        txt += `${fritzboxDateToTableDate(call[list[i].id].dateStart)} ${call[list[i].id].externalNumberForm}`;
         if (call[list[i].id].type === "CONNECT") {
             txt += durationForm(call[list[i].id].durationSecs2);
         }
@@ -457,14 +457,14 @@ function callmonitorAll(list) {
         if (call[id].callSymbol == " -> ") {
             intNr = '<span style="color:red  ">RING</span>';
         }
-        txt += fritzboxDateToTableDate(call[id].dateStart) + " " + call[id].externalNumberForm;
-        txt += call[id].callSymbolColor + " ";
+        txt += `${fritzboxDateToTableDate(call[id].dateStart)} ${call[id].externalNumberForm}`;
+        txt += `${call[id].callSymbolColor} `;
         txt += intNr;
         if (call[id].type === "CONNECT") {
-            txt += " " + '<span style="color:green">' + "<b>" + durationForm(call[id].durationSecs2) + "</b>" + '</span>';
+            txt += ` <span style="color:green"><b>${durationForm(call[id].durationSecs2)}</b></span>`;
         }
         if (call[id].type === "RING") {
-            txt += " " + '<span style="color:red  ">' + durationForm(call[id].durationRingSecs) + '</span>';
+            txt += ` <span style="color:red  ">${durationForm(call[id].durationRingSecs)}</span>`;
         }
         if (i < (list.length - 1)) {
             txt += (txt ? '<br>\n' : '');
@@ -475,9 +475,7 @@ function callmonitorAll(list) {
 
 function headlineMissedHTML() {
     var headlineHistoryMissedHTML =
-        "<b>" + headlineDate +
-        headlineExtnumber + nbsp +
-        headlineOwnnumber + "</b>";
+        `<b>${headlineDate}${headlineExtnumber}${nbsp}${headlineOwnnumber}</b>`;
     return headlineHistoryMissedHTML;
 }
 
@@ -505,7 +503,7 @@ function headlineAllTxt() {
 
 function headlineAllHTML() {
 // Überschrift Anruferliste gesamt (html)
-    var headlineHistoryAllHTML = "<b>" + headlineAllTxt() + "</b>";
+    var headlineHistoryAllHTML = `<b>${headlineAllTxt()}</b>`;
 
     return headlineHistoryAllHTML;
 }
@@ -594,11 +592,11 @@ function initVars() {
     configUnknownNumber         = numberFormat(adapter.config.unknownNumber, adapter.config.unknownNumber.length); // Leerzeichen gegen utf-8 nbsp ersetzen
     configNumberLength          = adapter.config.numberLength;
     if (configNumberLength < 4) {
-        adapter.log.warn("Rufnummernlänge zu klein gewählt, geändert von " + configNumberLength + " auf 4");
+        adapter.log.warn(`Rufnummernlänge zu klein gewählt, geändert von ${configNumberLength} auf 4`);
         configNumberLength = 4;
     }
     if (configNumberLength > 30) {
-        adapter.log.warn("Rufnummernlänge zu groß gewählt, geändert von " + configNumberLength + " auf 30");
+        adapter.log.warn(`Rufnummernlänge zu groß gewählt, geändert von ${configNumberLength} auf 30`);
         configNumberLength = 30;
     }
 
@@ -671,7 +669,7 @@ function initVars() {
 
 
 function parseData(message) {
-    adapter.log.info("data from " + adapter.config.fritzboxAddress + ": " + message);
+    adapter.log.info(`data from ${adapter.config.fritzboxAddress}: ${message}`);
     message = message.toString('utf8');
     adapter.setState('message', message, true);
 
@@ -711,7 +709,7 @@ function parseData(message) {
 
 
     // Outgoing call
-    if (call[id].type == "CALL") {
+    if (call[id].type === "CALL") {
         call[id].extensionLine      = obj[3];    // used extension line
         call[id].ownNumber          = obj[4];    // calling number - used own number
         call[id].externalNumber     = obj[5];    // called number
@@ -732,7 +730,7 @@ function parseData(message) {
         call[id].callSymbolColor    = cssBlack + call[id].callSymbol + cssEnd;
     }
     else // Incoming (RING)
-    if (call[id].type == "RING") {
+    if (call[id].type === "RING") {
         call[id].extensionLine      = "";        // used extension line
         call[id].ownNumber          = obj[4];    // called number - used own number
         call[id].externalNumber     = obj[3];    // calling number
@@ -753,7 +751,7 @@ function parseData(message) {
         call[id].callSymbolColor    = cssBlack + call[id].callSymbol + cssEnd;
     }
     else // Start of connect
-    if (call[id].type == "CONNECT") {
+    if (call[id].type === "CONNECT") {
         call[id].extensionLine      = obj[3];    // used extension line
         call[id].ownNumber          = call[id].ownNumber       || "????????";    // used own number
         call[id].externalNumber     = obj[4];    // connected number
@@ -770,15 +768,15 @@ function parseData(message) {
         call[id].dateStart          = call[id].dateStart || obj[0];
         call[id].dateConn           = obj[0];
         call[id].dateEnd            = null;
-        if (call[id].direction == "in") {
+        if (call[id].direction === "in") {
             call[id].callSymbol     = " ->>";
         } else {
             call[id].callSymbol     = "<<- "; // utf-8 nbsp
         }
-        call[id].callSymbolColor    = cssGreen + "<b>" + call[id].callSymbol + "</b>" + cssEnd;
+        call[id].callSymbolColor    = `${cssGreen}<b>${call[id].callSymbol}</b>${cssEnd}`;
     }
     else // End of call
-    if (call[id].type == "DISCONNECT") {
+    if (call[id].type === "DISCONNECT") {
         call[id].extensionLine      = call[id].extensionLine   || "";          // used extension line
         call[id].ownNumber          = call[id].ownNumber       || "????????";    // used own number
         call[id].externalNumber     = call[id].externalNumber  || "????????";    // connected number
@@ -797,7 +795,7 @@ function parseData(message) {
         call[id].dateEnd            = obj[0];
         if (call[id].connect === false) {
             cssColor = cssRed;
-            if (call[id].direction == "in") {
+            if (call[id].direction === "in") {
                 call[id].callSymbol = " ->X";
             } else {
                 call[id].callSymbol = "X<- "; // utf-8 nbsp
@@ -805,10 +803,10 @@ function parseData(message) {
         }
         call[id].callSymbol = call[id].callSymbol || "????";
         if (call[id].callSymbol === "????") cssColor = cssBlack;
-        call[id].callSymbolColor    = cssColor + "<b>" + call[id].callSymbol + "</b>" + cssEnd;
+        call[id].callSymbolColor    = `${cssColor}<b>${call[id].callSymbol}</b>${cssEnd}`;
     }
     else {
-        adapter.log.error ("adapter fritzBox unknown event type " + call[id].type);
+        adapter.log.error (`adapter fritzBox unknown event type ${call[id].type}`);
         return;
     }
 
@@ -896,12 +894,8 @@ function parseData(message) {
         }
     }
 
-/*    adapter.log.debug("ringCount: " + ringCount +
-        ", callCount: "             + callCount+
-        ", connectCount: "          + connectCount +
-        ", allActiveCount: "        + allActiveCount
+    adapter.log.debug(`ringCount: ${ringCount}, callCount: ${callCount}, connectCount: ${connectCount}, allActiveCount: ${allActiveCount}`
     );
-*/
 
 // sortiert die ermittelten Listen nach der tatsächlichen Meldungszeit (Systemzeit)
     listRing.sort(dynamicSort("-dateStartEpoch"));      // Liste sortieren: jüngster Eintrag oben
@@ -933,10 +927,8 @@ function parseData(message) {
         }
     });
 
-
-
-    if (call[id].type == "DISCONNECT") {
-        if (call[id].direction == "in") {
+    if (call[id].type === "DISCONNECT") {
+        if (call[id].direction === "in") {
             ringLastNumber    = call[id].externalNumber;        // letzter Anrufer
             adapter.setState('calls.ringLastNumber',                     ringLastNumber ,            true);
             ringLastNumberTel = call[id].externalTelLinkCenter; // letzter Anrufer als wählbarer Link
@@ -956,7 +948,7 @@ function parseData(message) {
                 if (missedCount > 999) missedCount = 999;
             }
         } else
-        if (call[id].direction == "out") {
+        if (call[id].direction === "out") {
             callLastNumber = call[id].externalNumber;
             adapter.setState('calls.callLastNumber',                     callLastNumber ,            true);
             callLastNumberTel = call[id].externalTelLinkCenter;
@@ -981,7 +973,7 @@ function parseData(message) {
     // Daten, die bei jeder Meldung aktualisiert werden
     adapter.setState('system.deltaTime',                         call[id].deltaTime ,        true);
     adapter.setState('system.deltaTimeOK',                       call[id].deltaTimeOK ,      true);
-    if (!call[id].deltaTimeOK) adapter.log.warn("delta time between system and fritzbox: " + call[id].deltaTime + " sec");
+    if (!call[id].deltaTimeOK) adapter.log.warn(`delta time between system and fritzbox: ${call[id].deltaTime} sec`);
 
     //Auf Änderungen im ioBroker Objekt reagieren und die lokale Variable auch ändern.
     if (objMissedCount !== missedCount) { // Zähler nur schreiben, wenn er sich verändert hat (wg. Traffic Überwachung des Objekts auf Änderung)
@@ -1001,7 +993,7 @@ function parseData(message) {
     adapterSetOnChange ("calls.counterActualCalls.allActiveCount" , allActiveCount);
 
     // History / Anruferlisten
-    if (call[id].type == "DISCONNECT") {
+    if (call[id].type === "DISCONNECT") {
 
         // Datensatz formatieren
         var extensionLine   = numberFormat(call[id].extensionLine, 5, "r");
@@ -1143,16 +1135,13 @@ function parseData(message) {
         adapterSetOnChange ("callmonitor.ring" , callmonitor(listRing));
         adapterSetOnChange ("callmonitor.all" , callmonitorAll(listAll));
     }
-
-
-
 }
 
 
 
 function handleWLANConfiguration(config) {
     //console.log(config);
-    adapter.log.debug("WLAN: " + config['NewEnable']);
+    adapter.log.debug(`WLAN: ${config['NewEnable']}`);
     wlanState = config['NewEnable'] == 1;
     adapterSetOnChange("wlan.enabled", wlanState);
 }
@@ -1169,12 +1158,12 @@ function connectToTR064(host, user, password, callback) {
                     callback(sslDev);
                 }
                 else {
-                    adapter.log.warn("TR-064 error: " + err);
+                    adapter.log.warn(`TR-064 error: ${err}`);
                 }
             });
         }
         else {
-            adapter.log.warn("TR-064 error: " + err);
+            adapter.log.warn(`TR-064 error: ${err}`);
         }
     });
 }
@@ -1191,7 +1180,7 @@ function getWlanConfig(host, user, password, callback) {
                 callback(result);
             }
             else {
-                adapter.log.warn("TR-064 error: " + err);
+                adapter.log.warn(`TR-064 error: ${err}`);
             }
         });
     });
@@ -1202,13 +1191,13 @@ function getWlanConfig(host, user, password, callback) {
 function setWlanEnabled(host, user, password, enabled) {
     connectToTR064(host, user, password, function (sslDev) {
         var wlanConfig = sslDev.services["urn:dslforum-org:service:WLANConfiguration:1"];
-        adapter.log.debug("TR-064: calling SetEnable(" + enabled + ")");
+        adapter.log.debug(`TR-064: calling SetEnable(${enabled})`);
         wlanConfig.actions.SetEnable({ 'NewEnable': enabled ? 1 : 0 }, function (err, result) {
             if (!err) {
                 adapter.log.debug("TR-064: got result from SetEnable()");
             }
             else {
-                adapter.log.warn("TR-064 error: " + err);
+                adapter.log.warn(`TR-064 error: ${err}`);
             }
         });
     });
@@ -1220,10 +1209,10 @@ function getTAM(host, user, password) {
         adapter.log.debug("TR-064: Calling GetMessageList()");
         tam.actions.GetMessageList({NewIndex: 0}, function(err, ret) {
             if (err) {
-                adapter.log.warn("TR-064: Error while calling GetMessageList(): " + err);
+                adapter.log.warn(`TR-064: Error while calling GetMessageList(): ${err}`);
             } else if (ret.NewURL && ret.NewURL.length > 0) {
                 var url = ret.NewURL;
-                adapter.log.debug("TR-064: Got TAM uri: " + url);
+                adapter.log.debug(`TR-064: Got TAM uri: ${url}`);
                 var baseUrl = url.substring(0, url.lastIndexOf('/'));
                 var sid = url.match(/sid=([\d\w]+)/)[1];
                 adapter.log.debug(`TR-064: sid=${sid}`);
@@ -1247,7 +1236,7 @@ function getTAM(host, user, password) {
                         var parser = new xml2js.Parser();
                         parser.parseString(body, function (err, result) {
                             if (err) {
-                                adapter.log.warn("TR-064: Error while parsing TAM content: " + err);
+                                adapter.log.warn(`TR-064: Error while parsing TAM content: ${err}`);
                             } else {
                                 adapter.log.debug("TR-064: Successfully parsed TAM content, analyzing result ...");
                                 var promises = [];
@@ -1336,7 +1325,7 @@ function getTAM(host, user, password) {
                                             );
                                         } else {
                                             files.forEach(file => {
-                                                file = path.resolve("tam/" + file);
+                                                file = path.resolve(`tam/${file}`);
                                                 if (!messages.find(msg => msg.audioFile == file)) {
                                                     // old file
                                                     adapter.log.debug(
@@ -1376,10 +1365,10 @@ function getPhonebook(host, user, password) {
         adapter.log.debug("TR-064: Calling GetPhonebook()");
         tel.actions.GetPhonebook({ NewPhonebookID: '0' }, function (err, ret) {
             if (err) {
-                adapter.log.warn("TR-064: Error while calling GetPhonebook(): " + err);
+                adapter.log.warn(`TR-064: Error while calling GetPhonebook(): ${err}`);
             } else if (ret.NewPhonebookURL && ret.NewPhonebookURL.length > 0) {
                 var url = ret.NewPhonebookURL;
-                adapter.log.debug("TR-064: Got phonebook uri: " + url);
+                adapter.log.debug(`TR-064: Got phonebook uri: ${url}`);
 
 				var agentOptions;
 				var agent;
@@ -1400,7 +1389,7 @@ function getPhonebook(host, user, password) {
                         var parser = new xml2js.Parser();
                         parser.parseString(body, function (err, result) {
                             if (err) {
-                                adapter.log.warn("TR-064: Error while parsing phonebook content: " + err);
+                                adapter.log.warn(`TR-064: Error while parsing phonebook content: ${err}`);
                             } else {
                                 adapter.log.debug("TR-064: Successfully parsed phonebook content, analyzing result ...");
                                 var phonenumbers = []; // create an empty array for fetching all configured phone numbers from fritzbox
@@ -1448,7 +1437,7 @@ function getPhonebook(host, user, password) {
 function connectToFritzbox(host) {
     clearRealtimeVars(); // IP-Verbindung neu: Realtimedaten werden gelöscht, da ggf. nicht konsistent
     socketBox = net.connect({port: 1012, host: host}, function() {
-        adapter.log.info("adapter connected to fritzbox: " + host);
+        adapter.log.info(`adapter connected to fritzbox: ${host}`);
     });
 
     function restartConnection() {
@@ -1458,7 +1447,7 @@ function connectToFritzbox(host) {
         }
 
         if (!connecting){
-            adapter.log.warn("restartConnection: " + host);
+            adapter.log.warn(`restartConnection: ${host}`);
             clearRealtimeVars(); // IP-Verbindung neu: Realtimedaten werden gelöscht, da ggf. nicht konsistent
             connecting = setTimeout(function () {
                 connectToFritzbox(host);
@@ -1474,7 +1463,7 @@ function connectToFritzbox(host) {
 
     if ((adapter.config.enableWlan || adapter.config.enablePhonebook || adapter.config.enableTAM)
         && adapter.config.fritzboxUser && adapter.config.fritzboxPassword && adapter.config.fritzboxPassword.length) {
-        adapter.log.info("Trying to connect to TR-064: " + host + ":49000");
+        adapter.log.info(`Trying to connect to TR-064: ${host}:49000`);
 
         // try to get WLAN status and enable timer
         if (adapter.config.enableWlan) {
@@ -1516,11 +1505,11 @@ function main() {
     // TODO: IP-Prüfung bringt nichts, da auch Hostnamen / DNS erlaubt sind & eine Prüfung auf der Admin-Webseite ist sinnvoller
     var validIP = /^((25[0-5]|2[0-4][0-9]|1?[0-9]?[0-9])\.){3}(25[0-5]|2[0-4][0-9]|1?[0-9]?[0-9])$/;
     if (!adapter.config.fritzboxAddress.match(validIP)) {
-        adapter.log.info("no valid ip-Adress: " + adapter.config.fritzboxAddress) + ". Is it a valid hostname?";
+        `${adapter.log.info(`no valid ip-Adress: ${adapter.config.fritzboxAddress}`)}. Is it a valid hostname?`;
     }
 
     if (adapter.config.fritzboxAddress && adapter.config.fritzboxAddress.length) {
-        adapter.log.info("try to connect: " + adapter.config.fritzboxAddress);
+        adapter.log.info(`try to connect: ${adapter.config.fritzboxAddress}`);
         connectToFritzbox(adapter.config.fritzboxAddress);      // fritzbox
     } else {
         adapter.log.error("<< ip-Adresse der Fritzbox unbekannt >>");
