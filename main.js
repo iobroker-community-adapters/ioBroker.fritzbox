@@ -123,7 +123,8 @@ var intervalRunningCall = null;
 var intervalTR046 = null;
 var wlanState = null;
 
-
+var connecting = null;
+var socketBox = null;
 
 adapter.on('message', function (obj) {
 //    if (obj) processMessage(obj);
@@ -138,9 +139,14 @@ adapter.on('ready', function () {
 });
 
 // hier wird der Adapter beendet
-adapter.on('unload', function () {
+adapter.on('unload', function (callback) {
     adapter.log.debug('adapter.on-unload: << UNLOAD >>');
     clearRealtimeVars();
+
+    if (connecting) {
+        clearInterval(connecting);
+        connecting = null;
+    }
 
     if (intervalRunningCall) {
         clearInterval(intervalRunningCall);
@@ -151,6 +157,16 @@ adapter.on('unload', function () {
         clearInterval(intervalTR046);
         intervalTR046 = null;
     }
+
+    if (socketBox) {
+        try {
+            socketBox.close();
+        } catch {
+            // ignroe
+        }
+    }
+
+    callback && callback();
 });
 
 
@@ -205,19 +221,19 @@ function dateNow() {
         hour     = date.getHours(),
         minute   = date.getMinutes(),
         second   = date.getSeconds();
-    if (month.toString().length == 1) {
+    if (month.toString().length === 1) {
         month  = '0' + month;
     }
-    if (day.toString().length == 1) {
+    if (day.toString().length === 1) {
         day = '0' + day;
     }
-    if (hour.toString().length == 1) {
+    if (hour.toString().length === 1) {
         hour = '0' + hour;
     }
-    if (minute.toString().length == 1) {
+    if (minute.toString().length === 1) {
         minute = '0' + minute;
     }
-    if (second.toString().length == 1) {
+    if (second.toString().length === 1) {
         second = '0' + second;
     }
     return day + "." + month + "." + year + " " + hour + ":" + minute;
@@ -1431,11 +1447,10 @@ function getPhonebook(host, user, password) {
 
 function connectToFritzbox(host) {
     clearRealtimeVars(); // IP-Verbindung neu: Realtimedaten werden gelöscht, da ggf. nicht konsistent
-    var socketBox = net.connect({port: 1012, host: host}, function() {
+    socketBox = net.connect({port: 1012, host: host}, function() {
         adapter.log.info("adapter connected to fritzbox: " + host);
     });
 
-    var connecting = false;
     function restartConnection() {
         if (socketBox) {
             socketBox.end();

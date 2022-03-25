@@ -3,10 +3,43 @@
         "name": "fritzbox",
         "version": "0.3.1",
         "title": "fritzbox Adapter",
+        "titleLang": {
+            "en": "fritzbox Adapter",
+            "de": "Fritzbox-Adapter",
+            "ru": "Адаптер для фрицбокса",
+            "pt": "adaptador fritzbox",
+            "nl": "fritzbox-adapter",
+            "fr": "Adaptateur fritzbox",
+            "it": "Adattatore per fritzbox",
+            "es": "Adaptador fritzbox",
+            "pl": "Adapter fritzbox",
+            "zh-cn": "弗里茨盒适配器"
+        },
+        "news": {
+            "0.2.1": {
+                "en": "Last long time stable version",
+                "de": "Letzte langzeitstabile Version",
+                "ru": "Последняя давно стабильная версия",
+                "pt": "Última versão estável por muito tempo",
+                "nl": "Laatste lange tijd stabiele versie",
+                "fr": "Dernière version stable depuis longtemps",
+                "it": "Ultima versione stabile da molto tempo",
+                "es": "Última versión estable desde hace mucho tiempo",
+                "pl": "Ostatnia długo stabilna wersja",
+                "zh-cn": "上次稳定版"
+            }
+        },
         "desc": {
             "en": "Adapter monitors the call information from Fritzbox via tcp, Port 1012 (Activate call monitor in the Fritzbox with #96*5*)",
-            "de": "Adapter verarbeitet die Anrufinformation der Fritzbox über tcp, Port 1012 (Callmonitor in der Fritzbox mit #96*5* aktivieren)",
-            "ru": "Драйвер для отображения звонков с Fritzbox через tcp, Port 1012 (Нужно активировать call monitor в Fritzbox с помощью #96*5*)"
+            "de": "Adapter überwacht die Anrufinformationen von Fritzbox über TCP, Port 1012 (Anrufüberwachung in der Fritzbox mit #96*5* aktivieren)",
+            "ru": "Адаптер отслеживает информацию о звонках из Fritzbox через tcp, порт 1012 (активируйте монитор звонков в Fritzbox с помощью #96*5*)",
+            "pt": "O adaptador monitora as informações de chamadas do Fritzbox via tcp, porta 1012 (Ative o monitor de chamadas no Fritzbox com #96*5*)",
+            "nl": "Adapter bewaakt de oproepinformatie van Fritzbox via tcp, poort 1012 (Activeer oproepmonitor in de Fritzbox met #96*5*)",
+            "fr": "L'adaptateur surveille les informations d'appel de Fritzbox via tcp, port 1012 (activez le moniteur d'appel dans la Fritzbox avec #96*5*)",
+            "it": "L'adattatore monitora le informazioni sulle chiamate da Fritzbox tramite TCP, Port 1012 (Attiva il monitoraggio delle chiamate nel Fritzbox con #96*5*)",
+            "es": "El adaptador monitorea la información de llamadas de Fritzbox a través de tcp, Puerto 1012 (Activar el monitor de llamadas en Fritzbox con #96*5*)",
+            "pl": "Adapter monitoruje informacje o połączeniach z Fritzbox przez tcp, Port 1012 (Aktywuj monitor połączeń we Fritzbox za pomocą #96*5*)",
+            "zh-cn": "适配器通过 tcp 端口 1012 监控 Fritzbox 的呼叫信息（使用 #96*5* 激活 Fritzbox 中的呼叫监控器）"
         },
         "authors": [
             "ruhr <ruhr@digheim.de>",
@@ -24,7 +57,20 @@
             "callmonitor"
         ],
         "extIcon": "https://raw.githubusercontent.com/iobroker-community-adapters/ioBroker.fritzbox/master/admin/fritzbox.png",
-        "type": "infrastructure"
+        "type": "infrastructure",
+        "plugins": {
+            "sentry": {
+                "dsn": "https://e1ad7490be034731a6ff30434299b508@sentry.iobroker.net/184"
+            }
+        },
+        "dependencies": [
+            {
+                "js-controller": ">=2.0.0"
+            }
+        ],
+        "connectionType": "local",
+        "dataSource": "push",
+        "tier": 2
     },
     "native": {
         "fritzboxAddress": "192.168.1.1",
