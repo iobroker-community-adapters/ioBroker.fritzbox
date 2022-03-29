@@ -44,7 +44,7 @@ var tr = require("tr-064");     // node-Modul für die Kommunikation via TR-064 
 var https = require("https");
 var request = require("request");
 
-const { existsSync, writeFile, mkdirSync, readdir, unlink, createWriteStream } = require('fs');
+const { existsSync, mkdirSync, readdir, unlink, createWriteStream } = require('fs');
 const path = require('path');
 const { url } = require('inspector');
 
@@ -89,6 +89,7 @@ var ringLastNumber             = "",
     historyListAllHtml         = [],
     historyListAllTxt          = [],
     historyListAllJson         = [],
+    historyListMissedJson      = [],
     historyListMissedHtml      = [];
 
 
@@ -125,6 +126,8 @@ var wlanState = null;
 
 var connecting = null;
 var socketBox = null;
+
+var instanceDir = null;
 
 adapter.on('message', function (obj) {
 //    if (obj) processMessage(obj);
@@ -648,7 +651,11 @@ function initVars() {
     } else {
         adapter.setState('history.missedTableHTML', headlineTableMissedHTML,   true);
     }
-    if (!showMissedTableJSON)     adapter.setState('history.missedTableJSON',   "deactivated", true);
+    if (!showMissedTableJSON) {
+        adapter.setState('history.missedTableJSON',   "deactivated", true);
+    } else {
+
+    }
     if (!showCallmonitor) {
         adapter.setState('callmonitor.connect', "deactivated", true);
         adapter.setState('callmonitor.ring', "deactivated", true);
@@ -1048,6 +1055,23 @@ function parseData(message) {
             }
         }
 
+        if (showMissedTableJSON) {
+            var lineMissedJson = {
+                "date" :            call[id].date,
+                "externalNumber" :  call[id].externalNumber,
+                "callSymbolColor" : call[id].callSymbolColor,
+                "extensionLine" :   call[id].extensionLine,
+                "ownNumber" :       call[id].ownNumber,
+                "lineType" :        call[id].lineType,
+                "durationForm" :    call[id].durationForm
+            };
+            // Anruferliste als JSON auf max Anzahl configHistoryAllLine beschränken
+            historyListMissedJson.unshift(lineMissedJson);
+            if (historyListMissedJson.length   > configHistoryMissedLines) {
+                historyListMissedJson.length   = configHistoryMissedLines;
+            }
+            adapter.setState('history.missedTableJSON',    JSON.stringify(historyListMissedJson), true);
+        }
 
         if (showHistoryAllTableHTML) {
             // Tabelle html erstellen
@@ -1151,7 +1175,7 @@ function handleWLANConfiguration(config) {
 function connectToTR064(host, user, password, callback) {
     var tr064 = new tr.TR064();
     tr064.initTR064Device(host, 49000, function (err, device) {
-        if (!err) {
+        if (!err && device) {
             device.startEncryptedCommunication(function (err, sslDev) {
                 if (!err) {
                     sslDev.login(user, password);
@@ -1242,7 +1266,11 @@ function getTAM(host, user, password) {
                                 var promises = [];
                                 var messages = [];
 
-                                mkdirSync('tam', { recursive: true });
+                                try {
+                                    mkdirSync(path.join(instanceDir, 'tam'), { recursive: true });
+                                } catch (err) {
+                                    adapter.log.error(`Could not create instance directory: ${err.message}`);
+                                }
 
                                 if(!result.Root.Message) {
                                     // No messahes
@@ -1268,7 +1296,7 @@ function getTAM(host, user, password) {
                                                 }
 
                                                 var callDate = message.Date[0].split('.').join("").split(':').join("").split(' ').join("");
-                                                var file = `tam/${callDate}-${message.Number[0]}.wav`
+                                                var file = path.join(instanceDir, 'tam', `${callDate}-${message.Number[0]}.wav`);
                                                 adapter.log.debug(`TR-064: TAM message file: ${file}`);
                                                 if (existsSync(file)) {
                                                     msg.audioFile = path.resolve(file);
@@ -1286,6 +1314,9 @@ function getTAM(host, user, password) {
                                                 adapter.log.debug(`TR-064: Download TAM audio file from ${downloadUrl}`);
 
                                                 const stream = createWriteStream(file);
+                                                stream.on('error', err => {
+                                                    adapter.log.error(`Could not write tam file: ${err.message}`);
+                                                });
                                                 request({url: downloadUrl, agent: agent})
                                                     .on('error', function(err) {
                                                         unlink(file);
@@ -1396,11 +1427,11 @@ function getPhonebook(host, user, password) {
                                 var phonebook = result.phonebooks.phonebook[0];
                                 for (var c = 0; c <= phonebook.contact.length; c++) {
                                     var contact = phonebook.contact[c];
-                                    if (typeof contact != 'undefined') {
+                                    if (typeof contact !== 'undefined') {
                                         var entryName = contact.person[0].realName[0];
                                         for (var t = 0; t <= contact.telephony.length; t++) {
                                             var telephony = contact.telephony[t];
-                                            if (typeof telephony != 'undefined') {
+                                            if (typeof telephony !== 'undefined' && typeof telephony.number !== 'undefined') {
                                                 for (var n = 0; n <= telephony.number.length; n++) {
                                                     var number = telephony.number[n];
                                                     if (typeof number != 'undefined') {
@@ -1494,6 +1525,13 @@ function connectToFritzbox(host) {
 
 function main() {
     adapter.log.debug("< main >");
+
+    instanceDir = utils.getAbsoluteInstanceDataDir();
+    try {
+        mkdirSync(instanceDir, { recursive: true });
+    } catch (err) {
+        adapter.log.error(`Could not create instance directory: ${err.message}`);
+    }
 
     initVars(); // ioBroker Objekte übernehmen wenn vorhanden, sonst init
 
