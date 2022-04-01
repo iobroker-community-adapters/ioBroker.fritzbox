@@ -653,8 +653,6 @@ function initVars() {
     }
     if (!showMissedTableJSON) {
         adapter.setState('history.missedTableJSON',   "deactivated", true);
-    } else {
-
     }
     if (!showCallmonitor) {
         adapter.setState('callmonitor.connect', "deactivated", true);
@@ -1056,21 +1054,23 @@ function parseData(message) {
         }
 
         if (showMissedTableJSON) {
-            var lineMissedJson = {
-                "date" :            call[id].date,
-                "externalNumber" :  call[id].externalNumber,
-                "callSymbolColor" : call[id].callSymbolColor,
-                "extensionLine" :   call[id].extensionLine,
-                "ownNumber" :       call[id].ownNumber,
-                "lineType" :        call[id].lineType,
-                "durationForm" :    call[id].durationForm
-            };
-            // Anruferliste als JSON auf max Anzahl configHistoryAllLine beschränken
-            historyListMissedJson.unshift(lineMissedJson);
-            if (historyListMissedJson.length   > configHistoryMissedLines) {
-                historyListMissedJson.length   = configHistoryMissedLines;
+            if (!call[id].connect) {
+                var lineMissedJson = {
+                    "date": call[id].date,
+                    "externalNumber": call[id].externalNumber,
+                    "callSymbolColor": call[id].callSymbolColor,
+                    "extensionLine": call[id].extensionLine,
+                    "ownNumber": call[id].ownNumber,
+                    "lineType": call[id].lineType,
+                    "durationForm": call[id].durationForm
+                };
+                // Anruferliste als JSON auf max Anzahl configHistoryAllLine beschränken
+                historyListMissedJson.unshift(lineMissedJson);
+                if (historyListMissedJson.length > configHistoryMissedLines) {
+                    historyListMissedJson.length = configHistoryMissedLines;
+                }
+                adapter.setState('history.missedTableJSON', JSON.stringify(historyListMissedJson), true);
             }
-            adapter.setState('history.missedTableJSON',    JSON.stringify(historyListMissedJson), true);
         }
 
         if (showHistoryAllTableHTML) {
