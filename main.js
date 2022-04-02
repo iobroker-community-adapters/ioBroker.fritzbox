@@ -29,26 +29,26 @@
 
 // require() ist eine Funktion von node.js, um weitere Module nachzuladen
 
-var utils = require('@iobroker/adapter-core'); // Get common adapter utils
-var xml2js = require('xml2js'); // node-Modul um xml Strukturen in JSON umzuwandeln. Eine Beschreibung: http://www.flyacts.com/blog/nodejs-xml-daten-verarbeiten/
+const utils = require('@iobroker/adapter-core'); // Get common adapter utils
+const xml2js = require('xml2js'); // node-Modul um xml Strukturen in JSON umzuwandeln. Eine Beschreibung: http://www.flyacts.com/blog/nodejs-xml-daten-verarbeiten/
                                 // Bei der Entwicklung ins iobroker.frittbox Verzeichnis installieren. Als Admin, d.h. beim Mac mit sudo:
                                 // sudo npm install xml2js --save
                                 // mit dem --save wird es ins packet.json geschrieben
                                 // vorbereitet, um das Telefonbuch der Fritzbox zu verarbeiten (Export im XML Format)
-var net =    require('net');    // node-Modul für die tcp/ip Kommunikation
+const net = require('net');    // node-Modul für die tcp/ip Kommunikation
                                 // ist schon in node.js enthalten
                                 // Beschreibung: https://nodejs.org/api/net.html
-var tr = require("tr-064");     // node-Modul für die Kommunikation via TR-064 mit der FritzBox
+const tr = require("tr-064");     // node-Modul für die Kommunikation via TR-064 mit der FritzBox
                                 // Beschreibung zu TR-064: http://avm.de/service/schnittstellen/
 
-var https = require("https");
-var request = require("request");
+const https = require("https");
+const request = require("request");
 
 const { existsSync, mkdirSync, readdir, unlink, createWriteStream } = require('fs');
 const path = require('path');
 const { url } = require('inspector');
 
-var adapter = utils.Adapter('fritzbox');
+const adapter = utils.Adapter('fritzbox');
 
 var call = [];
 
@@ -1526,7 +1526,7 @@ function connectToFritzbox(host) {
 function main() {
     adapter.log.debug("< main >");
 
-    instanceDir = utils.getAbsoluteInstanceDataDir();
+    instanceDir = utils.getAbsoluteInstanceDataDir(adapter);
     try {
         mkdirSync(instanceDir, { recursive: true });
     } catch (err) {
