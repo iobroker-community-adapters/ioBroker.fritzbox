@@ -179,7 +179,7 @@ Beispielwidgets:
 
 ## Changelog
 
-### __WOKR IN PROGRESS__
+### __WORK IN PROGRESS__
 * (Apollon77) Write history.missedTableJSON value
 * (Apollon77) Store tam files in an instance specific location
 * (Apollon77) Fix crash cases reported by Sentry
