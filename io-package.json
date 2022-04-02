@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "fritzbox",
-    "version": "0.4.0",
+    "version": "0.5.0",
     "title": "fritzbox Adapter",
     "titleLang": {
       "en": "fritzbox Adapter",
@@ -16,6 +16,18 @@
       "zh-cn": "弗里茨盒适配器"
     },
     "news": {
+      "0.5.0": {
+        "en": "Write history.missedTableJSON value\nStore tam files in an instance specific location\nFix crash cases reported by Sentry",
+        "de": "Schreiben Sie den Wert history.missedTableJSON\nSpeichern Sie Tam-Dateien an einem instanzspezifischen Ort\nVon Sentry gemeldete Absturzfälle beheben",
+        "ru": "Записать значение history.missedTableJSON\nХраните файлы tam в определенном месте экземпляра\nИсправить случаи сбоев, о которых сообщил Sentry",
+        "pt": "Escreva o valor history.missedTableJSON\nArmazenar arquivos tam em um local específico da instância\nCorrigir casos de travamento relatados pelo Sentinela",
+        "nl": "Schrijf history.missedTableJSON-waarde\nSla tam-bestanden op in een instantie-specifieke locatie\nHerstel crashgevallen gemeld door Sentry",
+        "fr": "Écrire la valeur history.missedTableJSON\nStockez les fichiers tam dans un emplacement spécifique à l'instance\nCorrection des cas de plantage signalés par Sentry",
+        "it": "Scrivi il valore history.missedTableJSON\nArchivia i file tam in una posizione specifica dell'istanza\nRisolvi i casi di crash segnalati da Sentry",
+        "es": "Escribe el valor history.missedTableJSON\nAlmacene archivos tam en una ubicación específica de la instancia\nSolucionar casos de fallas informados por Sentry",
+        "pl": "Zapisz wartość history.missedTableJSON\nPrzechowuj pliki tam w lokalizacji określonej dla instancji\nNapraw przypadki awarii zgłoszone przez Sentry",
+        "zh-cn": "写入 history.missedTableJSON 值\n将 tam 文件存储在实例特定位置\n修复 Sentry 报告的崩溃案例"
+      },
       "0.4.0": {
         "en": "IMPORTANT: You need to re-enter the password once after installing this version!\nGeneral updates and fixes\nTAM (Telephone Answering Maschine) support added\nAdd Sentry for crash reporting",
         "de": "WICHTIG: Nach der Installation dieser Version müssen Sie das Passwort einmalig neu eingeben!\nAllgemeine Aktualisierungen und Korrekturen\nTAM (Telefonanrufbeantworter)-Unterstützung hinzugefügt\nFügen Sie Sentry für Absturzberichte hinzu",

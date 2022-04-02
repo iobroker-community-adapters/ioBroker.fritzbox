@@ -178,8 +178,7 @@ Beispielwidgets:
 * Feinere Konfiguration der Anruferliste (Tabellen)
 
 ## Changelog
-
-### __WORK IN PROGRESS__
+### 0.5.0 (2022-04-02)
 * (Apollon77) Write history.missedTableJSON value
 * (Apollon77) Store tam files in an instance specific location
 * (Apollon77) Fix crash cases reported by Sentry
