@@ -143,7 +143,7 @@ adapter.on('ready', function () {
 
 // hier wird der Adapter beendet
 adapter.on('unload', function (callback) {
-    adapter.log.debug('adapter.on-unload: << UNLOAD >>');
+    adapter.log && adapter.log.debug('adapter.on-unload: << UNLOAD >>');
     clearRealtimeVars();
 
     if (connecting) {
