@@ -45,7 +45,7 @@
     "@alcalzone/release-script-plugin-license": "^3.5.9",
     "axios": "^0.27.2",
     "mocha": "^10.2.0",
-    "chai": "^4.3.8"
+    "chai": "^4.3.10"
   },
   "bugs": {
     "url": "https://github.com/iobroker-community-adapters/ioBroker.fritzbox/issues"
