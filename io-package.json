@@ -2,19 +2,6 @@
   "common": {
     "name": "fritzbox",
     "version": "0.5.0",
-    "title": "fritzbox Adapter",
-    "titleLang": {
-      "en": "fritzbox Adapter",
-      "de": "Fritzbox-Adapter",
-      "ru": "Адаптер для фрицбокса",
-      "pt": "adaptador fritzbox",
-      "nl": "fritzbox-adapter",
-      "fr": "Adaptateur fritzbox",
-      "it": "Adattatore per fritzbox",
-      "es": "Adaptador fritzbox",
-      "pl": "Adapter fritzbox",
-      "zh-cn": "弗里茨盒适配器"
-    },
     "news": {
       "0.5.0": {
         "en": "Write history.missedTableJSON value\nStore tam files in an instance specific location\nFix crash cases reported by Sentry",
@@ -53,6 +40,18 @@
         "zh-cn": "上次稳定版"
       }
     },
+    "titleLang": {
+      "en": "fritzbox Adapter",
+      "de": "Fritzbox-Adapter",
+      "ru": "Адаптер для фрицбокса",
+      "pt": "adaptador fritzbox",
+      "nl": "fritzbox-adapter",
+      "fr": "Adaptateur fritzbox",
+      "it": "Adattatore per fritzbox",
+      "es": "Adaptador fritzbox",
+      "pl": "Adapter fritzbox",
+      "zh-cn": "弗里茨盒适配器"
+    },
     "desc": {
       "en": "Adapter monitors the call information from Fritzbox via tcp, Port 1012 (Activate call monitor in the Fritzbox with #96*5*)",
       "de": "Adapter überwacht die Anrufinformationen von Fritzbox über TCP, Port 1012 (Anrufüberwachung in der Fritzbox mit #96*5* aktivieren)",
@@ -69,27 +68,30 @@
       "ruhr <ruhr@digheim.de>",
       "UncleSam <samuel.weibel@gmail.com>"
     ],
-    "license": "MIT",
-    "platform": "Javascript/Node.js",
-    "mode": "daemon",
-    "loglevel": "info",
-    "icon": "fritzbox.png",
-    "readme": "https://github.com/iobroker-community-adapters/ioBroker.fritzbox/blob/master/README.md",
     "keywords": [
       "fritzbox",
       "cdr",
       "callmonitor"
     ],
-    "extIcon": "https://raw.githubusercontent.com/iobroker-community-adapters/ioBroker.fritzbox/master/admin/fritzbox.png",
-    "type": "infrastructure",
-    "plugins": {
-      "sentry": {
-        "dsn": "https://e1ad7490be034731a6ff30434299b508@sentry.iobroker.net/184"
-      }
+    "licenseInformation": {
+      "license": "MIT",
+      "type": "free"
     },
+    "platform": "Javascript/Node.js",
+    "icon": "fritzbox.png",
+    "enabled": true,
+    "extIcon": "https://raw.githubusercontent.com/iobroker-community-adapters/ioBroker.fritzbox/master/admin/fritzbox.png",
+    "readme": "https://github.com/iobroker-community-adapters/ioBroker.fritzbox/blob/master/README.md",
+    "loglevel": "info",
+    "tier": 2,
+    "mode": "daemon",
+    "type": "infrastructure",
+    "connectionType": "local",
+    "dataSource": "push",
+    "compact": false,
     "dependencies": [
       {
-        "js-controller": ">=3.0.0"
+        "js-controller": ">=5.0.0"
       }
     ],
     "globalDependencies": [
@@ -97,9 +99,11 @@
         "admin": ">=5.1.28"
       }
     ],
-    "connectionType": "local",
-    "dataSource": "push",
-    "tier": 2,
+    "plugins": {
+      "sentry": {
+        "dsn": "https://e1ad7490be034731a6ff30434299b508@sentry.iobroker.net/184"
+      }
+    },
     "messages": [
       {
         "condition": {

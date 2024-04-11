@@ -171,13 +171,23 @@ Beispielwidgets:
 "externalTelLinkCenter":"<a style="\" text-decoration:"="" none;\"="" href="\" tel:+4951112345678\""="">051112345678</a>"
 }
 ```
-
+<!--
 ## todo
 * Doku der Datenpunkte
 * Import des xml Telefonbuch der Fritzbox
 * Feinere Konfiguration der Anruferliste (Tabellen)
+-->
 
 ## Changelog
+<!--
+    Placeholder for the next version (at the beginning of the line):
+    ### **WORK IN PROGRESS**
+-->
+
+### **WORK IN PROGRESS**
+* (mcm1957) Adapter requires node.js >=18 and js-controller >= 5 now
+* (mcm1957) Dependencies have been updated
+
 ### 0.5.0 (2022-04-02)
 * (Apollon77) Write history.missedTableJSON value
 * (Apollon77) Store tam files in an instance specific location
@@ -206,6 +216,7 @@ Beispielwidgets:
 
 The MIT License (MIT)
 
+Copyright (c) 2024 iobroker-community-adapters <iobroker-community-adapters@gmx.de>
 Copyright (c) 2015-2022, ruhr70
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
