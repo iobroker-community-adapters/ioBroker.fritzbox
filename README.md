@@ -183,8 +183,7 @@ Beispielwidgets:
     Placeholder for the next version (at the beginning of the line):
     ### **WORK IN PROGRESS**
 -->
-
-### **WORK IN PROGRESS**
+### 0.6.0 (2024-04-11)
 * (mcm1957) Adapter requires node.js >=18 and js-controller >= 5 now
 * (mcm1957) Dependencies have been updated
 

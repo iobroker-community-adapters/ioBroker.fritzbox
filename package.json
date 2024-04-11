@@ -1,7 +1,7 @@
 {
   "name": "iobroker.fritzbox",
   "description": "Verarbeitet die Callmontiorinformationen der AVM Fritzbox.",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "author": {
     "name": "ruhr",
     "email": "ruhr@digheim.de"

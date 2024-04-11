@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "fritzbox",
-    "version": "0.5.0",
+    "version": "0.6.0",
     "news": {
+      "0.6.0": {
+        "en": "Adapter requires node.js >=18 and js-controller >= 5 now\nDependencies have been updated",
+        "de": "Adapter benötigt node.js >=18 und js-controller >== 5 jetzt\nAbhängigkeiten wurden aktualisiert",
+        "ru": "Адаптер требует node.js >=18 и js-контроллер >= 5 сейчас\nЗависимость обновлена",
+        "pt": "Adapter requer node.js >=18 e js-controller >= 5 agora\nAs dependências foram atualizadas",
+        "nl": "Voor de adapter zijn node.js < 18 en js-controller > Nu 5\nAfhankelijkheden zijn bijgewerkt",
+        "fr": "L'adaptateur nécessite node.js >=18 et js-controller >= 5 maintenant\nLes dépendances ont été actualisées",
+        "it": "L'adattatore richiede node.js >=18 e js-controller >= 5 ora\nLe dipendenze sono state aggiornate",
+        "es": "Adaptador requiere node.js √≥=18 y js-controller 5 ahora\nSe han actualizado las dependencias",
+        "pl": "Adapter wymaga node.js > = 18 i kontroler js- > = 5 teraz\nZaktualizowano zależności",
+        "uk": "Адаптер вимагає node.js >=18 і js-controller >= 5 тепер\nЗалежність було оновлено",
+        "zh-cn": "适配器需要节点.js QQ18和js控制器 QQ 现在5号\n依赖关系已更新"
+      },
       "0.5.0": {
         "en": "Write history.missedTableJSON value\nStore tam files in an instance specific location\nFix crash cases reported by Sentry",
         "de": "Schreiben Sie den Wert history.missedTableJSON\nSpeichern Sie Tam-Dateien an einem instanzspezifischen Ort\nVon Sentry gemeldete Absturzfälle beheben",
@@ -41,17 +54,17 @@
       }
     },
     "titleLang": {
-        "en": "FRITZ!Box",
-        "de": "FRITZ!Box",
-        "ru": "FRITZ!Box",
-        "pt": "FRITZ!Box",
-        "nl": "FRITZ!Box",
-        "fr": "FRITZ!Box",
-        "it": "FRITZ!Box",
-        "es": "FRITZ!Box",
-        "pl": "FRITZ!Box",
-        "uk": "FRITZ!Box",
-        "zh-cn": "FRITZ!Box"
+      "en": "FRITZ!Box",
+      "de": "FRITZ!Box",
+      "ru": "FRITZ!Box",
+      "pt": "FRITZ!Box",
+      "nl": "FRITZ!Box",
+      "fr": "FRITZ!Box",
+      "it": "FRITZ!Box",
+      "es": "FRITZ!Box",
+      "pl": "FRITZ!Box",
+      "uk": "FRITZ!Box",
+      "zh-cn": "FRITZ!Box"
     },
     "desc": {
       "en": "Adapter monitors the call information from Fritzbox via tcp, Port 1012 (Activate call monitor in the Fritzbox with #96*5*)",
