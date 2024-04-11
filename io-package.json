@@ -41,16 +41,17 @@
       }
     },
     "titleLang": {
-      "en": "fritzbox Adapter",
-      "de": "Fritzbox-Adapter",
-      "ru": "Адаптер для фрицбокса",
-      "pt": "adaptador fritzbox",
-      "nl": "fritzbox-adapter",
-      "fr": "Adaptateur fritzbox",
-      "it": "Adattatore per fritzbox",
-      "es": "Adaptador fritzbox",
-      "pl": "Adapter fritzbox",
-      "zh-cn": "弗里茨盒适配器"
+        "en": "FRITZ!Box",
+        "de": "FRITZ!Box",
+        "ru": "FRITZ!Box",
+        "pt": "FRITZ!Box",
+        "nl": "FRITZ!Box",
+        "fr": "FRITZ!Box",
+        "it": "FRITZ!Box",
+        "es": "FRITZ!Box",
+        "pl": "FRITZ!Box",
+        "uk": "FRITZ!Box",
+        "zh-cn": "FRITZ!Box"
     },
     "desc": {
       "en": "Adapter monitors the call information from Fritzbox via tcp, Port 1012 (Activate call monitor in the Fritzbox with #96*5*)",
