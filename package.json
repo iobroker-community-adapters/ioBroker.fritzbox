@@ -2,23 +2,12 @@
   "name": "iobroker.fritzbox",
   "description": "Verarbeitet die Callmontiorinformationen der AVM Fritzbox.",
   "version": "0.6.0",
-  "author": {
-    "name": "ruhr",
-    "email": "ruhr@digheim.de"
-  },
+  "author": "ruhr <ruhr@digheim.de>",
   "contributors": [
-    {
-      "name": "ruhr",
-      "email": "ruhr@digheim.de"
-    },
-    {
-      "name": "UncleSam",
-      "email": "samuel.weibel@gmail.com"
-    },
-    {
-      "name": "BasGo",
-      "email": "basgo@gmx.de"
-    }
+    "ruhr <ruhr@digheim.de>",
+    "UncleSam <samuel.weibel@gmail.com>",
+    "BasGo <basgo@gmx.de>",
+    "iobroker-community-adapters <iobroker-community-adapters@gmx.de>"
   ],
   "homepage": "https://github.com/iobroker-community-adapters/ioBroker.fritzbox",
   "license": "MIT",
