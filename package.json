@@ -20,7 +20,7 @@
     "url": "https://github.com/iobroker-community-adapters/ioBroker.fritzbox"
   },
   "engines": {
-    "node": ">=18"
+    "node": ">=20"
   },
   "dependencies": {
     "request": "^2.88.2",
