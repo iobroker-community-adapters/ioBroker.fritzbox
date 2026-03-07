@@ -183,8 +183,7 @@ Beispielwidgets:
     Placeholder for the next version (at the beginning of the line):
     ### **WORK IN PROGRESS**
 -->
-
-### **WORK IN PROGRESS**
+### 0.7.0 (2026-03-07)
 - (iobroker-bot) Adapter requires node.js >= 20 now.
 - (copilot) Adapter requires admin >= 7.7.22 now
 - (copilot) Adapter requires js-controller >= 6.0.11 now
@@ -208,15 +207,6 @@ Beispielwidgets:
 ### 0.3.1 (2016-07-24)
 * (BasGo) enhanced TR-064 configuration
 * (BasGo) added rudimentary phonebook download into object store
-
-### 0.3.0 (2015-06-26)
-* (UncleSamSwiss) added support for wlan.enabled (using TR-064)
-
-### 0.2.1 (2015-06-28)
-* (ruhr) more configuration options
-
-### 0.2.0 (2015-06-26)
-* (ruhr)
 
 ## License
 
