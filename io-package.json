@@ -108,6 +108,9 @@
     "connectionType": "local",
     "dataSource": "push",
     "compact": false,
+    "adminUI": {
+      "config": "html"
+    },
     "dependencies": [
       {
         "js-controller": ">=6.0.11"
