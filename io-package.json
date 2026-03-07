@@ -26,7 +26,8 @@
         "it": "Scrivi il valore history.missedTableJSON\nArchivia i file tam in una posizione specifica dell'istanza\nRisolvi i casi di crash segnalati da Sentry",
         "es": "Escribe el valor history.missedTableJSON\nAlmacene archivos tam en una ubicación específica de la instancia\nSolucionar casos de fallas informados por Sentry",
         "pl": "Zapisz wartość history.missedTableJSON\nPrzechowuj pliki tam w lokalizacji określonej dla instancji\nNapraw przypadki awarii zgłoszone przez Sentry",
-        "zh-cn": "写入 history.missedTableJSON 值\n将 tam 文件存储在实例特定位置\n修复 Sentry 报告的崩溃案例"
+        "zh-cn": "写入 history.missedTableJSON 值\n将 tam 文件存储在实例特定位置\n修复 Sentry 报告的崩溃案例",
+        "uk": "Записати значення history.missedTableJSON\nЗберігайте файли tam у певному місці екземпляра\nВиправте випадки збоїв, про які повідомляє Sentry"
       },
       "0.4.0": {
         "en": "IMPORTANT: You need to re-enter the password once after installing this version!\nGeneral updates and fixes\nTAM (Telephone Answering Maschine) support added\nAdd Sentry for crash reporting",
@@ -38,7 +39,8 @@
         "it": "IMPORTANTE: è necessario reinserire la password una volta dopo aver installato questa versione!\nAggiornamenti e correzioni generali\nAggiunto il supporto TAM (Telephone Answering Maschine).\nAggiungi Sentinella per la segnalazione degli arresti anomali",
         "es": "IMPORTANTE: ¡Debe volver a ingresar la contraseña una vez después de instalar esta versión!\nActualizaciones y correcciones generales\nSe agregó compatibilidad con TAM (Máquina contestadora telefónica)\nAgregar Sentry para informes de fallas",
         "pl": "WAŻNE: Po zainstalowaniu tej wersji należy raz ponownie wprowadzić hasło!\nOgólne aktualizacje i poprawki\nDodano obsługę TAM (Telephone Answering Maschine)\nDodaj Sentry do zgłaszania awarii",
-        "zh-cn": "重要提示：安装此版本后需要重新输入一次密码！\n一般更新和修复\n添加了 TAM（电话应答机）支持\n添加 Sentry 以进行崩溃报告"
+        "zh-cn": "重要提示：安装此版本后需要重新输入一次密码！\n一般更新和修复\n添加了 TAM（电话应答机）支持\n添加 Sentry 以进行崩溃报告",
+        "uk": "IMPORTANT: You need to re-enter the password once after installing this version!\nЗагальні оновлення та виправлення\nДодано підтримку TAM (телефонний автовідповідач).\nДодайте Sentry для звітування про збої"
       },
       "0.2.1": {
         "en": "Last long time stable version",
@@ -50,7 +52,8 @@
         "it": "Ultima versione stabile da molto tempo",
         "es": "Última versión estable desde hace mucho tiempo",
         "pl": "Ostatnia długo stabilna wersja",
-        "zh-cn": "上次稳定版"
+        "zh-cn": "上次稳定版",
+        "uk": "Остання тривалий час стабільна версія"
       }
     },
     "titleLang": {
@@ -76,7 +79,8 @@
       "it": "L'adattatore monitora le informazioni sulle chiamate da Fritzbox tramite TCP, Port 1012 (Attiva il monitoraggio delle chiamate nel Fritzbox con #96*5*)",
       "es": "El adaptador monitorea la información de llamadas de Fritzbox a través de tcp, Puerto 1012 (Activar el monitor de llamadas en Fritzbox con #96*5*)",
       "pl": "Adapter monitoruje informacje o połączeniach z Fritzbox przez tcp, Port 1012 (Aktywuj monitor połączeń we Fritzbox za pomocą #96*5*)",
-      "zh-cn": "适配器通过 tcp 端口 1012 监控 Fritzbox 的呼叫信息（使用 #96*5* 激活 Fritzbox 中的呼叫监控器）"
+      "zh-cn": "适配器通过 tcp 端口 1012 监控 Fritzbox 的呼叫信息（使用 #96*5* 激活 Fritzbox 中的呼叫监控器）",
+      "uk": "Адаптер відстежує інформацію про виклики з Fritzbox через tcp, порт 1012 (Активуйте монітор викликів у Fritzbox за допомогою #96*5*)"
     },
     "authors": [
       "ruhr <ruhr@digheim.de>",
@@ -138,7 +142,8 @@
           "it": "Reinserire la password dopo l'aggiornamento!",
           "es": "Vuelva a ingresar la contraseña después de ¡Actualizar!",
           "pl": "Wprowadź hasło ponownie po aktualizacji!",
-          "zh-cn": "更新后重新输入密码！"
+          "zh-cn": "更新后重新输入密码！",
+          "uk": "Повторно введіть пароль після оновлення!"
         },
         "text": {
           "en": "After installing this update the password/token used to access the Fritzbox needs to be re-entered in the Instance-Settings!",
@@ -150,7 +155,8 @@
           "it": "Dopo aver installato questo aggiornamento, la password/token utilizzata per accedere al Fritzbox deve essere reinserita nelle Impostazioni dell'istanza!",
           "es": "¡Después de instalar esta actualización, la contraseña/token utilizada para acceder a Fritzbox debe volver a ingresarse en la configuración de la instancia!",
           "pl": "Po zainstalowaniu tej aktualizacji hasło/token używane do uzyskania dostępu do Fritzbox należy ponownie wprowadzić w ustawieniach instancji!",
-          "zh-cn": "安装此更新后，用于访问 Fritzbox 的密码/令牌需要在实例设置中重新输入！"
+          "zh-cn": "安装此更新后，用于访问 Fritzbox 的密码/令牌需要在实例设置中重新输入！",
+          "uk": "Після встановлення цього оновлення пароль/токен, який використовується для доступу до Fritzbox, потрібно повторно ввести в налаштуваннях екземпляра!"
         },
         "level": "warn",
         "buttons": [
