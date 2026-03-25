@@ -18,122 +18,122 @@ Choose Adapter "fritzbox" in ioBroker Admin
 
 ## Configuration
 
-## Dokumentation der Datenpunkte
+## Data Points Documentation
 
-Unter **fritzbox.x.** legt der Adapter folgende Channel und Datenpunkte an:
+Under **fritzbox.x.** the adapter creates the following channels and data points:
 
-* message                                 (Meldung aus der Fritzbox)
+* message                                 (Message from the FRITZ!Box)
 
 * **calls.                                  (CHANNEL)**
-* calls.ring                              (true/false, steht ein Ruf an?)
-* calls.missedCount                       (Integer, read & write, Anzahl verpasster Anrufe)
-* calls.missedDateReset                   (Datum, zu dem calls.missedCount auf 0 gesetzt wurde
-* calls.ringActualNumber                  (aktuell anstehender Ruf (der Letzte, wenn es mehrere gibt))
-* calls.ringActualNumbers                 (alle aktuell anstehenden Rufe)
-* calls.ringLastNumber                    (letzter Anrufer)
-* calls.ringLastMissedNumber              (letzter verpasster Anrufer)
-* calls.callLastNumber                    (Wahlwiederholung, letzte gewählte Rufnummer)
-* calls.connectNumber                     (letztes aktuell verbundenes Gespräch)
-* calls.connectNumbers                    (alle aktuell verbundenen Gespräche)
+* calls.ring                              (true/false, is there an incoming call?)
+* calls.missedCount                       (Integer, read & write, number of missed calls)
+* calls.missedDateReset                   (Date when calls.missedCount was last reset to 0)
+* calls.ringActualNumber                  (currently ringing call (the last one if there are multiple))
+* calls.ringActualNumbers                 (all currently ringing calls)
+* calls.ringLastNumber                    (last caller)
+* calls.ringLastMissedNumber              (last missed caller)
+* calls.callLastNumber                    (redial, last dialed phone number)
+* calls.connectNumber                     (last currently connected call)
+* calls.connectNumbers                    (all currently connected calls)
 
 * **calls.counterActualCalls.               (CHANNEL - Realtime)**
-* calls.counterActualCalls.ringCount      (Anzahl der anstehenden Anrufe (RING))
-* calls.counterActualCalls.callCount      (Anzahl der gehenden Anrufversuche (CALL))
-* calls.counterActualCalls.connectCount   (Anzahl der bestehenden Gespräche (CONNECT))
-* calls.counterActualCalls.allActiveCount (Anzahl aktiver Anrufe (CALL, RING & CONNECT)
+* calls.counterActualCalls.ringCount      (number of incoming ringing calls (RING))
+* calls.counterActualCalls.callCount      (number of outgoing call attempts (CALL))
+* calls.counterActualCalls.connectCount   (number of active connected calls (CONNECT))
+* calls.counterActualCalls.allActiveCount (number of all active calls (CALL, RING & CONNECT))
 
-* **calls.telLinks.                         (CHANNEL - wählbare Rufnummern tel:+...)**
-* calls.telLinks.ringLastNumberTel        (letzter Anrufer als wählbarer Link)
-* calls.telLinks.ringLastMissedNumberTel  (letzter verpasster Anrufer als wählbarer Link)
-* calls.telLinks.callLastNumberTel        (Wahlwiederholung, letzte gewählte Rufnummer, wählbar)
+* **calls.telLinks.                         (CHANNEL - dialable phone numbers tel:+...)**
+* calls.telLinks.ringLastNumberTel        (last caller as a dialable link)
+* calls.telLinks.ringLastMissedNumberTel  (last missed caller as a dialable link)
+* calls.telLinks.callLastNumberTel        (redial, last dialed phone number, dialable)
 
 * **history.                                (CHANNEL)**
 * history.allTableTxt                     (...)
-* history.allTableHTML                    (Anruferliste als html Tabelle)
-* history.allTableJSON                    (Anruferliste als JSON)
-* history.missedTableHTML                 (Liste verpasste Anrufe als html)
-* history.missedTableJSON                 (Liste verpasste Anrufe als JSON)
+* history.allTableHTML                    (call list as HTML table)
+* history.allTableJSON                    (call list as JSON)
+* history.missedTableHTML                 (missed calls list as HTML)
+* history.missedTableJSON                 (missed calls list as JSON)
 
 * **history.cdr.                            (CHANNEL)**
-* history.cdr.json                        (CDR als JSON)
-* history.cdr.html                        (CDR als html)
-* history.cdr.txt                         (CDR als txt)
-* history.cdr.missedJSON                  (letzter verpasster Anruf als JSON)
-* history.cdr.missedHTML                  (letzte verpasster Anruf als html)
+* history.cdr.json                        (CDR as JSON)
+* history.cdr.html                        (CDR as HTML)
+* history.cdr.txt                         (CDR as TXT)
+* history.cdr.missedJSON                  (last missed call as JSON)
+* history.cdr.missedHTML                  (last missed call as HTML)
 
 * **callmonitor.                            (CHANNEL - Realtime)**
-* callmonitor.all                         (html Liste: alle aktiven Anrufe in allen Zuständen)
-* callmonitor.ring                        (html Liste: alle aktiven Anrufe
-* callmonitor.call                        (html Liste: alle gehenden Gespräche)
-* callmonitor.connect                     (html Liste: alle verbundenen Gespräche)
+* callmonitor.all                         (HTML list: all active calls in all states)
+* callmonitor.ring                        (HTML list: all active incoming calls)
+* callmonitor.call                        (HTML list: all outgoing calls)
+* callmonitor.connect                     (HTML list: all connected calls)
 
 * **system.                                 (CHANNEL)**
-* system.deltaTime                        (Deltazeit zwischen System und Fritzbox in Sek.)
-* system.deltaTimeOK                      (true/false Deltazeit zwischen System und Fritzbox in der Tolereanz)
+* system.deltaTime                        (time delta between system and FRITZ!Box in seconds)
+* system.deltaTimeOK                      (true/false, time delta between system and FRITZ!Box within tolerance)
 
 * **wlan.                                   (CHANNEL)**
-* wlan.enabled                            (true/false, read & write, Zustand des WLANs, nur verfügbar wenn Passwort konfiguriert ist)
+* wlan.enabled                            (true/false, read & write, WLAN state, only available when password is configured)
 
 * **phonebook.                              (CHANNEL)**
-* phonebook.tableJSON                     (Telefonbuch aller externen Nummern als JSON)
+* phonebook.tableJSON                     (phone book of all external numbers as JSON)
 
 * **tam.                              (CHANNEL)**
-* tam.messagesJSON                     (Alle Nachrichten des Anrufbeantworters als JSON)
+* tam.messagesJSON                     (all messages of the answering machine as JSON)
 
-## Beispiel-Widgets
+## Example Widgets
 
-### Fritzbox Widget in groß
+### FRITZ!Box Large Widget
 
-Enthält u.a.:
+Includes among others:
 
-* beim aktuellen Anruf einen roten Balken mit der Rufnummer des Anrufers
-* grafischen zeitlichen Verlauf für die Anzahl der Gespräche nach Anrufen, Rufaufbau und Gespräch
-* Zähler für verpasste Anrufe mit einem Button zum zurücksetzen
-* Liste der verpassten Anrufe
-* Liste aller Anrufe mit farblicher Markierung (Gespräch/kein Gespräch) und der Richtung
-* Zähler für: aktuell anstehende Anrufe, aktuelle Rufaufbauten für gehende Gespräche, verbundene Gespräche, Gesamtanzahl von Gesprächen/Gesprächsversuchen
-* ein Infofeld, welches gelb eingeblendet wird, wenn die Fritzboxzeit von der ioBroker-Systemzeit zu stark abweicht
+* a red bar showing the caller's phone number during an active incoming call
+* graphical timeline showing the number of calls by type: ringing, call setup, and connected
+* counter for missed calls with a reset button
+* list of missed calls
+* list of all calls with color coding (connected/not connected) and direction
+* counters for: currently ringing calls, outgoing call setups, connected calls, total calls/call attempts
+* an info field that turns yellow when the FRITZ!Box time deviates too much from the ioBroker system time
 
-![Fritzbox Widget groß](doc/iobroker_fritzbox_widget_gross.png)
+![FRITZ!Box large widget](doc/iobroker_fritzbox_widget_gross.png)
 
-[ioBroker Fritzbox Widget in groß als VIS Importdatei](widgets/iobroker_fritzbox_widget_gross.json)
-
-
-### Fritzbox Widget Live-Anrufmonitor
-
-Zeigt alle aktiven Gespräche, Anrufe (klingeln) und gehende Rufaufbauten an. Bei den aktiven Gesprächen und den Anrufen wird die Dauer eingeblendet (sekündlich aktualisiert).
-
-![Fritzbox Widget Live-Anrufmonitor](doc/iobroker_fritzbox_anrufmonitor.png)
-
-[ioBroker Widget Live-Anrufmonitor zum Import in VIS](widgets/iobroker_fritzbox_anrufmonitor.json)
+[ioBroker FRITZ!Box large widget as VIS import file](widgets/iobroker_fritzbox_widget_gross.json)
 
 
-### Fritzbox Widget Anruferliste mit dem "basic - HTML Widget"
+### FRITZ!Box Live Call Monitor Widget
 
-Die Spalteninhalte und die dazugehörigen Überschriften können mit dem Widget frei gewählt werden. Damit sind auch Überschriften in anderen Sprachen möglich.
+Shows all active calls, incoming calls (ringing), and outgoing call setups. The duration is displayed for active calls and incoming calls (updated every second).
 
-![Fritzbox Widget Anruferliste mit dem basic - HTML Widget](doc/iobroker_fritzbox_html_table.png)
+![FRITZ!Box live call monitor widget](doc/iobroker_fritzbox_anrufmonitor.png)
 
-[ioBroker Widget Anruferliste mit dem basic - HTML Widget zum Import in VIS](widgets/iobroker_fritzbox_html_table.json)
+[ioBroker live call monitor widget for import into VIS](widgets/iobroker_fritzbox_anrufmonitor.json)
 
 
-### Fritzbox Widgets Informationen zum aktuellen Anrufer, sowie vergangenen Anrufern
+### FRITZ!Box Call List Widget using the "basic - HTML Widget"
 
-Die Informationswidgets sind Beispiele für einzelne Datenpunkte, die der Fritzbox-Adapter generiert.
+The column contents and their headers can be freely chosen in the widget. This also allows headings in other languages.
 
-Es exestiert jeweils ein Datenpunkt mit der Rufnummer, wie sie von der Fritzbox ausgegeben wurde (a) und ein Datenpunkt mit der Rufnummer umgewandelt als wählbarer Link (b) (es wird z.B. die Rufnummer 020147114711 angezeigt und als Link mit tel:+4920147114711 versehen). Die Tel-Links machen z.B. für VIS Oberflächen auf Smartphones Sinn, um einen verpassten Anruf direkt per Fingertipp zurückrufen zu können.
+![FRITZ!Box call list widget with the basic - HTML widget](doc/iobroker_fritzbox_html_table.png)
 
-Beispielwidgets:
-* (1) letzter Anrufer
-* (2) aktueller Anrufer (wird für die Dauer des Klingelns angezeigt)
-* (3) letzter Anrufer, der verpasst (nicht angenommen wurden)
-* (4) Wahlwiederholung: zuletzt gewählte Rufnummer
+[ioBroker call list widget with the basic - HTML widget for import into VIS](widgets/iobroker_fritzbox_html_table.json)
 
-![Fritzbox Widget Informationen zu den letzten Anrufen](doc/iobroker_fritzbox_letzte_telefonate.png)
 
-[ioBroker Widget Informationen zu den letzten Anrufen](widgets/iobroker_fritzbox_letzte_telefonate.json)
+### FRITZ!Box Widgets: Information About Current and Past Callers
 
-## JSON Datenformat für JSON CDR und JSON Anruferliste
+The info widgets are examples of individual data points generated by the FRITZ!Box adapter.
+
+There is one data point with the phone number as output by the FRITZ!Box (a), and one data point with the phone number converted to a dialable link (b) (e.g. the number 020147114711 is displayed and linked with tel:+4920147114711). The tel-links are useful, for example, on VIS interfaces on smartphones, to return a missed call with a single tap.
+
+Example widgets:
+* (1) last caller
+* (2) current caller (shown for the duration of ringing)
+* (3) last caller who was missed (not answered)
+* (4) redial: last dialed phone number
+
+![FRITZ!Box widget information about recent calls](doc/iobroker_fritzbox_letzte_telefonate.png)
+
+[ioBroker widget information about recent calls](widgets/iobroker_fritzbox_letzte_telefonate.json)
+
+## JSON Data Format for JSON CDR and JSON Call List
 
 ```
 {
@@ -183,6 +183,9 @@ Beispielwidgets:
     Placeholder for the next version (at the beginning of the line):
     ### **WORK IN PROGRESS**
 -->
+### **WORK IN PROGRESS**
+- (copilot) **ENHANCED**: Translated README documentation from German to English
+
 ### 0.7.0 (2026-03-07)
 - (iobroker-bot) Adapter requires node.js >= 20 now.
 - (copilot) Adapter requires admin >= 7.7.22 now
