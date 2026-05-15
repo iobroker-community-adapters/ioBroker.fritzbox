@@ -212,6 +212,8 @@ Example widgets:
 * (BasGo) enhanced TR-064 configuration
 * (BasGo) added rudimentary phonebook download into object store
 
+[Older changelogs can be found there](CHANGELOG_OLD.md)
+
 ## License
 
 The MIT License (MIT)
