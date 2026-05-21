@@ -1,5 +1,6 @@
 {
     "type": "panel",
+    "i18n": true,
     "items": {
         "_monitoring": {
             "type": "staticText",

@@ -1,6 +1,6 @@
 {
-    "Username:": "Benutzer:",
     "Password:": "Passwort:",
+    "Username:": "Benutzer:",
     "area code": "Ortsvorwahl ohne Präfix (z.B.: 211):",
     "country code": "Landesvorwahl ohne Präfix (z.B.: 49):",
     "fritzbox ip address": "IP-Adresse der Fritzbox",
@@ -21,6 +21,6 @@
     "tr064 enable answering machine": "Anrufbeantworter auslesen:",
     "tr064 enable phonebook": "Telefonbuch auslesen:",
     "tr064 enable wlan": "WLAN-Steuerung:",
-    "tr064 section": "TR-064",
+    "tr064 section": "TR-064 Konfiguration",
     "unknown number": "Unterdrückte/unbekannte Rufnummer:"
 }

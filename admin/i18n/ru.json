@@ -1,6 +1,6 @@
 {
-    "Username:": "Имя пользователя:",
     "Password:": "Пароль:",
+    "Username:": "Имя пользователя:",
     "area code": "Код города:",
     "country code": "Код страны:",
     "fritzbox ip address": "IP-адрес FRITZ!Box",
@@ -21,6 +21,6 @@
     "tr064 enable answering machine": "Читать автоответчик",
     "tr064 enable phonebook": "Читать телефонную книгу",
     "tr064 enable wlan": "Управление WLAN",
-    "tr064 section": "TR-064",
+    "tr064 section": "Настройки TR-064",
     "unknown number": "Неизвестный номер:"
 }
