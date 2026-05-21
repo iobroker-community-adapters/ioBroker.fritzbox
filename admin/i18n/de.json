@@ -10,7 +10,7 @@
     "history all txt": "Generiere Liste aller Anrufe als txt:",
     "history missed html": "Generiere Liste verpasste Anrufe als html:",
     "history missed json": "Generiere Liste verpasste Anrufe als json:",
-    "monitoring": "An einem Telefon der Fritzbox #96*5* wählen, um den Anrufmonitor zu aktivieren.",
+    "monitoring": "Anrufmonitor zuerst aktivieren: an einem Telefon der FRITZ!Box #96*5* wählen.",
     "number length": "html/txt Länge der ext. Rufnummer (df=15):",
     "numbers": "Rufnummern",
     "output": "Datenausgabe und Formatierung",
