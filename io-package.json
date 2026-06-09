@@ -122,7 +122,7 @@
     "dataSource": "push",
     "compact": false,
     "adminUI": {
-      "config": "html"
+      "config": "json"
     },
     "dependencies": [
       {

@@ -1,0 +1,231 @@
+{
+    "type": "panel",
+    "i18n": true,
+    "items": {
+        "_monitoring": {
+            "type": "staticText",
+            "text": "monitoring",
+            "newLine": true,
+            "xs": 12,
+            "sm": 12,
+            "md": 12,
+            "lg": 12,
+            "xl": 12
+        },
+        "fritzboxAddress": {
+            "type": "text",
+            "label": "fritzbox ip address",
+            "xs": 12,
+            "sm": 12,
+            "md": 6,
+            "lg": 6,
+            "xl": 4
+        },
+        "_tr064": {
+            "type": "staticText",
+            "text": "tr064 section",
+            "newLine": true,
+            "xs": 12,
+            "sm": 12,
+            "md": 12,
+            "lg": 12,
+            "xl": 12
+        },
+        "_tr064Disclaimer": {
+            "type": "staticText",
+            "text": "tr064 disclaimer",
+            "newLine": true,
+            "xs": 12,
+            "sm": 12,
+            "md": 12,
+            "lg": 12,
+            "xl": 12
+        },
+        "fritzboxUser": {
+            "type": "text",
+            "label": "Username:",
+            "xs": 12,
+            "sm": 12,
+            "md": 6,
+            "lg": 6,
+            "xl": 4
+        },
+        "fritzboxPassword": {
+            "type": "password",
+            "label": "Password:",
+            "xs": 12,
+            "sm": 12,
+            "md": 6,
+            "lg": 6,
+            "xl": 4
+        },
+        "enableWlan": {
+            "type": "checkbox",
+            "label": "tr064 enable wlan",
+            "newLine": true,
+            "xs": 12,
+            "sm": 12,
+            "md": 6,
+            "lg": 6,
+            "xl": 4
+        },
+        "enablePhonebook": {
+            "type": "checkbox",
+            "label": "tr064 enable phonebook",
+            "xs": 12,
+            "sm": 12,
+            "md": 6,
+            "lg": 6,
+            "xl": 4
+        },
+        "enableTAM": {
+            "type": "checkbox",
+            "label": "tr064 enable answering machine",
+            "xs": 12,
+            "sm": 12,
+            "md": 6,
+            "lg": 6,
+            "xl": 4
+        },
+        "_numbers": {
+            "type": "staticText",
+            "text": "numbers",
+            "newLine": true,
+            "xs": 12,
+            "sm": 12,
+            "md": 12,
+            "lg": 12,
+            "xl": 12
+        },
+        "cc": {
+            "type": "text",
+            "label": "country code",
+            "xs": 12,
+            "sm": 12,
+            "md": 4,
+            "lg": 4,
+            "xl": 4
+        },
+        "ac": {
+            "type": "text",
+            "label": "area code",
+            "xs": 12,
+            "sm": 12,
+            "md": 4,
+            "lg": 4,
+            "xl": 4
+        },
+        "unknownNumber": {
+            "type": "text",
+            "label": "unknown number",
+            "xs": 12,
+            "sm": 12,
+            "md": 4,
+            "lg": 4,
+            "xl": 4
+        },
+        "_output": {
+            "type": "staticText",
+            "text": "output",
+            "newLine": true,
+            "xs": 12,
+            "sm": 12,
+            "md": 12,
+            "lg": 12,
+            "xl": 12
+        },
+        "showHeadline": {
+            "type": "checkbox",
+            "label": "headline",
+            "xs": 12,
+            "sm": 12,
+            "md": 6,
+            "lg": 6,
+            "xl": 4
+        },
+        "numberLength": {
+            "type": "number",
+            "label": "number length",
+            "min": 4,
+            "max": 30,
+            "xs": 12,
+            "sm": 12,
+            "md": 6,
+            "lg": 6,
+            "xl": 4
+        },
+        "externalLink": {
+            "type": "checkbox",
+            "label": "tel:number",
+            "xs": 12,
+            "sm": 12,
+            "md": 6,
+            "lg": 6,
+            "xl": 4
+        },
+        "_showHistory": {
+            "type": "staticText",
+            "text": "show history",
+            "newLine": true,
+            "xs": 12,
+            "sm": 12,
+            "md": 12,
+            "lg": 12,
+            "xl": 12
+        },
+        "showHistoryAllTableTxt": {
+            "type": "checkbox",
+            "label": "history all txt",
+            "xs": 12,
+            "sm": 12,
+            "md": 6,
+            "lg": 6,
+            "xl": 4
+        },
+        "showHistoryAllTableHTML": {
+            "type": "checkbox",
+            "label": "history all html",
+            "xs": 12,
+            "sm": 12,
+            "md": 6,
+            "lg": 6,
+            "xl": 4
+        },
+        "showHistoryAllTableJSON": {
+            "type": "checkbox",
+            "label": "history all json",
+            "xs": 12,
+            "sm": 12,
+            "md": 6,
+            "lg": 6,
+            "xl": 4
+        },
+        "showMissedTableHTML": {
+            "type": "checkbox",
+            "label": "history missed html",
+            "xs": 12,
+            "sm": 12,
+            "md": 6,
+            "lg": 6,
+            "xl": 4
+        },
+        "showMissedTableJSON": {
+            "type": "checkbox",
+            "label": "history missed json",
+            "xs": 12,
+            "sm": 12,
+            "md": 6,
+            "lg": 6,
+            "xl": 4
+        },
+        "showCallmonitor": {
+            "type": "checkbox",
+            "label": "show callmonitor",
+            "xs": 12,
+            "sm": 12,
+            "md": 6,
+            "lg": 6,
+            "xl": 4
+        }
+    }
+}
