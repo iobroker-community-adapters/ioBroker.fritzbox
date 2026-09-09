@@ -301,14 +301,14 @@ Example widgets:
     "dateConn":"25.07.15 16:39:27",
     "dateEnd":"25.07.15 16:40:21",
     "callSymbol":"<<-&nbsp;",
-    "callSymbolColor":"<span style="\" color:green\""=""><b><<-&nbsp;</b></span>",
+    "callSymbolColor":"<span style=\" color:green\"><b><<-&nbsp;</b></span>",
     "unknownNumber":false,
     "ownNumberForm":"021147114711&nbsp;&nbsp;&nbsp;",
     "externalNumberForm":"051112345678&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;",
     "ownNumberE164":"+4921147114711",
     "externalE164":"+4951112345678",
-    "externalTelLink":"<a style="\" text-decoration:"="" none;\"="" href="\" tel:+4951112345678\""="">051112345678&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>",
-    "externalTelLinkCenter":"<a style="\" text-decoration:"="" none;\"="" href="\" tel:+4951112345678\""="">051112345678</a>"
+    "externalTelLink":"<a style=\" text-decoration: none;\" href=\"tel:+4951112345678\">051112345678&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>",
+    "externalTelLinkCenter":"<a style=\" text-decoration: none;\" href=\"tel:+4951112345678\">051112345678</a>"
 }
 ```
 <!--
@@ -332,7 +332,7 @@ Example widgets:
 - (GermanBluefox) `request` was replaced by `axios`
 - (GermanBluefox) `enableWlan`, `enablePhonebook` and `enableTAM` have a default in io-package.json now, unused `native` entries were removed
 - (GermanBluefox) The adapter cannot be installed directly from GitHub anymore, because the sources have to be compiled (`common.nogit`)
-- (GermanBluefox) **FIXED**: after a lost connection the adapter tried to reconnect only once
+- (GermanBluefox) **FIXED**: after a lost connection, the adapter tried to reconnect only once
 - (GermanBluefox) **FIXED**: the tel: links were not initialized, they were written to `telLinks.*` instead of `calls.telLinks.*`
 - (GermanBluefox) **FIXED**: the cleanup of the answering machine audio files looked into the working directory instead of the instance directory
 - (GermanBluefox) The adapter supports the compact mode now
