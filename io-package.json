@@ -1,5 +1,9 @@
 {
   "common": {
+    "docs": {
+      "en": "docs/en/README.md",
+      "de": "docs/de/README.md"
+    },
     "name": "fritzbox",
     "version": "0.7.0",
     "news": {
