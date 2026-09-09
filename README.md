@@ -81,18 +81,18 @@ Within this channel 2 more channels and some data points are created:
 
 ![channel calls](doc/calls.png)
 
-| **data point**       | **description**                             |
-|----------------------|---------------------------------------------|
-| callLastNumber       | last dialed phone number                    |
-| connectNumber        | last currently connected call               |
-| connectNumbers       | all currently connected calls               |
-| missedCount          | counter of missed calls                     |
-| missedDateReset      | date of the last counter reset              |
-| ring                 | signal for an incoming call                 |
-| ringActualNumber     | phone number of a currently incoming call   |
+| **data point**       | **description**                               |
+|----------------------|-----------------------------------------------|
+| callLastNumber       | last dialed phone number                      |
+| connectNumber        | last currently connected call                 |
+| connectNumbers       | all currently connected calls                 |
+| missedCount          | counter of missed calls                       |
+| missedDateReset      | date of the last counter reset                |
+| ring                 | signal for an incoming call                   |
+| ringActualNumber     | phone number of a currently incoming call     |
 | ringActualNumbers    | phone numbers of all currently incoming calls |
-| ringLastMissedNumber | phone number of the last missed call        |
-| ringLastNumber       | phone number of the last incoming call      |
+| ringLastMissedNumber | phone number of the last missed call          |
+| ringLastNumber       | phone number of the last incoming call        |
 
 #### counterActualCalls
 
@@ -165,69 +165,69 @@ Under **fritzbox.x.** the adapter creates the following channels and data points
 * message -(Message from the FRITZ!Box)
 
 ### `calls` Channel
-* calls.ring                              (true/false, is there an incoming call?)
-* calls.missedCount                       (Integer, read & write, number of missed calls)
-* calls.missedDateReset                   (Date when calls.missedCount was last reset to 0)
-* calls.ringActualNumber                  (currently ringing call (the last one if there are multiple))
-* calls.ringActualNumbers                 (all currently ringing calls)
-* calls.ringLastNumber                    (last caller)
-* calls.ringLastMissedNumber              (last missed caller)
-* calls.callLastNumber                    (redial, last dialed phone number)
-* calls.connectNumber                     (last currently connected call)
-* calls.connectNumbers                    (all currently connected calls)
+* calls.ring - true/false, is there an incoming call?
+* calls.missedCount - Integer, read & write, number of missed calls
+* calls.missedDateReset - Date when calls.missedCount was last reset to 0
+* calls.ringActualNumber - currently ringing call - the last one if there are multiple)
+* calls.ringActualNumbers - all currently ringing calls
+* calls.ringLastNumber - last caller
+* calls.ringLastMissedNumber - last missed caller
+* calls.callLastNumber - redial, last dialed phone number
+* calls.connectNumber - last currently connected call
+* calls.connectNumbers - all currently connected calls
 
-* **calls.counterActualCalls.               (CHANNEL - Realtime)**
-* calls.counterActualCalls.ringCount      (number of incoming ringing calls (RING))
-* calls.counterActualCalls.callCount      (number of outgoing call attempts (CALL))
-* calls.counterActualCalls.connectCount   (number of active connected calls (CONNECT))
-* calls.counterActualCalls.allActiveCount (number of all active calls (CALL, RING & CONNECT))
+### `calls.counterActualCalls` Channel - Realtime
+* calls.counterActualCalls.ringCount - number of incoming ringing calls (RING)
+* calls.counterActualCalls.callCount - number of outgoing call attempts (CALL)
+* calls.counterActualCalls.connectCount - number of active connected calls (CONNECT)
+* calls.counterActualCalls.allActiveCount - number of all active calls (CALL, RING & CONNECT)
 
-* **calls.telLinks.                         (CHANNEL - dialable phone numbers tel:+...)**
-* calls.telLinks.ringLastNumberTel        (last caller as a dialable link)
-* calls.telLinks.ringLastMissedNumberTel  (last missed caller as a dialable link)
-* calls.telLinks.callLastNumberTel        (redial, last dialed phone number, dialable)
+### `calls.telLinks` Channel - dialable phone numbers tel:+...
+* calls.telLinks.ringLastNumberTel - last caller as a dialable link
+* calls.telLinks.ringLastMissedNumberTel - last missed caller as a dialable link
+* calls.telLinks.callLastNumberTel - redial, last dialed phone number, dialable
 
-* **history.                                (CHANNEL)**
-* history.allTableTxt                     (...)
-* history.allTableHTML                    (call list as HTML table)
-* history.allTableJSON                    (call list as JSON)
-* history.missedTableHTML                 (missed calls list as HTML)
-* history.missedTableJSON                 (missed calls list as JSON)
+### `history.` Channel
+* history.allTableTxt - ...
+* history.allTableHTML - call list as HTML table
+* history.allTableJSON - call list as JSON
+* history.missedTableHTML - missed calls list as HTML
+* history.missedTableJSON - missed calls list as JSON
 
-* **history.cdr.                            (CHANNEL)**
-* history.cdr.json                        (CDR as JSON)
-* history.cdr.html                        (CDR as HTML)
-* history.cdr.txt                         (CDR as TXT)
-* history.cdr.missedJSON                  (last missed call as JSON)
-* history.cdr.missedHTML                  (last missed call as HTML)
+### `history.cdr` Channel
+* history.cdr.json - CDR as JSON
+* history.cdr.html - CDR as HTML
+* history.cdr.txt - CDR as TXT
+* history.cdr.missedJSON - last missed call as JSON
+* history.cdr.missedHTML - last missed call as HTML
 
-* **callmonitor.                            (CHANNEL - Realtime)**
-* callmonitor.all                         (HTML list: all active calls in all states)
-* callmonitor.ring                        (HTML list: all active incoming calls)
-* callmonitor.call                        (HTML list: all outgoing calls)
-* callmonitor.connect                     (HTML list: all connected calls)
+### `callmonitor.` Channel
+* callmonitor.all - HTML list: all active calls in all states
+* callmonitor.ring - HTML list: all active incoming calls
+* callmonitor.call - HTML list: all outgoing calls
+* callmonitor.connect - HTML list: all connected calls
 
-* **system.                                 (CHANNEL)**
-* system.deltaTime                        (time delta between system and FRITZ!Box in seconds)
-* system.deltaTimeOK                      (true/false, time delta between system and FRITZ!Box within tolerance)
+### `system.` Channel
+* system.deltaTime - time delta between system and FRITZ!Box in seconds
+* system.deltaTimeOK - true/false, time delta between system and FRITZ!Box within tolerance
 
-* **wlan.                                   (CHANNEL)**
-* wlan.enabled                            (true/false, read & write, WLAN state, only available when password is configured)
+### `wlan.` Channel
+* wlan.enabled - true/false, read & write, WLAN state, only available when password is configured
 
-* **phonebook.                              (CHANNEL)**
-* phonebook.tableJSON                     (phone book of all external numbers as JSON)
+### `phonebook.` Channel
+* phonebook.tableJSON - phone book of all external numbers as JSON
 
-* **tam.                              (CHANNEL)**
-* tam.messagesJSON                     (all messages of the answering machine as JSON)
+### `tam.` Channel
+* tam.messagesJSON - all messages of the answering machine as JSON
 
 ## Example Widgets
 
 ### FRITZ!Box Large Widget
 
-Includes among others:
+Includes it among others:
 
 * a red bar showing the caller's phone number during an active incoming call
-* graphical timeline showing the number of calls by type: ringing, call setup, and connected
+* a graphical timeline showing the number of calls by type: ringing, call setup, and connected
 * counter for missed calls with a reset button
 * list of missed calls
 * list of all calls with color coding (connected/not connected) and direction
@@ -267,7 +267,7 @@ Example widgets:
 * (1) last caller
 * (2) current caller (shown for the duration of ringing)
 * (3) last caller who was missed (not answered)
-* (4) redial: last dialed phone number
+* (4) redial: last dialed a phone number
 
 ![FRITZ!Box widget information about recent calls](doc/iobroker_fritzbox_letzte_telefonate.png)
 
@@ -275,40 +275,40 @@ Example widgets:
 
 ## JSON Data Format for JSON CDR and JSON Call List
 
-```
+```json
 {
-"date":"25.07.15 16:40:21",
-"dateEpoch":1437835221000,
-"dateEpochNow":1437835221000,
-"deltaTime":0,
-"deltaTimeOK":true,
-"type":"DISCONNECT",
-"id":"1",
-"extensionLine":"11",
-"ownNumber":"021147114711",
-"externalNumber":"051112345678",
-"lineType":"POTS",
-"durationSecs":"55",
-"durationForm":"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;55",
-"durationSecs2":"55",
-"durationRingSecs":"",
-"connect":true,
-"direction":"out",
-"dateStartEpoch":1437835144000,
-"dateConnEpoch":1437835167000,
-"dateEndEpoch":1437835221000,
-"dateStart":"25.07.15 16:39:04",
-"dateConn":"25.07.15 16:39:27",
-"dateEnd":"25.07.15 16:40:21",
-"callSymbol":"<<-&nbsp;",
-"callSymbolColor":"<span style="\" color:green\""=""><b><<-&nbsp;</b></span>",
-"unknownNumber":false,
-"ownNumberForm":"021147114711&nbsp;&nbsp;&nbsp;",
-"externalNumberForm":"051112345678&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;",
-"ownNumberE164":"+4921147114711",
-"externalE164":"+4951112345678",
-"externalTelLink":"<a style="\" text-decoration:"="" none;\"="" href="\" tel:+4951112345678\""="">051112345678&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>",
-"externalTelLinkCenter":"<a style="\" text-decoration:"="" none;\"="" href="\" tel:+4951112345678\""="">051112345678</a>"
+    "date":"25.07.15 16:40:21",
+    "dateEpoch":1437835221000,
+    "dateEpochNow":1437835221000,
+    "deltaTime":0,
+    "deltaTimeOK":true,
+    "type":"DISCONNECT",
+    "id":"1",
+    "extensionLine":"11",
+    "ownNumber":"021147114711",
+    "externalNumber":"051112345678",
+    "lineType":"POTS",
+    "durationSecs":"55",
+    "durationForm":"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;55",
+    "durationSecs2":"55",
+    "durationRingSecs":"",
+    "connect":true,
+    "direction":"out",
+    "dateStartEpoch":1437835144000,
+    "dateConnEpoch":1437835167000,
+    "dateEndEpoch":1437835221000,
+    "dateStart":"25.07.15 16:39:04",
+    "dateConn":"25.07.15 16:39:27",
+    "dateEnd":"25.07.15 16:40:21",
+    "callSymbol":"<<-&nbsp;",
+    "callSymbolColor":"<span style="\" color:green\""=""><b><<-&nbsp;</b></span>",
+    "unknownNumber":false,
+    "ownNumberForm":"021147114711&nbsp;&nbsp;&nbsp;",
+    "externalNumberForm":"051112345678&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;",
+    "ownNumberE164":"+4921147114711",
+    "externalE164":"+4951112345678",
+    "externalTelLink":"<a style="\" text-decoration:"="" none;\"="" href="\" tel:+4951112345678\""="">051112345678&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>",
+    "externalTelLinkCenter":"<a style="\" text-decoration:"="" none;\"="" href="\" tel:+4951112345678\""="">051112345678</a>"
 }
 ```
 <!--
@@ -340,7 +340,7 @@ Example widgets:
 
 ### 0.5.0 (2022-04-02)
 * (Apollon77) Write history.missedTableJSON value
-* (Apollon77) Store tam files in an instance specific location
+* (Apollon77) Store tam files in an instance-specific location
 * (Apollon77) Fix crash cases reported by Sentry
 
 ### 0.4.0 (2022-03-25)
