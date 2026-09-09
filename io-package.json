@@ -120,7 +120,7 @@
     "type": "infrastructure",
     "connectionType": "local",
     "dataSource": "push",
-    "compact": false,
+    "compact": true,
     "adminUI": {
       "config": "json"
     },

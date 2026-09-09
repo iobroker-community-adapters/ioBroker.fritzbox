@@ -64,6 +64,10 @@ in `src/lib/adapter-config.d.ts`.
   field names are used by user scripts and by the example widgets. Do not rename them.
 - **Timers** always through `this.setTimeout` / `this.setInterval` of adapter-core, so they are
   cleaned up on unload.
+- **The adapter runs in compact mode** (`common.compact`), so the process survives a stopped
+  instance. Everything `onReady()` opened has to be closed in `onUnload()`, and every async
+  continuation that starts a timer or writes a state has to check `this.unloaded` first - a
+  TR-064 request that is still on its way would otherwise resurrect the WLAN poll timer.
 - The states are created from `instanceObjects` in `io-package.json`, the adapter never creates
   objects itself. A new state has to be added there.
 - `fritzboxPassword` is listed in `encryptedNative`, so js-controller encrypts it. The

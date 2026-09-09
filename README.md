@@ -335,6 +335,7 @@ Example widgets:
 - (GermanBluefox) **FIXED**: after a lost connection the adapter tried to reconnect only once
 - (GermanBluefox) **FIXED**: the tel: links were not initialized, they were written to `telLinks.*` instead of `calls.telLinks.*`
 - (GermanBluefox) **FIXED**: the cleanup of the answering machine audio files looked into the working directory instead of the instance directory
+- (GermanBluefox) The adapter supports the compact mode now
 
 ### 0.7.0 (2026-03-07)
 - (iobroker-bot) Adapter requires node.js >= 20 now.

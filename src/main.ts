@@ -125,6 +125,12 @@ class Fritzbox extends utils.Adapter {
     private socketBox: Socket | null = null;
     /** Directory the answering machine files are stored in */
     private instanceDir = '';
+    /**
+     * Set in `onUnload()`. The adapter runs in compact mode, so the process stays alive after
+     * the instance is stopped: a TR-064 request that is still on its way must not start a new
+     * timer or write a state when it comes back.
+     */
+    private unloaded = false;
 
     public constructor(options: Partial<utils.AdapterOptions> = {}) {
         super({ ...options, name: 'fritzbox' });
@@ -171,6 +177,7 @@ class Fritzbox extends utils.Adapter {
 
     private onUnload(callback: () => void): void {
         this.log.debug('adapter.on-unload: << UNLOAD >>');
+        this.unloaded = true;
         this.clearRealtimeVars();
 
         if (this.connecting) {
@@ -936,7 +943,7 @@ class Fritzbox extends utils.Adapter {
 
     private async updateWlanState(): Promise<void> {
         const enabled = await this.createTr064Client().getWlanEnabled();
-        if (enabled === null) {
+        if (enabled === null || this.unloaded) {
             return;
         }
         this.wlanState = enabled;
@@ -945,14 +952,14 @@ class Fritzbox extends utils.Adapter {
 
     private async updateTam(): Promise<void> {
         const messages = await this.createTr064Client().getTamMessages(join(this.instanceDir, 'tam'));
-        if (messages) {
+        if (messages && !this.unloaded) {
             await this.setState('tam.messagesJSON', JSON.stringify(messages), true);
         }
     }
 
     private async updatePhonebook(): Promise<void> {
         const phonenumbers = await this.createTr064Client().getPhonebook();
-        if (phonenumbers) {
+        if (phonenumbers && !this.unloaded) {
             await this.setState('phonebook.tableJSON', JSON.stringify(phonenumbers), true);
         }
     }
@@ -960,6 +967,9 @@ class Fritzbox extends utils.Adapter {
     // ############################## call monitor connection ##############################
 
     private connectToFritzbox(host: string): void {
+        if (this.unloaded) {
+            return;
+        }
         // a new connection means the realtime data may be inconsistent
         this.clearRealtimeVars();
 
@@ -984,7 +994,7 @@ class Fritzbox extends utils.Adapter {
                 void this.createTr064Client()
                     .getWlanEnabled()
                     .then(async enabled => {
-                        if (enabled === null) {
+                        if (enabled === null || this.unloaded) {
                             return;
                         }
                         this.log.info('Successfully connected to TR-064');
@@ -1011,7 +1021,7 @@ class Fritzbox extends utils.Adapter {
             this.socketBox = null;
         }
 
-        if (!this.connecting) {
+        if (!this.connecting && !this.unloaded) {
             this.log.warn(`restartConnection: ${host}`);
             // a new connection means the realtime data may be inconsistent
             this.clearRealtimeVars();
