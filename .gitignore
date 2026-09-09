@@ -1,5 +1,8 @@
 node_modules
 .idea
 
+build
+*.tsbuildinfo
+
 #ignore .commitinfo created by ioBroker release script
 .commitinfo

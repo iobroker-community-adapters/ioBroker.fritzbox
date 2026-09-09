@@ -1,0 +1,207 @@
+{
+    "i18n": true,
+    "type": "panel",
+    "items": {
+        "_logo": {
+            "type": "staticImage",
+            "src": "fritzbox.png",
+            "style": {
+                "width": "64px"
+            },
+            "sm": 12,
+            "md": 2,
+            "lg": 1
+        },
+        "_monitoring": {
+            "type": "staticText",
+            "text": "Dial #96*5* on a phone of the FRITZ!Box to activate the call monitor.",
+            "newLine": true,
+            "sm": 12
+        },
+        "_headerConnection": {
+            "type": "header",
+            "text": "Fritzbox IP-Address",
+            "size": 4,
+            "newLine": true,
+            "sm": 12
+        },
+        "fritzboxAddress": {
+            "type": "text",
+            "label": "IP-Address",
+            "validator": "!!data.fritzboxAddress",
+            "validatorErrorText": "Please enter the address of your FRITZ!Box",
+            "newLine": true,
+            "sm": 12,
+            "md": 6,
+            "lg": 4
+        },
+        "_headerTr064": {
+            "type": "header",
+            "text": "TR-064",
+            "size": 4,
+            "newLine": true,
+            "sm": 12
+        },
+        "_tr064Disclaimer": {
+            "type": "staticText",
+            "text": "The credentials are only required if you wish to get additional functionality (Wi-Fi, phonebook). Please be aware that the password is stored in plain-text in ioBroker!",
+            "newLine": true,
+            "sm": 12
+        },
+        "fritzboxUser": {
+            "type": "text",
+            "label": "Username",
+            "newLine": true,
+            "sm": 12,
+            "md": 6,
+            "lg": 4
+        },
+        "fritzboxPassword": {
+            "type": "password",
+            "label": "Password",
+            "visible": true,
+            "sm": 12,
+            "md": 6,
+            "lg": 4
+        },
+        "enableWlan": {
+            "type": "checkbox",
+            "label": "Control WLAN",
+            "newLine": true,
+            "sm": 12,
+            "md": 4,
+            "lg": 3
+        },
+        "enablePhonebook": {
+            "type": "checkbox",
+            "label": "Read phonebook",
+            "sm": 12,
+            "md": 4,
+            "lg": 3
+        },
+        "enableTAM": {
+            "type": "checkbox",
+            "label": "Read answering machine",
+            "sm": 12,
+            "md": 4,
+            "lg": 3
+        },
+        "_headerNumbers": {
+            "type": "header",
+            "text": "Numbers",
+            "size": 4,
+            "newLine": true,
+            "sm": 12
+        },
+        "cc": {
+            "type": "text",
+            "label": "Country Code",
+            "help": "without prefix, e.g. 49",
+            "validator": "!data.cc || data.cc.toString()[0] !== '0'",
+            "validatorErrorText": "Country Code without prefix",
+            "newLine": true,
+            "sm": 12,
+            "md": 4,
+            "lg": 3
+        },
+        "ac": {
+            "type": "text",
+            "label": "Area Code",
+            "help": "without prefix, e.g. 211",
+            "validator": "!data.ac || data.ac.toString()[0] !== '0' || data.cc.toString() !== '49'",
+            "validatorErrorText": "Area Code without prefix",
+            "sm": 12,
+            "md": 4,
+            "lg": 3
+        },
+        "unknownNumber": {
+            "type": "text",
+            "label": "Suppressed/unknown phone number",
+            "sm": 12,
+            "md": 4,
+            "lg": 3
+        },
+        "_headerOutput": {
+            "type": "header",
+            "text": "Output",
+            "size": 4,
+            "newLine": true,
+            "sm": 12
+        },
+        "showHeadline": {
+            "type": "checkbox",
+            "label": "html/txt call list, show headline",
+            "newLine": true,
+            "sm": 12,
+            "md": 4,
+            "lg": 3
+        },
+        "numberLength": {
+            "type": "number",
+            "label": "html/txt length of the external phone number",
+            "min": 4,
+            "max": 30,
+            "sm": 12,
+            "md": 4,
+            "lg": 3
+        },
+        "externalLink": {
+            "type": "checkbox",
+            "label": "html: phone number as tel: link",
+            "sm": 12,
+            "md": 4,
+            "lg": 3
+        },
+        "_headerHistory": {
+            "type": "header",
+            "text": "Show history",
+            "size": 4,
+            "newLine": true,
+            "sm": 12
+        },
+        "showHistoryAllTableTxt": {
+            "type": "checkbox",
+            "label": "Generate list of all calls as txt",
+            "newLine": true,
+            "sm": 12,
+            "md": 4,
+            "lg": 3
+        },
+        "showHistoryAllTableHTML": {
+            "type": "checkbox",
+            "label": "Generate list of all calls as html",
+            "sm": 12,
+            "md": 4,
+            "lg": 3
+        },
+        "showHistoryAllTableJSON": {
+            "type": "checkbox",
+            "label": "Generate list of all calls as json",
+            "sm": 12,
+            "md": 4,
+            "lg": 3
+        },
+        "showMissedTableHTML": {
+            "type": "checkbox",
+            "label": "Generate list of missed calls as html",
+            "newLine": true,
+            "sm": 12,
+            "md": 4,
+            "lg": 3
+        },
+        "showMissedTableJSON": {
+            "type": "checkbox",
+            "label": "Generate list of missed calls as json",
+            "sm": 12,
+            "md": 4,
+            "lg": 3
+        },
+        "showCallmonitor": {
+            "type": "checkbox",
+            "label": "Show the realtime call monitor",
+            "sm": 12,
+            "md": 4,
+            "lg": 3
+        }
+    }
+}

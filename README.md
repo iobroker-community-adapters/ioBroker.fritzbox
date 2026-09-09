@@ -327,6 +327,11 @@ Example widgets:
 - (copilot) Adapter requires node.js >= 22 now
 - (copilot) **ENHANCED**: Translated README documentation from German to English
 - (GermanBluefox) Merged the ioBroker.net manual (docs/de, docs/en) into a single README.md
+- (GermanBluefox) The adapter was refactored to TypeScript, the sources are in `src/` and are compiled to `build/`
+- (GermanBluefox) The admin configuration was migrated from the HTML page to JsonConfig, the translations moved to `admin/i18n/<lang>.json`
+- (GermanBluefox) `request` was replaced by `axios`
+- (GermanBluefox) `enableWlan`, `enablePhonebook` and `enableTAM` have a default in io-package.json now, unused `native` entries were removed
+- (GermanBluefox) The adapter cannot be installed directly from GitHub anymore, because the sources have to be compiled (`common.nogit`)
 
 ### 0.7.0 (2026-03-07)
 - (iobroker-bot) Adapter requires node.js >= 20 now.

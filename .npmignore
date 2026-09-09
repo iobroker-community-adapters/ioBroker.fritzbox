@@ -1,9 +1,0 @@
-Gruntfile.js
-tasks
-.gitignore
-.git
-test
-.travis.yml
-appveyor.yml
-eslint.config.mjs
-prettier.config.mjs

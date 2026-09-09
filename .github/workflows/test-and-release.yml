@@ -26,12 +26,13 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: ioBroker/testing-action-check@v1
+      - uses: ioBroker/testing-action-check@v2
         with:
           node-version: '24.x'
           # Uncomment the following line if your adapter cannot be installed using 'npm ci'
           # install-command: 'npm install'
-          lint: false
+          type-checking: true
+          lint: true
 
   # Runs adapter tests on all supported node versions and OSes
   adapter-tests:
@@ -51,10 +52,7 @@ jobs:
           os: ${{ matrix.os }}
           # Uncomment the following line if your adapter cannot be installed using 'npm ci'
           # install-command: 'npm install'
-
-# TODO: To enable automatic npm releases, create a token on npmjs.org
-# Enter this token as a GitHub secret (with name NPM_TOKEN) in the repository options
-# Then uncomment the following block:
+          build: true
 
   # Deploys the final package to NPM
   deploy:
@@ -80,12 +78,12 @@ jobs:
           # Uncomment the following line if your adapter cannot be installed using 'npm ci'
           # install-command: 'npm install'
           # npm-token: ${{ secrets.NPM_TOKEN }}  # Commented out for migration to Trusted Publishing
+          build: true
           github-token: ${{ secrets.GITHUB_TOKEN }}
 
           # When using Sentry for error reporting, Sentry can be informed about new releases
           # To enable create an API-Token in Sentry (User settings, API keys)
           # Enter this token as a GitHub secret (with name SENTRY_AUTH_TOKEN) in the repository options
-          # Then uncomment and customize the following block:
           sentry: true
           sentry-token: ${{ secrets.SENTRY_AUTH_TOKEN }}
           sentry-project: "iobroker-fritzbox"

@@ -122,7 +122,7 @@
     "dataSource": "push",
     "compact": false,
     "adminUI": {
-      "config": "html"
+      "config": "json"
     },
     "dependencies": [
       {
@@ -180,7 +180,8 @@
           "cancel"
         ]
       }
-    ]
+    ],
+    "nogit": true
   },
   "protectedNative": [
     "fritzboxPassword"
@@ -192,29 +193,21 @@
     "fritzboxAddress": "192.168.1.1",
     "fritzboxUser": "dslf-config",
     "fritzboxPassword": "",
+    "enableWlan": false,
+    "enablePhonebook": false,
+    "enableTAM": false,
     "cc": "49",
     "ac": "211",
     "unknownNumber": "### ? ###",
-    "numberLength": 15,
-    "deltaTimeOKSec": 5,
-    "externalLink": true,
     "showHeadline": true,
-    "numberEntriesHistoryAll": 12,
-    "numberEntriesHistoryMissed": 10,
+    "numberLength": 15,
+    "externalLink": true,
     "showHistoryAllTableTxt": false,
     "showHistoryAllTableHTML": true,
     "showHistoryAllTableJSON": true,
-    "showCallmonitor": true,
     "showMissedTableHTML": true,
     "showMissedTableJSON": true,
-    "headlineDateOn": true,
-    "headlineDate": "Tag    Zeit  ",
-    "headlineDateLength": 14,
-    "headlineExtnumberOn": true,
-    "headlineExtnumber": "ext. Rufnr.",
-    "headlineDirectionOn": true,
-    "headlineDirection": "g<>k",
-    "headlineDirectionLength": 4
+    "showCallmonitor": true
   },
   "objects": [],
   "instanceObjects": [
