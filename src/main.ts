@@ -232,9 +232,9 @@ class Fritzbox extends utils.Adapter {
         await this.setOnUndefined('calls.ringLastMissedNumber', '');
         await this.setOnUndefined('calls.callLastNumber', '');
 
-        await this.setOnUndefined('telLinks.ringLastNumberTel', '');
-        await this.setOnUndefined('telLinks.ringLastMissedNumberTel', '');
-        await this.setOnUndefined('telLinks.callLastNumberTel', '');
+        await this.setOnUndefined('calls.telLinks.ringLastNumberTel', '');
+        await this.setOnUndefined('calls.telLinks.ringLastMissedNumberTel', '');
+        await this.setOnUndefined('calls.telLinks.callLastNumberTel', '');
 
         await this.setOnUndefined('system.deltaTime', 0);
         await this.setOnUndefined('system.deltaTimeOK', true);
@@ -1013,7 +1013,13 @@ class Fritzbox extends utils.Adapter {
             this.log.warn(`restartConnection: ${host}`);
             // a new connection means the realtime data may be inconsistent
             this.clearRealtimeVars();
-            this.connecting = this.setTimeout(() => this.connectToFritzbox(host), RECONNECT_DELAY_MS) ?? null;
+            this.connecting =
+                this.setTimeout(() => {
+                    // has to be cleared before reconnecting, otherwise the guard above stays
+                    // closed forever and the adapter never tries a second time
+                    this.connecting = null;
+                    this.connectToFritzbox(host);
+                }, RECONNECT_DELAY_MS) ?? null;
         }
     }
 }

@@ -119,7 +119,7 @@ export class Tr064Client {
         }
         messages.sort((m1, m2) => (m1.index > m2.index ? 1 : m1.index < m2.index ? -1 : 0));
 
-        this.cleanupTamFiles(messages);
+        this.cleanupTamFiles(tamDir, messages);
         this.log.debug('TR-064: Successfully analyzed TAM results');
         return messages;
     }
@@ -240,16 +240,14 @@ export class Tr064Client {
     }
 
     /** Remove the audio files of messages that are no longer on the answering machine */
-    private cleanupTamFiles(messages: TamMessage[]): void {
-        // FIXME: 'tam' is relative to the working directory of the adapter process and not the
-        // instance directory the files are written to, so this cleanup never finds them.
-        readdir('tam', (err, files) => {
+    private cleanupTamFiles(tamDir: string, messages: TamMessage[]): void {
+        readdir(tamDir, (err, files) => {
             if (err) {
-                this.log.warn(`TR-064: Error reading files from dir /tam: ${err.message}`);
+                this.log.warn(`TR-064: Error reading files from dir ${tamDir}: ${err.message}`);
                 return;
             }
             files.forEach(name => {
-                const file = resolve(`tam/${name}`);
+                const file = resolve(join(tamDir, name));
                 if (!messages.find(msg => msg.audioFile === file)) {
                     this.log.debug(`TR-064: Remove old tam audio file: ${file}`);
                     unlink(file, error => {
