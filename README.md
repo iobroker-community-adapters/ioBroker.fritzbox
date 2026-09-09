@@ -323,7 +323,7 @@ Example widgets:
     Placeholder for the next version (at the beginning of the line):
     ### **WORK IN PROGRESS**
 -->
-### **WORK IN PROGRESS**
+### 1.0.0 (2026-09-09)
 - (copilot) Adapter requires node.js >= 22 now
 - (copilot) **ENHANCED**: Translated README documentation from German to English
 - (GermanBluefox) Merged the ioBroker.net manual (docs/de, docs/en) into a single README.md
@@ -357,10 +357,6 @@ Example widgets:
 * (Khaos66/Apollon77) General updates and fixes
 * (Khaos66) TAM (Telephone Answering Maschine) support added
 * (Apollon77) Add Sentry for crash reporting
-
-### 0.3.1 (2016-07-24)
-* (BasGo) enhanced TR-064 configuration
-* (BasGo) added rudimentary phonebook download into object store
 
 [Older changelogs can be found there](CHANGELOG_OLD.md)
 

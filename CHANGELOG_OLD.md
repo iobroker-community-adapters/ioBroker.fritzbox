@@ -1,4 +1,8 @@
 # Older changes
+## 0.3.1 (2016-07-24)
+* (BasGo) enhanced TR-064 configuration
+* (BasGo) added rudimentary phonebook download into object store
+
 ## 0.3.0 (2015-06-26)
 * (UncleSamSwiss) added support for wlan.enabled (using TR-064)
 
