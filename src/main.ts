@@ -573,7 +573,9 @@ class Fritzbox extends utils.Adapter {
             call.dateStart = previous?.dateStart || obj[0];
             call.dateConn = previous?.dateConn || obj[0];
             call.dateEnd = obj[0];
-            if (call.connect === false) {
+            // a DISCONNECT without a preceding message means the adapter was started during the
+            // call - it then gets the `????` symbol, not the symbol of a missed call
+            if (previous?.connect === false) {
                 cssColor = CSS_RED;
                 call.callSymbol = call.direction === 'in' ? '\u00A0->X' : 'X<-\u00A0';
             } else {
