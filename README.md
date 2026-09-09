@@ -1,6 +1,5 @@
 ![Logo](admin/fritzbox.png)
 ioBroker fritzbox Adapter
-===========================
 
 ![Number of Installations](http://iobroker.live/badges/fritzbox-installed.svg)
 ![Number of Installations](http://iobroker.live/badges/fritzbox-stable.svg)
@@ -12,19 +11,160 @@ ioBroker fritzbox Adapter
 
 **This adapter uses Sentry libraries to automatically report exceptions and code errors to the developers.** For more details and for information how to disable the error reporting see [Sentry-Plugin Documentation](https://github.com/ioBroker/plugin-sentry#plugin-sentry)! Sentry reporting is used starting with js-controller 3.0.
 
+## AVM Fritz!Box®
+
+The Fritz!Box (own spelling of the manufacturer AVM) is one of the most widely used routers on the market.
+
+There are now models for all common types of internet connection: DSL, cable, mobile and fiber access.
+
+### Adapter Fritzbox
+
+The adapter establishes a connection between the Fritz!Box (short: FB) and ioBroker and provides data and lists of calls.
+
+## Prerequisites before installation
+
+The data exchange takes place via the *call monitor* integrated in the FB. To activate it, dial the following number from a connected telephone:
+
+* `#96*5*` - switch call monitor on
+* `#96*4*` - switch call monitor off
+
 ## Install
 
 Choose Adapter "fritzbox" in ioBroker Admin
 
 ## Configuration
 
+### Settings
+
+Here you only have to activate which data should be transmitted and in which form. According to the developers some data fields are unnecessary (see the graphic and the thread in the forum); this adapter does not receive any further updates, as it can be replaced by the more powerful "TR-064" adapter.
+
+![Post from the forum](doc/konfig_fehler.png)
+
+Further information in the forum [in this thread](https://forum.iobroker.net/viewtopic.php?f=20&t=3344&hilit=fritzbox).
+
+### Autosetup
+
+see [Settings](#settings)
+
+## Instance
+
+Under *Instances* of the ioBroker you find the installed instance of the adapter. On the left it is visualized in a traffic light system whether the adapter is activated and connected.
+
+![instance](doc/instanz.png)
+
+If you place the mouse pointer on a symbol, you get detailed information.
+
+## Objects of the adapter
+
+In the objects area all values, lists and information transmitted by the FB to the adapter are displayed in a tree structure (see settings).
+
+Directly in the instance folder *fritzbox.x* you find the data point *message* with date, time and type of the last action.
+
+![folder hierarchy](doc/ordnerbaum.png)
+
+The respective channels and the data points created therein are briefly described below.
+
+### Channel callmonitor
+
+The data points show the calls in real time.
+
+| **data point** | **description**                                                       |
+|----------------|-----------------------------------------------------------------------|
+| all            | display of date, time and phone number; incoming and outgoing         |
+| call           | display of date, time and phone number; outgoing                      |
+| connect        | display of date, time and phone number of an existing connection      |
+| ring           | display of date, time and phone number of incoming calls              |
+
+### Channel calls
+
+Within this channel 2 more channels and some data points are created:
+
+![channel calls](doc/calls.png)
+
+| **data point**       | **description**                             |
+|----------------------|---------------------------------------------|
+| callLastNumber       | last dialed phone number                    |
+| connectNumber        | last currently connected call               |
+| connectNumbers       | all currently connected calls               |
+| missedCount          | counter of missed calls                     |
+| missedDateReset      | date of the last counter reset              |
+| ring                 | signal for an incoming call                 |
+| ringActualNumber     | phone number of a currently incoming call   |
+| ringActualNumbers    | phone numbers of all currently incoming calls |
+| ringLastMissedNumber | phone number of the last missed call        |
+| ringLastNumber       | phone number of the last incoming call      |
+
+#### counterActualCalls
+
+Here the values of the various counters of current calls are listed in real time:
+
+| **data point** | **description**                                       |
+|----------------|-------------------------------------------------------|
+| allActiveCount | number of all active calls (connected, incoming)      |
+| callCount      | number of outgoing calls                              |
+| connectCount   | number of existing connections                        |
+| ringCount      | number of currently incoming calls                    |
+
+#### telLinks
+
+The data points listed below are formatted as a link, so that the corresponding number can be dialed via the link (e.g. via a widget in VIS):
+
+| **data point**          | **description**                              |
+|-------------------------|----------------------------------------------|
+| callLastNumberTel       | redial, last dialed phone number             |
+| ringLastMissedNumberTel | last missed call                             |
+| ringLastNumberTel       | last incoming call                           |
+
+### Channel cdr
+
+These data points provide information in formatted form (see settings).
+
+| **data point** | **description**          |
+|----------------|--------------------------|
+| html           | last call                |
+| json           |                          |
+| missedHTML     | last missed call         |
+| missedJSON     |                          |
+| txt            | last call                |
+
+### Channel history
+
+These data points provide tables in formatted form. Which information is transmitted can be defined in the settings.
+
+| **data point**  | **description**  |
+|-----------------|------------------|
+| allTableHTML    |                  |
+| allTableJSON    | all calls        |
+| allTableTxt     |                  |
+| missedTableHTML | missed calls     |
+| missedTableJSON |                  |
+
+### Channel system
+
+| **data point** | **description**                                             |
+|----------------|-------------------------------------------------------------|
+| deltaTime      | delta time between ioBroker system time and Fritzbox in sec |
+| deltaTimeOK    | test result (true/false)                                    |
+
+## FAQ
+
+**Q: There is the Fritzbox and the TR-064 adapter, which also accesses the FB call monitor. What are the differences, do both adapters have to be installed?**
+
+A: The Fritzbox adapter comes from the initial phase and made only those of the possible information of the router available which concerned the calls.
+
+TR-064 can be considered a further development, as this adapter offers much more extensive information, e.g. about the devices registered at the FB.
+
+In principle it is sufficient if one of the two adapters is installed. However, since many long-standing users use the FB adapter and have built their visualization on it, it remains available but is no longer being developed.
+
+Newcomers are recommended to install the [TR-064 adapter](https://github.com/ioBroker/ioBroker.docs/tree/master/docs/adapterref/docs/iobroker.tr-064/de).
+
 ## Data Points Documentation
 
 Under **fritzbox.x.** the adapter creates the following channels and data points:
 
-* message                                 (Message from the FRITZ!Box)
+* message -(Message from the FRITZ!Box)
 
-* **calls.                                  (CHANNEL)**
+### `calls` Channel
 * calls.ring                              (true/false, is there an incoming call?)
 * calls.missedCount                       (Integer, read & write, number of missed calls)
 * calls.missedDateReset                   (Date when calls.missedCount was last reset to 0)
@@ -186,6 +326,7 @@ Example widgets:
 ### **WORK IN PROGRESS**
 - (copilot) Adapter requires node.js >= 22 now
 - (copilot) **ENHANCED**: Translated README documentation from German to English
+- (GermanBluefox) Merged the ioBroker.net manual (docs/de, docs/en) into a single README.md
 
 ### 0.7.0 (2026-03-07)
 - (iobroker-bot) Adapter requires node.js >= 20 now.
