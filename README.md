@@ -1,5 +1,5 @@
 ![Logo](admin/fritzbox.png)
-ioBroker fritzbox Adapter
+# ioBroker.fritzbox
 
 ![Number of Installations](http://iobroker.live/badges/fritzbox-installed.svg)
 ![Number of Installations](http://iobroker.live/badges/fritzbox-stable.svg)
@@ -314,18 +314,15 @@ Example widgets:
     "externalTelLinkCenter":"<a style=\" text-decoration: none;\" href=\"tel:+4951112345678\">051112345678</a>"
 }
 ```
-<!--
-## todo
-* Doku der Datenpunkte
-* Import des xml Telefonbuch der Fritzbox
-* Feinere Konfiguration der Anruferliste (Tabellen)
--->
 
 ## Changelog
 <!--
     Placeholder for the next version (at the beginning of the line):
     ### **WORK IN PROGRESS**
 -->
+### **WORK IN PROGRESS**
+- (GermanBluefox) Fixed repochecker issues (state roles, responsive config, README) (#327)
+
 ### 1.0.0 (2026-09-09)
 - (copilot) Adapter requires node.js >= 22 now
 - (copilot) **ENHANCED**: Translated README documentation from German to English

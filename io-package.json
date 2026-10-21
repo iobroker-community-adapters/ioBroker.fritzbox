@@ -230,7 +230,7 @@
       "common": {
         "name": "Last fritzbox message",
         "type": "string",
-        "role": "message",
+        "role": "text",
         "read": true,
         "write": false,
         "desc": "last message from fritzbox as string"
@@ -241,8 +241,7 @@
       "_id": "calls",
       "type": "channel",
       "common": {
-        "name": "calls",
-        "role": "call info"
+        "name": "calls"
       },
       "native": {}
     },
@@ -252,7 +251,7 @@
       "common": {
         "name": "ring activ?",
         "type": "boolean",
-        "role": "call info",
+        "role": "indicator",
         "read": true,
         "write": false,
         "desc": "ring activ?"
@@ -265,7 +264,7 @@
       "common": {
         "name": "Counter: rings missed",
         "type": "number",
-        "role": "call info",
+        "role": "value",
         "read": true,
         "write": true,
         "desc": "Counter: rings missed"
@@ -291,7 +290,7 @@
       "common": {
         "name": "actual last ringing number",
         "type": "string",
-        "role": "call info",
+        "role": "text",
         "read": true,
         "write": false,
         "desc": "actual last ringing number"
@@ -304,7 +303,7 @@
       "common": {
         "name": "actual ringing numbers",
         "type": "string",
-        "role": "call info",
+        "role": "text",
         "read": true,
         "write": false,
         "desc": "actual ringing numbers"
@@ -317,7 +316,7 @@
       "common": {
         "name": "ring last number",
         "type": "string",
-        "role": "call info",
+        "role": "text",
         "read": true,
         "write": false,
         "desc": "ring last number"
@@ -330,7 +329,7 @@
       "common": {
         "name": "ring last missed number",
         "type": "string",
-        "role": "call info",
+        "role": "text",
         "read": true,
         "write": false,
         "desc": "ring last missed number"
@@ -343,7 +342,7 @@
       "common": {
         "name": "call last number",
         "type": "string",
-        "role": "call info",
+        "role": "text",
         "read": true,
         "write": false,
         "desc": "call last number"
@@ -356,7 +355,7 @@
       "common": {
         "name": "actual last connected number",
         "type": "string",
-        "role": "call info",
+        "role": "text",
         "read": true,
         "write": false,
         "desc": "actual last connected number"
@@ -369,7 +368,7 @@
       "common": {
         "name": "actual last connected numbers",
         "type": "string",
-        "role": "call info",
+        "role": "text",
         "read": true,
         "write": false,
         "desc": "actual last connected numbers"
@@ -380,8 +379,7 @@
       "_id": "calls.counterActualCalls",
       "type": "channel",
       "common": {
-        "name": "calls",
-        "role": "call info"
+        "name": "calls"
       },
       "native": {}
     },
@@ -391,7 +389,7 @@
       "common": {
         "name": "Counter: all active Calls",
         "type": "number",
-        "role": "call info",
+        "role": "value",
         "read": true,
         "write": false,
         "desc": "Counter: all active Calls"
@@ -404,7 +402,7 @@
       "common": {
         "name": "actual active connects",
         "type": "number",
-        "role": "call info",
+        "role": "value",
         "read": true,
         "write": false,
         "desc": "Counter: actual active connected calls"
@@ -417,7 +415,7 @@
       "common": {
         "name": "actual ring count",
         "type": "number",
-        "role": "call info",
+        "role": "value",
         "read": true,
         "write": false,
         "desc": "Counter: actual ring count"
@@ -430,7 +428,7 @@
       "common": {
         "name": "actual active calls",
         "type": "number",
-        "role": "call info",
+        "role": "value",
         "read": true,
         "write": false,
         "desc": "Counter: actual active calls"
@@ -441,8 +439,7 @@
       "_id": "calls.telLinks",
       "type": "channel",
       "common": {
-        "name": "calls",
-        "role": "call info"
+        "name": "calls"
       },
       "native": {}
     },
@@ -452,10 +449,10 @@
       "common": {
         "name": "ring last number tel:link",
         "type": "string",
-        "role": "call info",
+        "role": "html",
         "read": true,
         "write": false,
-        "desc": "letzter Anrufer als tel:link"
+        "desc": "last caller as tel:link"
       },
       "native": {}
     },
@@ -465,10 +462,10 @@
       "common": {
         "name": "call last number tel:link",
         "type": "string",
-        "role": "call info",
+        "role": "html",
         "read": true,
         "write": false,
-        "desc": "letzte angerufene Nummer (Wahlwiederholung) als tel:link"
+        "desc": "last dialed number (redial) as tel:link"
       },
       "native": {}
     },
@@ -478,10 +475,10 @@
       "common": {
         "name": "ring last missed number tel:link",
         "type": "string",
-        "role": "call info",
+        "role": "html",
         "read": true,
         "write": false,
-        "desc": "letzter verpasster Anrufer als tel:link"
+        "desc": "last missed caller as tel:link"
       },
       "native": {}
     },
@@ -489,8 +486,7 @@
       "_id": "callmonitor",
       "type": "channel",
       "common": {
-        "name": "callmonitor",
-        "role": "callmonitor"
+        "name": "callmonitor"
       },
       "native": {}
     },
@@ -500,7 +496,7 @@
       "common": {
         "name": "callmonitor all",
         "type": "string",
-        "role": "callmonitor",
+        "role": "html",
         "read": true,
         "write": false,
         "desc": "callmonitor all"
@@ -513,7 +509,7 @@
       "common": {
         "name": "callmonitor ring",
         "type": "string",
-        "role": "callmonitor",
+        "role": "html",
         "read": true,
         "write": false,
         "desc": "callmonitor ring"
@@ -526,7 +522,7 @@
       "common": {
         "name": "callmonitor call",
         "type": "string",
-        "role": "callmonitor",
+        "role": "html",
         "read": true,
         "write": false,
         "desc": "callmonitor call"
@@ -539,7 +535,7 @@
       "common": {
         "name": "callmonitor connect",
         "type": "string",
-        "role": "callmonitor",
+        "role": "html",
         "read": true,
         "write": false,
         "desc": "callmonitor connect"
@@ -550,8 +546,7 @@
       "_id": "system",
       "type": "channel",
       "common": {
-        "name": "system",
-        "role": "system"
+        "name": "system"
       },
       "native": {}
     },
@@ -561,7 +556,7 @@
       "common": {
         "name": "delta time in seconds between fritzbox and ioBroker",
         "type": "number",
-        "role": "seconds",
+        "role": "value.interval",
         "read": true,
         "write": false,
         "desc": "delta time in seconds between fritzbox and ioBroker"
@@ -574,7 +569,7 @@
       "common": {
         "name": "delta time in seconds between fritzbox and ioBroker ok",
         "type": "boolean",
-        "role": "seconds",
+        "role": "indicator",
         "read": true,
         "write": false,
         "desc": "delta time in seconds between fritzbox and ioBroker ok"
@@ -585,8 +580,7 @@
       "_id": "cdr",
       "type": "channel",
       "common": {
-        "name": "cdr",
-        "role": "cdr"
+        "name": "cdr"
       },
       "native": {}
     },
@@ -596,7 +590,7 @@
       "common": {
         "name": "call cdr as JSON",
         "type": "object",
-        "role": "cdr",
+        "role": "json",
         "read": true,
         "write": false,
         "desc": "call cdr as JSON"
@@ -609,7 +603,7 @@
       "common": {
         "name": "call cdr as html",
         "type": "string",
-        "role": "cdr",
+        "role": "html",
         "read": true,
         "write": false,
         "desc": "call cdr as html"
@@ -622,7 +616,7 @@
       "common": {
         "name": "missed calls as JSON",
         "type": "object",
-        "role": "cdr",
+        "role": "json",
         "read": true,
         "write": false,
         "desc": "missed calls as JSON"
@@ -635,7 +629,7 @@
       "common": {
         "name": "missed calls as HTML",
         "type": "string",
-        "role": "cdr",
+        "role": "html",
         "read": true,
         "write": false,
         "desc": "missed calls as HTML"
@@ -648,7 +642,7 @@
       "common": {
         "name": "call cdr as txt",
         "type": "string",
-        "role": "cdr",
+        "role": "text",
         "read": true,
         "write": false,
         "desc": "call cdr as txt"
@@ -659,8 +653,7 @@
       "_id": "history",
       "type": "channel",
       "common": {
-        "name": "history",
-        "role": "history"
+        "name": "history"
       },
       "native": {}
     },
@@ -670,7 +663,7 @@
       "common": {
         "name": "history of calls as HTML",
         "type": "string",
-        "role": "history",
+        "role": "html",
         "read": true,
         "write": false,
         "desc": "history of calls as HTML"
@@ -683,7 +676,7 @@
       "common": {
         "name": "history of calls as Txt",
         "type": "string",
-        "role": "history",
+        "role": "text",
         "read": true,
         "write": false,
         "desc": "history of calls as Txt"
@@ -696,7 +689,7 @@
       "common": {
         "name": "history of calls as JSON",
         "type": "object",
-        "role": "table",
+        "role": "json",
         "read": true,
         "write": false,
         "desc": "history of calls as JSON"
@@ -709,7 +702,7 @@
       "common": {
         "name": "history of missed calls as HTML",
         "type": "string",
-        "role": "history",
+        "role": "html",
         "read": true,
         "write": false,
         "desc": "history of missed calls as HTML"
@@ -722,7 +715,7 @@
       "common": {
         "name": "history of missed calls as JSON",
         "type": "string",
-        "role": "history",
+        "role": "json",
         "read": true,
         "write": false,
         "desc": "history of missed calls as JSON"
@@ -733,8 +726,7 @@
       "_id": "tam",
       "type": "channel",
       "common": {
-        "name": "tam",
-        "role": "tam"
+        "name": "tam"
       },
       "native": {}
     },
@@ -744,7 +736,7 @@
       "common": {
         "name": "tam as JSON",
         "type": "string",
-        "role": "tam",
+        "role": "json",
         "read": true,
         "write": false,
         "desc": "answering machine as JSON"
@@ -755,8 +747,7 @@
       "_id": "phonebook",
       "type": "channel",
       "common": {
-        "name": "phonebook",
-        "role": "phonebook"
+        "name": "phonebook"
       },
       "native": {}
     },
@@ -766,7 +757,7 @@
       "common": {
         "name": "phonebook as JSON",
         "type": "string",
-        "role": "phonebook",
+        "role": "json",
         "read": true,
         "write": false,
         "desc": "phonebook as JSON"
