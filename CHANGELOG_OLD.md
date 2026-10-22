@@ -5,7 +5,6 @@
 * (Khaos66) TAM (Telephone Answering Maschine) support added
 * (Apollon77) Add Sentry for crash reporting
 
-
 ## 0.3.1 (2016-07-24)
 * (BasGo) enhanced TR-064 configuration
 * (BasGo) added rudimentary phonebook download into object store
