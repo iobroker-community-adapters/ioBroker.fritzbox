@@ -320,7 +320,7 @@ Example widgets:
     Placeholder for the next version (at the beginning of the line):
     ### **WORK IN PROGRESS**
 -->
-### **WORK IN PROGRESS**
+### 1.1.0 (2026-10-22)
 - (GermanBluefox) Fixed repochecker issues (state roles, responsive config, README) (#327)
 - (GermanBluefox) Fixed repochecker issues (type of JSON states, role of calls.missedCount, copyright) (#335)
 
@@ -352,12 +352,6 @@ Example widgets:
 * (Apollon77) Write history.missedTableJSON value
 * (Apollon77) Store tam files in an instance-specific location
 * (Apollon77) Fix crash cases reported by Sentry
-
-### 0.4.0 (2022-03-25)
-* IMPORTANT: You need to re-enter the password once after installing this version!
-* (Khaos66/Apollon77) General updates and fixes
-* (Khaos66) TAM (Telephone Answering Maschine) support added
-* (Apollon77) Add Sentry for crash reporting
 
 [Older changelogs can be found there](CHANGELOG_OLD.md)
 

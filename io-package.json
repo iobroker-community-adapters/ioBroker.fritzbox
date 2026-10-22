@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "fritzbox",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "news": {
+      "1.1.0": {
+        "en": "Fixed repochecker issues (state roles, responsive config, README) (#327)\nFixed repochecker issues (type of JSON states, role of calls.missedCount, copyright) (#335)",
+        "de": "Repochecker behoben (State Roles, Responsive Config, README) (#327)\nRepochecker-Probleme behoben (JSON-Status, Rolle calls.MissedCount, Copyright) (#335)",
+        "ru": "Исправлены проблемы с repochecker (роли состояний, адаптивная конфигурация, README) (#327)\nИсправлены проблемы с функцией repochecker (тип состояний JSON, роль Calls.missedCount, авторское право) (#335)",
+        "pt": "Problemas corrigidos no repochecker (status roles, responsivo, README) (#327)\nProblemas corrigidos no repochecker (tipo de estado JSON, função de calls.missedCount, copyright) (#335)",
+        "nl": "Problemen met de repochecker opgelost (statusrollen, responsieve configuratie, README) (#327)\nProblemen met de repochecker opgelost (type JSON-status, rol van Calls.MissedCount, copyright) (#335)",
+        "fr": "Correction de problèmes de repochecker (rôles, responsive config, README) (#327)\nCorrection de problèmes de repochecker (type d'états JSON, rôle de Calls.MissedCount, copyright) (#335)",
+        "it": "Risolti i problemi di repochecker (ruoli di stato, responsive, README) (#327)\nRisolti i repochecker (tipo di stati JSON, ruolo di calls.missedCount, copyright) (#335)",
+        "es": "Problemas de repochecker (roles de estado, configuración de respuesta, README) (#327)\nSe corrigieron problemas de repochecker (tipo de estados de JSON, rol de Calls.MissedCount, copyright) (#335)",
+        "pl": "Naprawiono problemy z ponownym sprawdzaniem (role stanu, responsywna konfiguracja, README) (#327)\nNaprawiono problemy z repocheckerem (typ stanów JSON, rola calls.MissedCount, prawa autorskie) (#335)",
+        "uk": "Виправлені проблеми репочекера (ролі стану, адаптивна конфігурація, README) (#327)\nВиправлені проблеми репочекера (тип станів JSON, роль calls.missedCount, авторські права) (#335)",
+        "zh-cn": "修复了 repochecker 问题（状态角色、响应式配置、自述文件）(#327)\n修复了 repochecker 问题（JSON 状态的类型、calls.missedCount 的角色、版权）(#335)"
+      },
       "1.0.0": {
         "en": "Adapter requires node.js >= 22 now\n**ENHANCED**: Translated README documentation from German to English\nMerged the ioBroker.net manual (docs/de, docs/en) into a single README.md\nThe adapter was refactored to TypeScript, the sources are in `src/` and are compiled to `build/`\nThe admin configuration was migrated from the HTML page to JsonConfig, the translations moved to `admin/i18n/<lang>.json`\n`request` was replaced by `axios`\n`enableWlan`, `enablePhonebook` and `enableTAM` have a default in io-package.json now, unused `native` entries were removed\nThe adapter cannot be installed directly from GitHub anymore, because the sources have to be compiled (`common.nogit`)\n**FIXED**: after a lost connection, the adapter tried to reconnect only once\n**FIXED**: the tel: links were not initialized, they were written to `telLinks.*` instead of `calls.telLinks.*`\n**FIXED**: the cleanup of the answering machine audio files looked into the working directory instead of the instance directory\nThe adapter supports the compact mode now",
         "de": "Adapter benötigt jetzt node.js >= 22\n**VERBESSERT**: Die README-Dokumentation wurde vom Deutschen ins Englische übersetzt\nFügt das ioBroker.NET-Handbuch (docs/de, docs/en) in README.md zusammen\nDer Adapter wurde auf TypeScript umgestellt, die Quellen sind in `src/“ kompiliert\n<lang>Die Admin-Konfiguration wurde von der HTML-Seite zu JSONConfig migriert, die Übersetzung nach `admin/i18n/ .json`\n„Anfrage“ wurde durch „Axios“ ersetzt\n`enableWLAN`, `enablePhoneBook` und `enableTeam` haben nun Standard in io-package.json, unbenutzte `native`-Einträge wurden entfernt\nDer Adapter kann nicht mehr direkt von GitHub installiert werden, da die Quellen kompiliert werden müssen.\n**REPARIERT**: Nach einem Verbindungsabbruch versuchte der Adapter nur einmal\n**REPARIERT**: Die Tel-Links wurden nicht initialisiert, sondern in `telLinks*` statt in `calls.telinks. *`\n**REPARIERT**: Die Säuberung der Audiodateien des Anrufbeantworters sah im Arbeitsverzeichnis statt im Instanzverzeichnis\nDer Adapter unterstützt jetzt Kompakt",
