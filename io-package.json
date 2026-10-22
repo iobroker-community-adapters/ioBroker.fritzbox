@@ -264,7 +264,7 @@
       "common": {
         "name": "Counter: rings missed",
         "type": "number",
-        "role": "value",
+        "role": "level",
         "read": true,
         "write": true,
         "desc": "Counter: rings missed"
@@ -589,7 +589,7 @@
       "type": "state",
       "common": {
         "name": "call cdr as JSON",
-        "type": "object",
+        "type": "string",
         "role": "json",
         "read": true,
         "write": false,
@@ -615,7 +615,7 @@
       "type": "state",
       "common": {
         "name": "missed calls as JSON",
-        "type": "object",
+        "type": "string",
         "role": "json",
         "read": true,
         "write": false,
@@ -688,7 +688,7 @@
       "type": "state",
       "common": {
         "name": "history of calls as JSON",
-        "type": "object",
+        "type": "string",
         "role": "json",
         "read": true,
         "write": false,
