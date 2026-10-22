@@ -320,7 +320,7 @@ Example widgets:
     Placeholder for the next version (at the beginning of the line):
     ### **WORK IN PROGRESS**
 -->
-### 1.1.0 (2026-10-22)
+### **WORK IN PROGRESS**
 - (GermanBluefox) Fixed repochecker issues (state roles, responsive config, README) (#327)
 - (GermanBluefox) Fixed repochecker issues (type of JSON states, role of calls.missedCount, copyright) (#335)
 
