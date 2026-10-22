@@ -322,6 +322,7 @@ Example widgets:
 -->
 ### **WORK IN PROGRESS**
 - (GermanBluefox) Fixed repochecker issues (state roles, responsive config, README) (#327)
+- (GermanBluefox) Fixed repochecker issues (type of JSON states, role of calls.missedCount, copyright) (#335)
 
 ### 1.0.0 (2026-09-09)
 - (copilot) Adapter requires node.js >= 22 now
@@ -365,7 +366,7 @@ Example widgets:
 The MIT License (MIT)
 
 Copyright (c) 2024-2026 iobroker-community-adapters <iobroker-community-adapters@gmx.de>  
-Copyright (c) 2015-2022, ruhr70
+Copyright (c) 2015-2022 ruhr70 <ruhr@digheim.de>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
